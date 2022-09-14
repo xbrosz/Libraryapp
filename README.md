@@ -1,5 +1,10 @@
 # Libraryapp
 
+Authors:<br>
+  485694 Patrik Brosz<br>
+  485630 Richard Ondrejka<br>
+  468984 Lukáš Hasik<br>
+
 Aplikácia bude umožňovať:<br>
 autentizáciu užívateľov<br>
 užívateľovi si zmeniť osobné údaje<br>

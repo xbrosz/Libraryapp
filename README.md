@@ -1,21 +1,25 @@
-# Libraryapp
+# Library.app
 
-Authors:<br>
-  485694 Patrik Brosz<br>
-  485630 Richard Ondrejka<br>
-  468984 Lukáš Hasik<br>
+## O projekte
 
-Aplikácia bude umožňovať:<br>
-autentizáciu užívateľov<br>
-užívateľovi si zmeniť osobné údaje<br>
-užívateľovi managovat rezerváciu na knihu, ktorú by si chcel prečítať<br>
-užívateľovi managovat hodnotenia na knihy<br>
-užívateľovi zobraziť históriu rezervácií<br>
-uzivateľovi zobraziť stav knihy (počet dostupných výtlačkov v jednotlivých pobočkách)<br>
+**Autori**:
+- 485694 Patrik Brosz
+- 485630 Richard Ondrejka
+- 468984 Lukáš Hasik<br>
 
-adminovi pridávať/mazať/upravovať knihy, užívateľov<br>
-adminovi managovat rezervacie<br>
-adminovi managovat pobočky<br>
+Aplikácia bude umožňovať:
+1. autentizáciu používateľov
+2. zobraziť ponuku kníh<br>
+3. vyhľadávanie na základe parametrov (názov, autor, žáner, pobočka, hodnotenie, stav)
+4. *používateľovi:*
+   1. si zmeniť osobné údaje
+   2. managovat rezerváciu na knihu, ktorú by si chcel prečítať
+   3. managovat hodnotenia na knihy
+   4. zobraziť históriu rezervácií
+   5. zobraziť stav knihy (počet dostupných výtlačkov v jednotlivých pobočkách)
+5. *adminovi:*
+   1. pridávať/mazať/upravovať knihy, užívateľov
+   2. managovat rezervacie
+   3. managovat pobočky
 
-zobraziť ponuku kníh<br>
-vyhľadávanie na základe pár parametrov (názov, autor, žáner, pobočka, hodnotenie, stav)
+

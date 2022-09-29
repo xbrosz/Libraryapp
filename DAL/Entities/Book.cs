@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    internal class Book
+    public class Book
     {
     }
 }

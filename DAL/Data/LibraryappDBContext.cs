@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Data
 {
-    internal class LibraryappDBContext : DbContext
+    internal class LibraryappDbContext : DbContext
     {
         private const string ConnectionString = $"Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database=Libraryapp;Trusted_Connection=True;";
 

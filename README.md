@@ -22,4 +22,9 @@ Aplikácia bude umožňovať:
    2. managovat rezervacie
    3. managovat pobočky
 
+---
+### ERD
+
+![plot](./erd_library.jpg)
+
 

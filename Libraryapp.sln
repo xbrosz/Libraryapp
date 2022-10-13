@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{7A7E4EFD-7EC2-452A-94D2-079A98B61F5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{7A7E4EFD-7EC2-452A-94D2-079A98B61F5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{3535C051-96F1-4206-9FB1-718B3457986D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.EFCore", "Infrastructure.EFCore\Infrastructure.EFCore.csproj", "{9C0AB46F-5E4B-4F1C-96FF-E80E3CB78F37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{7A7E4EFD-7EC2-452A-94D2-079A98B61F5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A7E4EFD-7EC2-452A-94D2-079A98B61F5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A7E4EFD-7EC2-452A-94D2-079A98B61F5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3535C051-96F1-4206-9FB1-718B3457986D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3535C051-96F1-4206-9FB1-718B3457986D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3535C051-96F1-4206-9FB1-718B3457986D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3535C051-96F1-4206-9FB1-718B3457986D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C0AB46F-5E4B-4F1C-96FF-E80E3CB78F37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C0AB46F-5E4B-4F1C-96FF-E80E3CB78F37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C0AB46F-5E4B-4F1C-96FF-E80E3CB78F37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C0AB46F-5E4B-4F1C-96FF-E80E3CB78F37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,8 +1,10 @@
-﻿namespace DAL.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DAL.Entities
 {
-    public class Book
+    public class Book : BaseEntity
     {
-        public int Id { get; set; }
+        [MaxLength(150)]
         public string Title { get; set; }
         public DateTime Release { get; set; }
         public virtual int AuthorId { get; set; }

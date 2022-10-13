@@ -2,9 +2,8 @@
 
 namespace DAL.Entities
 {
-    public class Rating
+    public class Rating : BaseEntity
     {
-        public int Id { get; set; }
         [Range(0, 5)]
         public int RatingNumber { get; set; }
         public int BookId { get; set; }

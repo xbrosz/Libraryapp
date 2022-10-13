@@ -1,8 +1,10 @@
-﻿namespace DAL.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DAL.Entities
 {
-    public class Role
+    public class Role : BaseEntity
     {
-        public int Id { get; set; }
+        [MaxLength(60)]
         public string Name { get; set; }
     }
 }

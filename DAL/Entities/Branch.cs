@@ -1,9 +1,12 @@
-﻿namespace DAL.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DAL.Entities
 {
-    public class Branch
+    public class Branch : BaseEntity
     {
-        public int Id { get; set; }
+        [MaxLength(150)]
         public string Name { get; set; }
+        [MaxLength(255)]
         public string Address { get; set; }
     }
 }

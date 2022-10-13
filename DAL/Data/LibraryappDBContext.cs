@@ -20,12 +20,13 @@ namespace DAL.Data
         {
             optionsBuilder
                 .UseSqlServer(ConnectionString);
-            //.UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Seed();
+
+            base.OnModelCreating(modelBuilder);
         }
 
     }

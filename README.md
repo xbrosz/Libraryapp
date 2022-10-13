@@ -3,9 +3,9 @@
 ## O projekte
 
 **Autori**:
-- 485694 Patrik Brosz
-- 485630 Richard Ondrejka
-- 468984 Lukáš Hasik<br>
+- 485694 Patrik Brosz (_Blackies_)
+- 485630 Richard Ondrejka (_RIK_)
+- 468984 Lukáš Hasik (_Ultrafuk_)<br> 
 
 Aplikácia bude umožňovať:
 1. autentizáciu používateľov
@@ -21,5 +21,10 @@ Aplikácia bude umožňovať:
    1. pridávať/mazať/upravovať knihy, užívateľov
    2. managovat rezervacie
    3. managovat pobočky
+
+---
+### ERD
+
+![plot](./erd_library.jpg)
 
 

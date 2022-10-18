@@ -32,7 +32,7 @@ namespace DAL.Data
                 optionsBuilder
                 .UseSqlServer(ConnectionString);
             }
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -7,7 +7,6 @@ namespace Infrastructure.EFCore.Test
 {
     public class GenericQueryTests
     {
-
         private readonly LibraryappDbContext dbContext;
 
         public GenericQueryTests()
@@ -69,6 +68,16 @@ namespace Infrastructure.EFCore.Test
             Assert.True(result.Count() == 1);
 
             Assert.True(result.First().Name == "Branch1");
+        }
+
+        [Fact]
+        public void BranchesNameStartsWithBra_QueryWhere_Test()
+        {
+            var efquery = new EFGenericQuery<Branch>(dbContext);
+            efquery.Where<string>(a => a.StartsWith("Bra"), "Name");
+            var result = efquery.Execute();
+
+            Assert.True(result.Count() == 2);
         }
 
         [Fact]

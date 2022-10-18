@@ -1,13 +1,7 @@
 ﻿using DAL.Data;
 using Infrastructure.EFCore.ExpressionHelpers;
 using Infrastructure.Query;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.EFCore.Query
 {
@@ -15,8 +9,8 @@ namespace Infrastructure.EFCore.Query
     {
         protected LibraryappDbContext DbContext { get; set; }
 
-        public EFGenericQuery(LibraryappDbContext dbContext) 
-        { 
+        public EFGenericQuery(LibraryappDbContext dbContext)
+        {
             DbContext = dbContext;
         }
         public override IEnumerable<TEntity> Execute()

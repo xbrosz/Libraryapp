@@ -9,6 +9,8 @@ namespace DAL.Data
 
         public DbSet<Author> Author { get; set; }
         public DbSet<Book> Book { get; set; }
+        public DbSet<BookPrint> BookPrint { get; set; }
+        public DbSet<BookGenre> BookGenre { get; set; }
         public DbSet<Branch> Branch { get; set; }
         public DbSet<Genre> Genre { get; set; }
         public DbSet<Rating> Rating { get; set; }

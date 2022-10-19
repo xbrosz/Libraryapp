@@ -9,7 +9,7 @@ namespace DAL.Entities
         public DateTime Release { get; set; }
         public virtual int AuthorId { get; set; }
         public virtual Author Author { get; set; }
-  
+
         public virtual List<BookPrint> BookPrints { get; set; }
         public virtual List<Rating> Ratings { get; set; }
 

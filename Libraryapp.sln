@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.EFCore", "Infrastructure.EFCore\Infrastructure.EFCore.csproj", "{9C0AB46F-5E4B-4F1C-96FF-E80E3CB78F37}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryappTestProject", "LibraryappRunProject\LibraryappTestProject.csproj", "{2960FB6B-6D88-4261-B5DE-FCBBB6DB2273}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.EFCore.Test", "Infrastructure.EFCore.Test\Infrastructure.EFCore.Test.csproj", "{9E317BB7-A94E-423A-BF90-81F2B4C1040B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{9C0AB46F-5E4B-4F1C-96FF-E80E3CB78F37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C0AB46F-5E4B-4F1C-96FF-E80E3CB78F37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C0AB46F-5E4B-4F1C-96FF-E80E3CB78F37}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2960FB6B-6D88-4261-B5DE-FCBBB6DB2273}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2960FB6B-6D88-4261-B5DE-FCBBB6DB2273}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2960FB6B-6D88-4261-B5DE-FCBBB6DB2273}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2960FB6B-6D88-4261-B5DE-FCBBB6DB2273}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E317BB7-A94E-423A-BF90-81F2B4C1040B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E317BB7-A94E-423A-BF90-81F2B4C1040B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E317BB7-A94E-423A-BF90-81F2B4C1040B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E317BB7-A94E-423A-BF90-81F2B4C1040B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

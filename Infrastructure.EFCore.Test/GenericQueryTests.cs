@@ -19,6 +19,8 @@ namespace Infrastructure.EFCore.Test
 
             dbContext = new LibraryappDbContext(dbContextOptions);
 
+            
+
             dbContext.Genre.Add(new Genre { Id = 1, Name = "horror" });
             dbContext.Genre.Add(new Genre { Id = 2, Name = "sci-fi" });
 
@@ -42,6 +44,79 @@ namespace Infrastructure.EFCore.Test
                 MiddleName = "",
                 BirthDate = DateTime.Today.AddDays(-100)
             });
+
+            dbContext.Add(
+
+                    new BookPrint
+                    {
+                        Id = 1,
+                        BookId = 1,
+                        BranchId = 1
+                    });
+
+            dbContext.Add(
+                    new BookPrint
+                    {
+                        Id = 2,
+                        BookId = 1,
+                        BranchId = 1
+                    });
+
+            dbContext.Add(
+                    new BookPrint
+                    {
+                        Id = 3,
+                        BookId = 1,
+                        BranchId = 1
+                    });
+
+            dbContext.Add(
+                    new BookPrint
+                    {
+                        Id = 4,
+                        BookId = 1,
+                        BranchId = 1
+                    });
+
+            dbContext.Add(
+                    new BookPrint
+                    {
+                        Id = 5,
+                        BookId = 1,
+                        BranchId = 1
+                    });
+
+            dbContext.Add(
+                    new BookPrint
+                    {
+                        Id = 6,
+                        BookId = 1,
+                        BranchId = 1
+                    });
+
+            dbContext.Add(
+                    new BookPrint
+                    {
+                        Id = 7,
+                        BookId = 1,
+                        BranchId = 1
+                    });
+
+            dbContext.Add(
+                    new BookPrint
+                    {
+                        Id = 8,
+                        BookId = 1,
+                        BranchId = 1
+                    });
+
+            dbContext.Add(
+                    new BookPrint
+                    {
+                        Id = 9,
+                        BookId = 1,
+                        BranchId = 1
+                    });
 
             dbContext.SaveChanges();
         }
@@ -100,6 +175,58 @@ namespace Infrastructure.EFCore.Test
             var result = efquery.Execute();
 
             Assert.True(result.Count() == 1);
+        }
+
+        [Fact]
+        public void ClassroomsOrderedAscending_QueryOrderBy_Test()
+        {
+            var efquery = new EFGenericQuery<BookPrint>(dbContext);
+            efquery.OrderBy<int>("Id", true);
+            var result = efquery.Execute()
+                .Select(a => a.Id)
+                .ToList();
+
+            var ExpectedResult = dbContext.BookPrint
+                .Select(a => a.Id)
+                .OrderBy(a => a)
+                .ToList();
+
+            Assert.Equal(ExpectedResult, result);
+        }
+        
+        [Fact]
+        public void ClassroomsOrderedDescending_QueryOrderBy_Test()
+        {
+            var efquery = new EFGenericQuery<BookPrint>(dbContext);
+            efquery.OrderBy<int>("Id", false);
+            var result = efquery.Execute()
+                .Select(a => a.Id)
+                .ToList();
+
+            var ExpectedResult = dbContext.BookPrint
+                .Select(a => a.Id)
+                .OrderByDescending(a => a)
+                .ToList();
+
+            Assert.Equal(ExpectedResult, result);
+        }
+        
+        [Fact]
+        public void StudentsSimplePagination_QueryPagination_Test()
+        {
+            var efquery = new EFGenericQuery<BookPrint>(dbContext);
+            efquery.Page(3, 3);
+            var result = efquery.Execute()
+                .Select(a => a.Id)
+                .ToList();
+
+            var ExpectedResult = dbContext.BookPrint
+                .Skip(6)
+                .Take(3)
+                .Select(a => a.Id)
+                .ToList();
+
+            Assert.Equal(ExpectedResult, result);
         }
     }
 

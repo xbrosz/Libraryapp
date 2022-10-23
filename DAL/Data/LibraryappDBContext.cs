@@ -16,6 +16,7 @@ namespace DAL.Data
         public DbSet<BookGenre> BookGenres { get; set; }
         public DbSet<Reservation> Reservation { get; set; }
         public DbSet<Role> Role { get; set; }
+        public DbSet<BookPrint> BookPrint { get; set; }
 
         public LibraryappDbContext()
         {

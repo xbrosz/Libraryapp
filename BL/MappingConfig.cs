@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BL.DTOs;
+using DAL.Entities;
 
 namespace BL
 {
@@ -11,7 +8,8 @@ namespace BL
     {
         public static void ConfigureMapping(IMapperConfigurationExpression config)
         {
-
+            config.CreateMap<Reservation, ReservationsDto>()
+                .ForMember(dest => dest.BookTitle, act => act.MapFrom(src => src.BookPrint.Book.Title));
         }
     }
 }

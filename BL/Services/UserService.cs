@@ -10,7 +10,7 @@ using Infrastructure.Repository;
 
 namespace BL.Service
 {
-    public class UserService : GenericService<User, UserDetailDto, UserDetailDto>, IUserService
+    public class UserService : GenericService<User, UserDetailDto, UserDetailDto, UserDetailDto>, IUserService
     {
         private IMapper mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
         private IRepository<User> repository;

@@ -1,4 +1,4 @@
-﻿using BL.DTOs;
+﻿using BL.DTOs.Reservation;
 
 namespace BL.Services
 {

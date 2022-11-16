@@ -1,4 +1,6 @@
-﻿namespace BL.DTOs.Reservation
+﻿using BL.DTOs.Branch;
+
+namespace BL.DTOs.Reservation
 {
     public class ReservationsDto
     {

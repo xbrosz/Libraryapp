@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using BL.DTOs.Author;
+using BL.DTOs.Branch;
 using BL.DTOs.Reservation;
 using BL.DTOs.User;
 using DAL.Entities;
@@ -12,6 +14,8 @@ namespace BL
             config.CreateMap<Reservation, ReservationsDto>()
                 .ForMember(dest => dest.BookTitle, act => act.MapFrom(src => src.BookPrint.Book.Title)).ReverseMap();
             config.CreateMap<User, UserDetailDto>().ReverseMap();
+            config.CreateMap<Author, AuthorDto>().ReverseMap();
+            config.CreateMap<Branch, BranchDto>().ReverseMap();
         }
     }
 }

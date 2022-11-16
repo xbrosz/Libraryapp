@@ -3,12 +3,13 @@ using Infrastructure.Repository;
 
 namespace BL.Services
 {
-    public abstract class GenericService<TEntity, FEntity, UEntity>
+    public abstract class GenericService<TEntity, FEntity, UEntity, IEntity>
         where TEntity : class
         where FEntity : class
         where UEntity : class
+        where IEntity : class
     {
-        private IMapper mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
+        protected IMapper mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
         private IRepository<TEntity> repository;
 
         public GenericService(IRepository<TEntity> repository)
@@ -29,6 +30,11 @@ namespace BL.Services
         public void update(UEntity dtoToUpdate)
         {
             repository.Update(mapper.Map<TEntity>(dtoToUpdate));
+        }
+
+        public virtual void Insert(IEntity dtoToInsert)
+        {
+            repository.Insert(mapper.Map<TEntity>(dtoToInsert));
         }
     }
 }

@@ -31,7 +31,7 @@ namespace BL.QueryObjects
 
             if (filter.BookId.HasValue)
             {
-                query = myQuery.Where<int>(a => a == filter.BookId, "BookPrint.BookId");
+                query = myQuery.Where<BookPrint>(a => a.BookId == filter.BookId, "BookPrint");
             }
 
             if (filter.RequestedPageNumber.HasValue)

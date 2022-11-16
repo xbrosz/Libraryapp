@@ -25,8 +25,14 @@ namespace BL.Service
         {
             queryObject = new ReservationQueryObject(mapper, dbContext);
 
-            return queryObject.ExecuteQuery(new ReservationFilterDto() { UserId = userId }).Items;
+            return queryObject.ExecuteQuery(new ReservationFilterDto { UserId = userId }).Items;
         }
 
+        public IEnumerable<ReservationsDto> GetReservationsByBookId(int bookId)
+        {
+            queryObject = new ReservationQueryObject(mapper, dbContext);
+
+            return queryObject.ExecuteQuery(new ReservationFilterDto { BookId = bookId }).Items;
+        }
     }
 }

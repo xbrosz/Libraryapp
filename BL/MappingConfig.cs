@@ -17,6 +17,7 @@ namespace BL
             config.CreateMap<Author, AuthorDto>().ReverseMap();
             config.CreateMap<Book, BookDetailDto>().ReverseMap();
             config.CreateMap<Book,BookGridDto>().ReverseMap();
+            config.CreateMap<BookPrint, BookPrintDto>().ReverseMap();
         }
     }
 }

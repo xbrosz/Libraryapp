@@ -36,5 +36,27 @@ namespace BL.Service
 
             }).Items;
         }
+        public IEnumerable<BookPrintDto> GetBookbyBranchID(int branchId)
+        {
+            bookPrintQueryObject = new BookPrintQueryObject(mapper, _context);
+
+            return bookPrintQueryObject.ExecuteQuery(new BookPrintFilterDto
+            {
+                
+                BranchId = branchId
+
+            }).Items;
+        }
+        public IEnumerable<BookPrintDto> GetBookbyBookID(int bookId)
+        {
+            bookPrintQueryObject = new BookPrintQueryObject(mapper, _context);
+
+            return bookPrintQueryObject.ExecuteQuery(new BookPrintFilterDto
+            {
+                BookId = bookId,
+                
+
+            }).Items;
+        }
     }
 }

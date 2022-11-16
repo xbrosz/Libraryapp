@@ -26,8 +26,16 @@ namespace BL.QueryObjects
 
         public QueryResultDto<BookPrintDto> ExecuteQuery(BookPrintFilterDto filter)
         {
-            var query = myQuery.Where<int>(a => a == filter.BranchId, "BranchId")
-                               .Where<int>(a => a == filter.BookId, "BookId");
+            var query = myQuery;
+            if (filter.BranchId != null)
+            {
+                query = query.Where<int>(a => a == filter.BranchId, "BranchId");
+            }
+            if (filter.BookId != null)
+            {
+                query = query.Where<int>(a => a == filter.BookId, "BookId");
+            }
+            
             if (filter.RequestedPageNumber.HasValue)
             {
                 query = query.Page(filter.RequestedPageNumber.Value, filter.PageSize);

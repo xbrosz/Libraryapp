@@ -10,7 +10,7 @@ using Infrastructure.Repository;
 
 namespace BL.Service
 {
-    public class UserService : GenericService<User, UserDetailDto, UserDetailDto>
+    public class UserService : GenericService<User, UserDetailDto, UserDetailDto>, IUserService
     {
         private IMapper mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
         private IRepository<User> repository;
@@ -33,7 +33,7 @@ namespace BL.Service
             //TODO: call genericservice to create user
         }
 
-        public UserDetailDto login(UserLoginDto loginDto)
+        public bool login(UserLoginDto loginDto)
         {
             Guard.Against.NullOrWhiteSpace(loginDto.UserName, "UserName", "Username cannot be null");
 
@@ -48,12 +48,7 @@ namespace BL.Service
 
             var user = repository.GetByID(userDto.Id);
 
-            if (!PasswordHasher.Verify(loginDto.Password, user.Password))
-            {
-                throw new ArgumentException("Password doesn't match.");
-            }
-
-            return userDto;
+            return PasswordHasher.Verify(loginDto.Password, user.Password);
         }
 
         public IEnumerable<UserDetailDto> getUsersBySubstringName(string substring)

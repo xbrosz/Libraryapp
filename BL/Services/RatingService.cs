@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BL.DTOs;
 using BL.QueryObjects;
 using DAL.Data;
 using DAL.Entities;
@@ -23,7 +24,22 @@ namespace BL.Service
 
         public double GetBookAverageRating(int bookId)
         {
-            return _context.Rating.Select(r => r.RatingNumber).Average();
+            ratingQueryObject = new RatingQueryObject(mapper, _context);
+
+            return ratingQueryObject.ExecuteQuery(new RatingFilterDto
+            {
+                BookId = bookId,
+            }).Items.Select(r => r.RatingNumber).Average();
+        }
+
+        public IEnumerable<RatingDto> GetRatingsByBook(int bookId)
+        {
+            ratingQueryObject = new RatingQueryObject(mapper, _context);
+
+            return ratingQueryObject.ExecuteQuery(new RatingFilterDto
+            {
+                BookId = bookId,
+            }).Items;
         }
     }
 }

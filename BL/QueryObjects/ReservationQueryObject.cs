@@ -22,7 +22,17 @@ namespace BL.QueryObjects
 
         public QueryResultDto<ReservationsDto> ExecuteQuery(ReservationFilterDto filter)
         {
-            var query = myQuery.Where<int>(a => a == filter.UserId, "UserId");
+            var query = myQuery;
+
+            if (filter.UserId.HasValue) 
+            {
+                query = myQuery.Where<int>(a => a == filter.UserId, "UserId");
+            }
+
+            if (filter.BookId.HasValue)
+            {
+                query = myQuery.Where<int>(a => a == filter.BookId, "BookPrint.BookId");
+            }
 
             if (filter.RequestedPageNumber.HasValue)
             {

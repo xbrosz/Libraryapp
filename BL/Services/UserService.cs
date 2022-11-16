@@ -10,7 +10,7 @@ using Infrastructure.Repository;
 
 namespace BL.Service
 {
-    public class UserService : GenericService<User, UserDetailDto, UserDetailDto, UserDetailDto>, IUserService
+    public class UserService : GenericService<User, UserDetailDto, UserDetailDto, CreateUserDto>, IUserService
     {
         private IMapper mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
         private IRepository<User> repository;
@@ -30,7 +30,7 @@ namespace BL.Service
 
             registerDto.Password = PasswordHasher.Hash(registerDto.Password);
 
-            //TODO: call genericservice to create user
+            base.Insert(registerDto);
         }
 
         public bool login(UserLoginDto loginDto)

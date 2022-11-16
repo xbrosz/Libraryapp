@@ -10,7 +10,7 @@ namespace BL.Services
     public interface IUserService
     {
         IEnumerable<UserDetailDto> getUsersBySubstringName(string substring);
-
+        void register(CreateUserDto registerDto);
         bool login(UserLoginDto userLogin);
     }
 }

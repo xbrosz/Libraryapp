@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BL.DTOs;
+using BL.DTOs.Reservation;
 using BL.QueryObjects;
 using BL.Services;
 using DAL.Data;

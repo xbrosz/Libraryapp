@@ -1,10 +1,10 @@
-﻿using BL.DTOs.Author;
 using BL.DTOs.Branch;
 using BL.QueryObjects;
 using BL.Services;
 using DAL.Data;
 using DAL.Entities;
 using Infrastructure.Repository;
+using Infrastructure.EFCore.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +25,5 @@ namespace BL.Service
             var queryObject = new BranchQueryObject(mapper, _dbContext);
             return queryObject.ExecuteQuery(filter).Items.First();
         }
-    }
 }
 

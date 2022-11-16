@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using BL.DTOs.Author;
+using BL.DTOs.Branch;
 using BL.DTOs.Reservation;
 using BL.DTOs.User;
 using DAL.Entities;

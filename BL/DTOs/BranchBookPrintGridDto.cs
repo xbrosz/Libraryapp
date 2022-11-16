@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BL.DTOs.Branch;
 
-namespace BL.DTOs.Branch
+namespace BL.DTOs
 {
     public class BranchBookPrintGrid
     {

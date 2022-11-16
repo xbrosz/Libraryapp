@@ -8,7 +8,7 @@ using Infrastructure.Repository;
 
 namespace BL.Service
 {
-    public class ReservationService : GenericService<Reservation, ReservationsDto, ReservationsDto>, IReservationService
+    public class ReservationService : GenericService<Reservation, ReservationsDto, ReservationsDto, ReservationsDto>, IReservationService
     {
         private IMapper mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
         private IRepository<Reservation> repository;

@@ -21,7 +21,7 @@ namespace BL.Service
             this.dbContext = ctx;
         }
 
-        public IEnumerable<ReservationsDto> getReservationsByUserId(int userId)
+        public IEnumerable<ReservationsDto> GetReservationsByUserId(int userId)
         {
             queryObject = new ReservationQueryObject(mapper, dbContext);
 

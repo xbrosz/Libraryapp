@@ -1,4 +1,4 @@
-﻿namespace BL.DTOs
+﻿namespace BL.DTOs.Reservation
 {
     public class ReservationFilterDto
     {

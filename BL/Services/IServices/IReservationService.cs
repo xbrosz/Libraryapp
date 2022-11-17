@@ -1,6 +1,6 @@
 ﻿using BL.DTOs.Reservation;
 
-namespace BL.Services
+namespace BL.Services.IServices
 {
     public interface IReservationService
     {

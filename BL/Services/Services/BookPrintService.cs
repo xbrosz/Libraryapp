@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Service
+namespace BL.Services.Services
 {
     public class BookPrintService
     {
@@ -42,7 +42,7 @@ namespace BL.Service
 
             return bookPrintQueryObject.ExecuteQuery(new BookPrintFilterDto
             {
-                
+
                 BranchId = branchId
 
             }).Items;
@@ -54,7 +54,7 @@ namespace BL.Service
             return bookPrintQueryObject.ExecuteQuery(new BookPrintFilterDto
             {
                 BookId = bookId,
-                
+
 
             }).Items;
         }

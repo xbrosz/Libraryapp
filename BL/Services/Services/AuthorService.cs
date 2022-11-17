@@ -1,6 +1,7 @@
 ﻿using BL.DTOs.Author;
 using BL.QueryObjects;
-using BL.Services;
+using BL.Services.GenericService;
+using BL.Services.IServices;
 using DAL.Data;
 using DAL.Entities;
 using Infrastructure.Repository;
@@ -10,12 +11,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Service
+namespace BL.Services.Services
 {
     public class AuthorService : GenericService<Author, AuthorDto, AuthorDto, AuthorDto>, IAuthorService
     {
         private LibraryappDbContext _dbContext;
-        public AuthorService(IRepository<Author> repository, LibraryappDbContext dbContext) : base(repository) { 
+        public AuthorService(IRepository<Author> repository, LibraryappDbContext dbContext) : base(repository)
+        {
             _dbContext = dbContext;
         }
 

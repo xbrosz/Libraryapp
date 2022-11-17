@@ -24,9 +24,9 @@ namespace BL.QueryObjects
 
         public QueryResultDto<AuthorDto> ExecuteQuery(AuthorFilterDto filter)
         {
-            var query = _query.Where<string>(a => a == filter.FirstName, nameof(Author.FirstName))
-                .Where<string>(a => a == filter.MiddleName, nameof(Author.MiddleName))
-                .Where<string>(a => a == filter.LastName, nameof(Author.LastName));
+            var query = _query.Where<string>(a => a.ToLower() == filter.FirstName.ToLower(), nameof(Author.FirstName))
+                .Where<string>(a => a.ToLower() == filter.MiddleName.ToLower(), nameof(Author.MiddleName))
+                .Where<string>(a => a.ToLower() == filter.LastName.ToLower(), nameof(Author.LastName));
             return _mapper.Map<QueryResultDto<AuthorDto>>(query.Execute());
         }
     }

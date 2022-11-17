@@ -1,7 +1,8 @@
 ﻿using BL.DTOs.Author;
 using BL.DTOs.Branch;
 using BL.QueryObjects;
-using BL.Services;
+using BL.Services.GenericService;
+using BL.Services.IServices;
 using DAL.Data;
 using DAL.Entities;
 using Infrastructure.Repository;
@@ -11,13 +12,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Service
+namespace BL.Services.Services
 {
     public class BranchService : GenericService<Branch, BranchDto, BranchDto, BranchDto>, IBranchService
     {
         private LibraryappDbContext _dbContext;
-        public BranchService(IRepository<Branch> repository, LibraryappDbContext dbContext) : base(repository) { 
-            _dbContext= dbContext;
+        public BranchService(IRepository<Branch> repository, LibraryappDbContext dbContext) : base(repository)
+        {
+            _dbContext = dbContext;
         }
 
         public BranchDto GetBranchByName(BranchFilterDto filter)

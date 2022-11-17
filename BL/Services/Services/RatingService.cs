@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Service
+namespace BL.Services.Services
 {
     public class RatingService
     {

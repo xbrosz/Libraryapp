@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Infrastructure.Repository;
 
-namespace BL.Services
+namespace BL.Services.GenericService
 {
     public abstract class GenericService<TEntity, FEntity, UEntity, IEntity>
         where TEntity : class

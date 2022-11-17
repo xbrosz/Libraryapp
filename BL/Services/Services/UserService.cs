@@ -4,11 +4,13 @@ using BL.DTOs.User;
 using BL.Hasher;
 using BL.QueryObjects;
 using BL.Services;
+using BL.Services.GenericService;
+using BL.Services.IServices;
 using DAL.Data;
 using DAL.Entities;
 using Infrastructure.Repository;
 
-namespace BL.Service
+namespace BL.Services.Services
 {
     public class UserService : GenericService<User, UserDetailDto, UserDetailDto, CreateUserDto>, IUserService
     {

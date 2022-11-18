@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BL.DTOs;
-using BL.QueryObjects;
+using BL.QueryObjects.QueryObjects;
 using DAL.Data;
 using DAL.Entities;
 using Infrastructure.Repository;

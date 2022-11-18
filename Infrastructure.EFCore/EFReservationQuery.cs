@@ -1,6 +1,6 @@
 ﻿using DAL.Data;
 using DAL.Entities;
-using Infrastructure.EFCore.ExpressionHelpers;
+using Infrastructure.EFCore;
 using Infrastructure.Query;
 using System;
 using System.Collections.Generic;

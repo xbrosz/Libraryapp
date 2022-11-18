@@ -19,9 +19,12 @@ namespace BL
             config.CreateMap<Rating, RatingDto>().ReverseMap();
             config.CreateMap<Author, AuthorDto>().ReverseMap();
             config.CreateMap<Book, BookDetailDto>().ReverseMap();
-            config.CreateMap<Book,BookGridDto>().ReverseMap();
+            config.CreateMap<Book, BookGridDto>().ReverseMap();
             config.CreateMap<BookPrint, BookPrintDto>().ReverseMap();
             config.CreateMap<Branch, BranchDto>().ReverseMap();
+
+            config.CreateMap<QueryResultDto<Author>, Author>();
+            config.CreateMap<QueryResultDto<Branch>, Branch>();
         }
     }
 }

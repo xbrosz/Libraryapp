@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Infrastructure.EFCore.ExpressionHelpers
+namespace Infrastructure.EFCore
 {
     public class ReplaceParamVisitor : ExpressionVisitor
     {

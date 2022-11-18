@@ -1,21 +1,20 @@
 ﻿using DAL.Data;
-using Infrastructure.EFCore.ExpressionHelpers;
 using Infrastructure.Query;
 using System.Linq.Expressions;
 
-namespace Infrastructure.EFCore.Query
+namespace Infrastructure.EFCore
 {
-    public class EFGenericQuery<TEntity> : GenericQuery<TEntity> where TEntity : class, new()
+    public class GenericQuery<TEntity> : AbstractQuery<TEntity> where TEntity : class, new()
     {
-        protected LibraryappDbContext DbContext { get; set; }
+        private LibraryappDbContext _dbContext;
 
-        public EFGenericQuery(LibraryappDbContext dbContext)
+        public GenericQuery(LibraryappDbContext dbContext)
         {
-            DbContext = dbContext;
+            _dbContext = dbContext;
         }
         public override IEnumerable<TEntity> Execute()
         {
-            IQueryable<TEntity> query = DbContext.Set<TEntity>();
+            IQueryable<TEntity> query = _dbContext.Set<TEntity>();
 
             if (WherePredicate.Capacity != 0)
             {
@@ -25,7 +24,7 @@ namespace Infrastructure.EFCore.Query
             if (OrderByContainer != null)
             {
                 query = OrderBy(query);
-            }
+            } 
 
             if (PaginationContainer.HasValue)
             {

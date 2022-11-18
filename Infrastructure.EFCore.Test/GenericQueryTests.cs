@@ -1,6 +1,6 @@
 using DAL.Data;
 using DAL.Entities;
-using Infrastructure.EFCore.Query;
+using Infrastructure.EFCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.EFCore.Test
@@ -124,7 +124,7 @@ namespace Infrastructure.EFCore.Test
         [Fact]
         public void OneHorrorGenreExists_QueryWhere_Test()
         {
-            var efquery = new EFGenericQuery<Genre>(dbContext);
+            var efquery = new GenericQuery<Genre>(dbContext);
             efquery.Where<string>(a => a == "horror", "Name");
             var result = efquery.Execute();
 
@@ -136,7 +136,7 @@ namespace Infrastructure.EFCore.Test
         [Fact]
         public void OneBranchExistsWNameBranch1_QueryWhere_Test()
         {
-            var efquery = new EFGenericQuery<Branch>(dbContext);
+            var efquery = new GenericQuery<Branch>(dbContext);
             efquery.Where<string>(a => a == "Branch1", "Name");
             var result = efquery.Execute();
 
@@ -148,7 +148,7 @@ namespace Infrastructure.EFCore.Test
         [Fact]
         public void BranchesNameStartsWithBra_QueryWhere_Test()
         {
-            var efquery = new EFGenericQuery<Branch>(dbContext);
+            var efquery = new GenericQuery<Branch>(dbContext);
             efquery.Where<string>(a => a.StartsWith("Bra"), "Name");
             var result = efquery.Execute();
 
@@ -158,7 +158,7 @@ namespace Infrastructure.EFCore.Test
         [Fact]
         public void OneAuthorExistsWNameMike_QueryWhere_Test()
         {
-            var efquery = new EFGenericQuery<Author>(dbContext);
+            var efquery = new GenericQuery<Author>(dbContext);
             efquery.Where<string>(a => a == "Mike", "FirstName");
             var result = efquery.Execute();
 
@@ -170,7 +170,7 @@ namespace Infrastructure.EFCore.Test
         [Fact]
         public void OneAuthorExistsWBirthDate_QueryWhere_Test()
         {
-            var efquery = new EFGenericQuery<Author>(dbContext);
+            var efquery = new GenericQuery<Author>(dbContext);
             efquery.Where<DateTime>(a => a < DateTime.Today, "BirthDate");
             var result = efquery.Execute();
 
@@ -180,7 +180,7 @@ namespace Infrastructure.EFCore.Test
         [Fact]
         public void ClassroomsOrderedAscending_QueryOrderBy_Test()
         {
-            var efquery = new EFGenericQuery<BookPrint>(dbContext);
+            var efquery = new GenericQuery<BookPrint>(dbContext);
             efquery.OrderBy<int>("Id", true);
             var result = efquery.Execute()
                 .Select(a => a.Id)
@@ -197,7 +197,7 @@ namespace Infrastructure.EFCore.Test
         [Fact]
         public void ClassroomsOrderedDescending_QueryOrderBy_Test()
         {
-            var efquery = new EFGenericQuery<BookPrint>(dbContext);
+            var efquery = new GenericQuery<BookPrint>(dbContext);
             efquery.OrderBy<int>("Id", false);
             var result = efquery.Execute()
                 .Select(a => a.Id)
@@ -214,7 +214,7 @@ namespace Infrastructure.EFCore.Test
         [Fact]
         public void StudentsSimplePagination_QueryPagination_Test()
         {
-            var efquery = new EFGenericQuery<BookPrint>(dbContext);
+            var efquery = new GenericQuery<BookPrint>(dbContext);
             efquery.Page(3, 3);
             var result = efquery.Execute()
                 .Select(a => a.Id)

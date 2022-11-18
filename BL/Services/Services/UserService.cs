@@ -6,9 +6,11 @@ using BL.QueryObjects;
 using BL.Services;
 using BL.Services.GenericService;
 using BL.Services.IServices;
-using DAL.Data;
 using DAL.Entities;
 using Infrastructure.Repository;
+using BL.QueryObjects.IQueryObject;
+using Infrastructure.UnitOfWork;
+using DAL.Data;
 
 namespace BL.Services.Services
 {
@@ -51,7 +53,7 @@ namespace BL.Services.Services
 
             var userDto = queryResult.Items.First();
 
-            var user = repository.GetByID(userDto.Id);
+            var user = _unitOfWork.UserRepository.GetByID(userDto.Id);
 
             return PasswordHasher.Verify(loginDto.Password, user.Password);
         }

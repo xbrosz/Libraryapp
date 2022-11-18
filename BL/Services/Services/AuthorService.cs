@@ -1,30 +1,27 @@
-﻿using BL.DTOs.Author;
-using BL.QueryObjects;
+﻿using AutoMapper;
+using BL.DTOs.Author;
+using BL.QueryObjects.IQueryObject;
+using BL.QueryObjects.QueryObjects;
 using BL.Services.GenericService;
 using BL.Services.IServices;
 using DAL.Data;
 using DAL.Entities;
-using Infrastructure.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Infrastructure.UnitOfWork;
 
 namespace BL.Services.Services
 {
     public class AuthorService : GenericService<Author, AuthorDto, AuthorDto, AuthorDto>, IAuthorService
     {
-        private LibraryappDbContext _dbContext;
-        public AuthorService(IRepository<Author> repository, LibraryappDbContext dbContext) : base(repository)
+        private IQueryObject<AuthorFilterDto, AuthorDto> _authorQueryObject;
+
+        public AuthorService(IUnitOfWork unitOfWork, IMapper mapper, IQueryObject<AuthorFilterDto, AuthorDto> authorQueryObject) : base(unitOfWork, mapper, unitOfWork.AuthorRepository) 
         {
-            _dbContext = dbContext;
+            _authorQueryObject = authorQueryObject;
         }
 
         public AuthorDto GetAuthorByName(AuthorFilterDto filter)
         {
-            var queryObject = new AuthorQueryObject(mapper, _dbContext);
-            return queryObject.ExecuteQuery(filter).Items.First();
+            return _authorQueryObject.ExecuteQuery(filter).Items.First();
         }
     }
 }

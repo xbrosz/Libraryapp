@@ -3,10 +3,10 @@ using BL.DTOs;
 using BL.DTOs.Reservation;
 using DAL.Data;
 using DAL.Entities;
-using Infrastructure.EFCore.Query;
+using Infrastructure.EFCore;
 using Infrastructure.Query;
 
-namespace BL.QueryObjects
+namespace BL.QueryObjects.QueryObjects
 {
     public class ReservationQueryObject
     {
@@ -24,7 +24,7 @@ namespace BL.QueryObjects
         {
             var query = myQuery;
 
-            if (filter.UserId.HasValue) 
+            if (filter.UserId.HasValue)
             {
                 query = myQuery.Where<int>(a => a == filter.UserId, "UserId");
             }

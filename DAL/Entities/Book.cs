@@ -12,6 +12,7 @@ namespace DAL.Entities
 
         public virtual List<BookPrint> BookPrints { get; set; }
         public virtual List<Rating> Ratings { get; set; }
+        public virtual List<Genre> Genres { get; set; }
 
     }
 }

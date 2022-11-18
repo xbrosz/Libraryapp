@@ -2,26 +2,21 @@
 using BL.DTOs;
 using DAL.Data;
 using DAL.Entities;
-using Infrastructure.EFCore.Query;
+using Infrastructure.EFCore;
 using Infrastructure.Query;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BL.QueryObjects
+namespace BL.QueryObjects.QueryObjects
 {
     public class RatingQueryObject
     {
         private IMapper mapper;
 
-        private IGenericQuery<Rating> myQuery;
+        private IAbstractQuery<Rating> myQuery;
 
         public RatingQueryObject(IMapper mapper, LibraryappDbContext context)
         {
             this.mapper = mapper;
-            myQuery = new EFGenericQuery<Rating>(context);
+            myQuery = new GenericQuery<Rating>(context);
         }
 
         public QueryResultDto<RatingDto> ExecuteQuery(RatingFilterDto filter)

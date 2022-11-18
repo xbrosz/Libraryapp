@@ -2,14 +2,14 @@
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.EFCore.Repository
+namespace Infrastructure.EFCore
 {
-    public class EFGenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         internal LibraryappDbContext context;
         internal DbSet<TEntity> dbSet;
 
-        public EFGenericRepository(LibraryappDbContext dbcontext)
+        public Repository(LibraryappDbContext dbcontext)
         {
             context = dbcontext;
             dbSet = context.Set<TEntity>();

@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
 using BL.DTOs;
-using BL.QueryObjects;
+using BL.QueryObjects.QueryObjects;
 using DAL.Data;
 using DAL.Entities;
-using Infrastructure.EFCore.Repository;
 using Infrastructure.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL.Services.Services
 {

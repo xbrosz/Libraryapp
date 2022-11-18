@@ -6,22 +6,19 @@ using BL.QueryObjects;
 using BL.Services;
 using BL.Services.GenericService;
 using BL.Services.IServices;
-using DAL.Data;
 using DAL.Entities;
 using Infrastructure.Repository;
+using BL.QueryObjects.IQueryObject;
+using Infrastructure.UnitOfWork;
+using DAL.Data;
 
 namespace BL.Services.Services
 {
     public class UserService : GenericService<User, UserDetailDto, UserDetailDto, UserDetailDto>, IUserService
     {
-        private IMapper mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
-        private IRepository<User> repository;
-        private QueryObject<UserFilterDto, UserDetailDto> queryObject;
+        private IQueryObject<UserFilterDto, UserDetailDto> queryObject;
 
-        public UserService(IRepository<User> repository, QueryObject<UserFilterDto, UserDetailDto> queryObject)
-            : base(repository)
-        {
-            this.repository = repository;
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IQueryObject<UserFilterDto, UserDetailDto> queryObject) : base(unitOfWork, mapper, unitOfWork.UserRepository) {
             this.queryObject = queryObject;
         }
 
@@ -48,7 +45,7 @@ namespace BL.Services.Services
 
             var userDto = queryResult.Items.First();
 
-            var user = repository.GetByID(userDto.Id);
+            var user = _unitOfWork.UserRepository.GetByID(userDto.Id);
 
             return PasswordHasher.Verify(loginDto.Password, user.Password);
         }

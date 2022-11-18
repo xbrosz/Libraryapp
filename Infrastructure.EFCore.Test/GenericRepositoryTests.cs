@@ -1,6 +1,6 @@
 ﻿using DAL.Data;
 using DAL.Entities;
-using Infrastructure.EFCore.Repository;
+using Infrastructure.EFCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -150,7 +150,7 @@ namespace Infrastructure.EFCore.Test
             [Fact]
             void GenericRepoGetBookByIDTest()
             {
-                var efRepository = new EFGenericRepository<Book>(dbContext);
+                var efRepository = new Repository<Book>(dbContext);
                 var book = efRepository.GetByID(1);
                 Assert.True(book.Title.Equals("The Lord of the Rings: The Fellowship of the Ring"));
                 Assert.True(book.Author.Id == 1);
@@ -159,7 +159,7 @@ namespace Infrastructure.EFCore.Test
             [Fact]
             void GenericRepoInsertBookTest()
             {
-                var efRepository = new EFGenericRepository<Book>(dbContext);
+                var efRepository = new Repository<Book>(dbContext);
                 efRepository.Insert(new Book
                 {
                     AuthorId = 1,
@@ -174,7 +174,7 @@ namespace Infrastructure.EFCore.Test
             [Fact]
             void GenericRepoUpdateBookTest()
             {
-                var efRepository = new EFGenericRepository<Book>(dbContext);
+                var efRepository = new Repository<Book>(dbContext);
                 var bookToUpdate = efRepository.GetByID(1);
                 bookToUpdate.Title = "Updated name";
                 efRepository.Update(bookToUpdate);
@@ -185,7 +185,7 @@ namespace Infrastructure.EFCore.Test
             [Fact]
             void GenericDeleteBookTest()
             {
-                var efRepository = new EFGenericRepository<Book>(dbContext);
+                var efRepository = new Repository<Book>(dbContext);
                 var bookToDelete = efRepository.GetByID(1);
                 efRepository.Delete(bookToDelete);
                 dbContext.SaveChanges();

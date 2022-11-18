@@ -1,28 +1,26 @@
 ﻿using AutoMapper;
 using BL.DTOs.Reservation;
-using BL.QueryObjects;
-using BL.Services;
+using BL.QueryObjects.QueryObjects;
 using BL.Services.GenericService;
 using BL.Services.IServices;
 using DAL.Data;
 using DAL.Entities;
-using Infrastructure.Repository;
+using Infrastructure.UnitOfWork;
 
 namespace BL.Services.Services
 {
     public class ReservationService : GenericService<Reservation, ReservationsDto, ReservationsDto, ReservationsDto>, IReservationService
     {
-        private LibraryappDbContext dbContext;
         private ReservationQueryObject queryObject;
-
-        public ReservationService(IRepository<Reservation> repository, LibraryappDbContext ctx) : base(repository)
+        LibraryappDbContext dbContex;
+        public ReservationService(IUnitOfWork unitOfWork, LibraryappDbContext dbContext, IMapper mapper) : base(unitOfWork, mapper, unitOfWork.ReservationRepository) 
         {
-            dbContext = ctx;
+            this.dbContex = dbContex;
         }
 
         public IEnumerable<ReservationsDto> getReservationsByUserId(int userId)
         {
-            queryObject = new ReservationQueryObject(mapper, dbContext);
+            queryObject = new ReservationQueryObject(_mapper, dbContex);
 
             return queryObject.ExecuteQuery(new ReservationFilterDto() { UserId = userId }).Items;
         }

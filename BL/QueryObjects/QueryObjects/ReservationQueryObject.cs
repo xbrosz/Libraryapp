@@ -3,28 +3,28 @@ using BL.DTOs;
 using BL.DTOs.Reservation;
 using DAL.Data;
 using DAL.Entities;
-using Infrastructure.EFCore.Query;
+using Infrastructure.EFCore;
 using Infrastructure.Query;
 
-namespace BL.QueryObjects
+namespace BL.QueryObjects.QueryObjects
 {
     public class ReservationQueryObject
     {
         private IMapper mapper;
 
-        private IGenericQuery<Reservation> myQuery;
+        private IAbstractQuery<Reservation> myQuery;
 
         public ReservationQueryObject(IMapper mapper, LibraryappDbContext dbx)
         {
             this.mapper = mapper;
-            myQuery = new EFGenericQuery<Reservation>(dbx);
+            myQuery = new GenericQuery<Reservation>(dbx);
         }
 
         public QueryResultDto<ReservationsDto> ExecuteQuery(ReservationFilterDto filter)
         {
             var query = myQuery;
 
-            if (filter.UserId.HasValue) 
+            if (filter.UserId.HasValue)
             {
                 query = myQuery.Where<int>(a => a == filter.UserId, "UserId");
             }

@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using DAL.Data;
+using Infrastructure.EFCore;
 using Infrastructure.Repository;
+using Infrastructure.UnitOfWork;
 
 namespace BL.Services.GenericService
 {
@@ -9,32 +12,35 @@ namespace BL.Services.GenericService
         where UEntity : class
         where IEntity : class
     {
-        protected IMapper mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
-        private IRepository<TEntity> repository;
+        protected readonly IMapper _mapper;
+        protected readonly IUnitOfWork _unitOfWork;
+        private readonly IRepository<TEntity> _repository;
 
-        public GenericService(IRepository<TEntity> repository)
+        public GenericService(IUnitOfWork unitOfWork, IMapper mapper, IRepository<TEntity> repository)
         {
-            this.repository = repository;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
+            _repository = repository;
         }
 
-        public FEntity find(int id)
+        public FEntity Find(int id)
         {
-            return mapper.Map<FEntity>(repository.GetByID(id));
+            return _mapper.Map<FEntity>(_repository.GetByID(id));
         }
 
-        public void delete(int id)
+        public void Delete(int id)
         {
-            repository.Delete(id);
+            _repository.Delete(id);
         }
 
-        public void update(UEntity dtoToUpdate)
+        public void Update(UEntity dtoToUpdate)
         {
-            repository.Update(mapper.Map<TEntity>(dtoToUpdate));
+            _repository.Update(_mapper.Map<TEntity>(dtoToUpdate));
         }
 
-        public virtual void Insert(IEntity dtoToInsert)
+        public void Insert(IEntity dtoToInsert)
         {
-            repository.Insert(mapper.Map<TEntity>(dtoToInsert));
+            _repository.Insert(_mapper.Map<TEntity>(dtoToInsert));
         }
     }
 }

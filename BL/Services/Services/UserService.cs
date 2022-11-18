@@ -11,6 +11,9 @@ using Infrastructure.Repository;
 using BL.QueryObjects.IQueryObject;
 using Infrastructure.UnitOfWork;
 using DAL.Data;
+using BL.QueryObjects.QueryObjects;
+using BL.DTOs.Author;
+using Infrastructure.EFCore;
 
 namespace BL.Services.Services
 {
@@ -21,8 +24,7 @@ namespace BL.Services.Services
         private LibraryappDbContext dbContext;
         private UserQueryObject queryObject;
 
-        public UserService(IRepository<User> repository, LibraryappDbContext dbContext)
-            : base(repository)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IRepository<User> repository, LibraryappDbContext dbContext): base(unitOfWork, mapper, unitOfWork.UserRepository)
         {
             this.repository = repository;
             this.dbContext = dbContext;

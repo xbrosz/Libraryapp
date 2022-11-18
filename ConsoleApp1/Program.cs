@@ -32,7 +32,7 @@ public class Program
 
         var authorService = container.Resolve<IAuthorService>();
 
-        var authorService.Find(1);
+        Console.WriteLine(authorService.Find(1).FirstName);
 
         //var res = authorService.GetAuthorByName(new AuthorFilterDto() { FirstName = "Adrian", LastName = "McKinty", MiddleName = "Alfonz" });
 

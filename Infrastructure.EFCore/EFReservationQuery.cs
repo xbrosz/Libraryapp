@@ -1,25 +1,35 @@
 ﻿using DAL.Data;
-using Infrastructure.EFCore.ExpressionHelpers;
+using DAL.Entities;
 using Infrastructure.Query;
 using System.Linq.Expressions;
 
 namespace Infrastructure.EFCore.Query
 {
-    public class EFGenericQuery<TEntity> : GenericQuery<TEntity> where TEntity : class, new()
+    public class EFReservationQuery : ReservationQuery
     {
         protected LibraryappDbContext DbContext { get; set; }
 
-        public EFGenericQuery(LibraryappDbContext dbContext)
+        public EFReservationQuery(LibraryappDbContext dbContext)
         {
             DbContext = dbContext;
         }
-        public override IEnumerable<TEntity> Execute()
+        public override IEnumerable<Reservation> Execute()
         {
-            IQueryable<TEntity> query = DbContext.Set<TEntity>();
+            IQueryable<Reservation> query = DbContext.Set<Reservation>();
 
             if (WherePredicate.Capacity != 0)
             {
                 query = ApplyWhere(query);
+            }
+
+            if (fromDate.HasValue)
+            {
+                query = ApplyFromFilter(query);
+            }
+
+            if (fromDate.HasValue)
+            {
+                query = ApplyToFilter(query);
             }
 
             if (OrderByContainer != null)
@@ -35,17 +45,32 @@ namespace Infrastructure.EFCore.Query
             return query.ToList();
         }
 
-        private IQueryable<TEntity> ApplyWhere(IQueryable<TEntity> query)
+        private IQueryable<Reservation> ApplyFromFilter(IQueryable<Reservation> query)
+        {
+            query.Where(r => r.StartDate >= fromDate || r.EndDate >= fromDate);
+
+            return query;
+        }
+
+        private IQueryable<Reservation> ApplyToFilter(IQueryable<Reservation> query)
+        {
+            query.Where(r => r.StartDate <= toDate || r.EndDate <= toDate);
+
+            return query;
+        }
+
+        private IQueryable<Reservation> ApplyWhere(IQueryable<Reservation> query)
         {
             foreach (var expr in WherePredicate)
             {
-                var p = Expression.Parameter(typeof(TEntity), "p");
+                var p = Expression.Parameter(typeof(Reservation), "p");
 
-                var columnNameFromObject = typeof(TEntity)
+                var columnNameFromObject = typeof(Reservation)
                     .GetProperty(expr.columnName)
                     ?.Name;
 
                 var exprProp = Expression.Property(p, columnNameFromObject);
+
 
                 var expression = expr.expression;
 
@@ -63,7 +88,7 @@ namespace Infrastructure.EFCore.Query
 
                 var exprNewBody = visitor.Visit(body);
 
-                var lambda = Expression.Lambda<Func<TEntity, bool>>(exprNewBody, p);
+                var lambda = Expression.Lambda<Func<Reservation, bool>>(exprNewBody, p);
 
                 query = query.Where(lambda);
             }
@@ -71,15 +96,15 @@ namespace Infrastructure.EFCore.Query
             return query;
         }
 
-        private IQueryable<TEntity> OrderBy(IQueryable<TEntity> query)
+        private IQueryable<Reservation> OrderBy(IQueryable<Reservation> query)
         {
             var orderByColumn = OrderByContainer.Value.tableName;
             var isAscending = OrderByContainer.Value.isAscending;
             var argumentType = OrderByContainer.Value.argumentType;
 
-            var p = Expression.Parameter(typeof(TEntity), "p");
+            var p = Expression.Parameter(typeof(Reservation), "p");
 
-            var columnNameFromObject = typeof(TEntity)
+            var columnNameFromObject = typeof(Reservation)
                 .GetProperty(orderByColumn)
                 ?.Name;
 
@@ -90,12 +115,12 @@ namespace Infrastructure.EFCore.Query
                 .GetMethods()
                 .First(a => a.Name == (isAscending ? "OrderBy" : "OrderByDescending") && a.GetParameters().Length == 2);
 
-            var orderByClosedMethod = orderByMethod.MakeGenericMethod(typeof(TEntity), argumentType);
+            var orderByClosedMethod = orderByMethod.MakeGenericMethod(typeof(Reservation), argumentType);
 
-            return (IQueryable<TEntity>)orderByClosedMethod.Invoke(null, new object[] { query, lambda })!;
+            return (IQueryable<Reservation>)orderByClosedMethod.Invoke(null, new object[] { query, lambda })!;
         }
 
-        private IQueryable<TEntity> Pagination(IQueryable<TEntity> query)
+        private IQueryable<Reservation> Pagination(IQueryable<Reservation> query)
         {
             var page = PaginationContainer.Value.PageToFetch;
             var pageSize = PaginationContainer.Value.PageSize;

@@ -4,6 +4,8 @@ namespace BL.Services.IServices
 {
     public interface IReservationService
     {
-        IEnumerable<ReservationsDto> getReservationsByUserId(int userId);
+        IEnumerable<ReservationsDto> GetReservationsByUserId(int userId);
+        IEnumerable<ReservationsDto> GetReservationsByBookId(int bookId);
+
     }
 }

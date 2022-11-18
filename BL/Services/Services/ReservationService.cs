@@ -33,5 +33,13 @@ namespace BL.Services.Services
 
             return queryObject.ExecuteQuery(new ReservationFilterDto { BookId = bookId }).Items;
         }
+
+        public IEnumerable<ReservationsDto> GetReservationsInDateRangeByBookAndBranch(
+            int bookId, int branchId, DateTime fromDate, DateTime toDate)
+        {
+            queryObject = new ReservationQueryObject(mapper, dbContext);
+
+            return queryObject.ExecuteQuery(new ReservationFilterDto { BookId = bookId, BranchId = branchId, FromDate = fromDate, ToDate = toDate }).Items;
+        }
     }
 }

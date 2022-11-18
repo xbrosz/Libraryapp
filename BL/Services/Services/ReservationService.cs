@@ -12,22 +12,22 @@ namespace BL.Services.Services
     public class ReservationService : GenericService<Reservation, ReservationsDto, ReservationsDto, ReservationsDto>, IReservationService
     {
         private ReservationQueryObject queryObject;
-        LibraryappDbContext dbContex;
+        private LibraryappDbContext dbContext;
         public ReservationService(IUnitOfWork unitOfWork, LibraryappDbContext dbContext, IMapper mapper) : base(unitOfWork, mapper, unitOfWork.ReservationRepository) 
         {
-            this.dbContex = dbContex;
+            this.dbContext = dbContext;
         }
 
         public IEnumerable<ReservationsDto> GetReservationsByUserId(int userId)
         {
-            queryObject = new ReservationQueryObject(_mapper, dbContex);
+            queryObject = new ReservationQueryObject(_mapper, dbContext);
 
             return queryObject.ExecuteQuery(new ReservationFilterDto { UserId = userId }).Items;
         }
 
         public IEnumerable<ReservationsDto> GetReservationsByBookId(int bookId)
         {
-            queryObject = new ReservationQueryObject(mapper, dbContext);
+            queryObject = new ReservationQueryObject(_mapper, dbContext);
 
             return queryObject.ExecuteQuery(new ReservationFilterDto { BookId = bookId }).Items;
         }
@@ -35,7 +35,7 @@ namespace BL.Services.Services
         public IEnumerable<ReservationsDto> GetReservationsInDateRangeByBookAndBranch(
             int bookId, int branchId, DateTime fromDate, DateTime toDate)
         {
-            queryObject = new ReservationQueryObject(mapper, dbContext);
+            queryObject = new ReservationQueryObject(_mapper, dbContext);
 
             return queryObject.ExecuteQuery(new ReservationFilterDto { BookId = bookId, BranchId = branchId, FromDate = fromDate, ToDate = toDate }).Items;
         }

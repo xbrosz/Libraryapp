@@ -20,12 +20,26 @@ namespace BL.Services.Services
             dbContext = ctx;
         }
 
-        public IEnumerable<ReservationsDto> getReservationsByUserId(int userId)
+        public IEnumerable<ReservationsDto> GetReservationsByUserId(int userId)
         {
             queryObject = new ReservationQueryObject(mapper, dbContext);
 
-            return queryObject.ExecuteQuery(new ReservationFilterDto() { UserId = userId }).Items;
+            return queryObject.ExecuteQuery(new ReservationFilterDto { UserId = userId }).Items;
         }
 
+        public IEnumerable<ReservationsDto> GetReservationsByBookId(int bookId)
+        {
+            queryObject = new ReservationQueryObject(mapper, dbContext);
+
+            return queryObject.ExecuteQuery(new ReservationFilterDto { BookId = bookId }).Items;
+        }
+
+        public IEnumerable<ReservationsDto> GetReservationsInDateRangeByBookAndBranch(
+            int bookId, int branchId, DateTime fromDate, DateTime toDate)
+        {
+            queryObject = new ReservationQueryObject(mapper, dbContext);
+
+            return queryObject.ExecuteQuery(new ReservationFilterDto { BookId = bookId, BranchId = branchId, FromDate = fromDate, ToDate = toDate }).Items;
+        }
     }
 }

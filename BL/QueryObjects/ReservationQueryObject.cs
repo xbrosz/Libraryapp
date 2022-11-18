@@ -12,12 +12,12 @@ namespace BL.QueryObjects
     {
         private IMapper mapper;
 
-        private IGenericQuery<Reservation> myQuery;
+        private IReservationQuery myQuery;
 
         public ReservationQueryObject(IMapper mapper, LibraryappDbContext dbx)
         {
             this.mapper = mapper;
-            myQuery = new EFGenericQuery<Reservation>(dbx);
+            myQuery = new EFReservationQuery(dbx);
         }
 
         public QueryResultDto<ReservationsDto> ExecuteQuery(ReservationFilterDto filter)
@@ -32,6 +32,21 @@ namespace BL.QueryObjects
             if (filter.BookId.HasValue)
             {
                 query = myQuery.Where<BookPrint>(a => a.BookId == filter.BookId, "BookPrint");
+            }
+
+            if (filter.BranchId.HasValue)
+            {
+                query = myQuery.Where<BookPrint>(a => a.BranchId == filter.BranchId, "BookPrint");
+            }
+
+            if (filter.FromDate.HasValue)
+            {
+                query = myQuery.FromFilter(filter.FromDate.Value);
+            }
+
+            if (filter.ToDate.HasValue)
+            {
+                query = myQuery.ToFilter(filter.ToDate.Value);
             }
 
             if (filter.RequestedPageNumber.HasValue)

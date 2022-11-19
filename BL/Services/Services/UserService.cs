@@ -2,17 +2,11 @@
 using AutoMapper;
 using BL.DTOs.User;
 using BL.Hasher;
-using BL.QueryObjects;
-using BL.Services;
+using BL.QueryObjects.IQueryObject;
 using BL.Services.GenericService;
 using BL.Services.IServices;
 using DAL.Entities;
-using Infrastructure.Repository;
-using BL.QueryObjects.IQueryObject;
 using Infrastructure.UnitOfWork;
-using DAL.Data;
-using BL.DTOs.Reservation;
-using Infrastructure.Query;
 
 namespace BL.Services.Services
 {

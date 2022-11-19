@@ -126,7 +126,7 @@ namespace Infrastructure.EFCore.Test
         {
             var efquery = new GenericQuery<Genre>(dbContext);
             efquery.Where<string>(a => a == "horror", "Name");
-            var result = efquery.Execute();
+            var result = efquery.Execute().Items;
 
             Assert.True(result.Count() == 1);
 
@@ -138,7 +138,7 @@ namespace Infrastructure.EFCore.Test
         {
             var efquery = new GenericQuery<Branch>(dbContext);
             efquery.Where<string>(a => a == "Branch1", "Name");
-            var result = efquery.Execute();
+            var result = efquery.Execute().Items;
 
             Assert.True(result.Count() == 1);
 
@@ -150,7 +150,7 @@ namespace Infrastructure.EFCore.Test
         {
             var efquery = new GenericQuery<Branch>(dbContext);
             efquery.Where<string>(a => a.StartsWith("Bra"), "Name");
-            var result = efquery.Execute();
+            var result = efquery.Execute().Items;
 
             Assert.True(result.Count() == 2);
         }
@@ -160,7 +160,7 @@ namespace Infrastructure.EFCore.Test
         {
             var efquery = new GenericQuery<Author>(dbContext);
             efquery.Where<string>(a => a == "Mike", "FirstName");
-            var result = efquery.Execute();
+            var result = efquery.Execute().Items;
 
             Assert.True(result.Count() == 1);
 
@@ -172,7 +172,7 @@ namespace Infrastructure.EFCore.Test
         {
             var efquery = new GenericQuery<Author>(dbContext);
             efquery.Where<DateTime>(a => a < DateTime.Today, "BirthDate");
-            var result = efquery.Execute();
+            var result = efquery.Execute().Items;
 
             Assert.True(result.Count() == 1);
         }
@@ -182,7 +182,7 @@ namespace Infrastructure.EFCore.Test
         {
             var efquery = new GenericQuery<BookPrint>(dbContext);
             efquery.OrderBy<int>("Id", true);
-            var result = efquery.Execute()
+            var result = efquery.Execute().Items
                 .Select(a => a.Id)
                 .ToList();
 
@@ -199,7 +199,7 @@ namespace Infrastructure.EFCore.Test
         {
             var efquery = new GenericQuery<BookPrint>(dbContext);
             efquery.OrderBy<int>("Id", false);
-            var result = efquery.Execute()
+            var result = efquery.Execute().Items
                 .Select(a => a.Id)
                 .ToList();
 
@@ -216,7 +216,7 @@ namespace Infrastructure.EFCore.Test
         {
             var efquery = new GenericQuery<BookPrint>(dbContext);
             efquery.Page(3, 3);
-            var result = efquery.Execute()
+            var result = efquery.Execute().Items
                 .Select(a => a.Id)
                 .ToList();
 

@@ -12,7 +12,8 @@ namespace Infrastructure.EFCore
         {
             _dbContext = dbContext;
         }
-        public override IEnumerable<TEntity> Execute()
+
+        public override EFQueryResult<TEntity> Execute()
         {
             IQueryable<TEntity> query = _dbContext.Set<TEntity>();
 
@@ -24,14 +25,19 @@ namespace Infrastructure.EFCore
             if (OrderByContainer != null)
             {
                 query = OrderBy(query);
-            } 
+            }  
 
             if (PaginationContainer.HasValue)
             {
                 query = Pagination(query);
             }
-
-            return query.ToList();
+            
+            return new EFQueryResult<TEntity>() 
+            { 
+                Items = query.ToList(),
+                RequestedPageNumber = PaginationContainer != null ? PaginationContainer.Value.PageToFetch : null,
+                PageSize = PaginationContainer != null ? PaginationContainer.Value.PageSize : 0
+            };
         }
 
         private IQueryable<TEntity> ApplyWhere(IQueryable<TEntity> query)

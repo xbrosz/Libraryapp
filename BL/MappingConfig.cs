@@ -5,6 +5,7 @@ using BL.DTOs.Branch;
 using BL.DTOs.Reservation;
 using BL.DTOs.User;
 using DAL.Entities;
+using Infrastructure.Query;
 
 namespace BL
 {
@@ -23,8 +24,8 @@ namespace BL
             config.CreateMap<BookPrint, BookPrintDto>().ReverseMap();
             config.CreateMap<Branch, BranchDto>().ReverseMap();
 
-            config.CreateMap<QueryResultDto<Author>, Author>();
-            config.CreateMap<QueryResultDto<Branch>, Branch>();
+            config.CreateMap<QueryResultDto<AuthorDto>, EFQueryResult<Author>>().ReverseMap();
+            //config.CreateMap<QueryResultDto<Branch>, Branch>();
         }
     }
 }

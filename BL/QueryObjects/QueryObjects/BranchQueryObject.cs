@@ -23,7 +23,7 @@ namespace BL.QueryObjects.QueryObjects
         {
             var query = _query.Where<string>(a => a == filter.Name, nameof(Branch.Name));
 
-            return _mapper.Map<QueryResultDto<BranchDto>>(query.Execute().First<Author>());
+            return _mapper.Map<QueryResultDto<BranchDto>>(query.Execute());
         }
     }
 }

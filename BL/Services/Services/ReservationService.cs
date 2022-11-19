@@ -18,6 +18,7 @@ namespace BL.Services.Services
             : base(unitOfWork, mapper, unitOfWork.ReservationRepository) 
         {
             this.queryObject = reservationQueryObject;
+
         }
 
         public IEnumerable<ReservationsDto> GetReservationsByUserId(int userId)

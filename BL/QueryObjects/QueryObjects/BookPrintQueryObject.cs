@@ -9,7 +9,7 @@ using Infrastructure.Query;
 
 namespace BL.QueryObjects.QueryObjects
 {
-    public class BookPrintQueryObject
+    public class BookPrintQueryObject : IQueryObject<BookPrintFilterDto, BookPrintDto>
     {
         private IMapper mapper;
 

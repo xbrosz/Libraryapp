@@ -33,6 +33,11 @@ namespace BL.QueryObjects.QueryObjects
                 query = query.Where<int>(a => a == filter.BookId, "BookId");
             }
 
+            if (filter.ReservedBookPrintIDs != null)
+            {
+                query = query.Where<int>(a => !filter.ReservedBookPrintIDs.Contains(a), "Id");
+            }
+
             if (filter.RequestedPageNumber.HasValue)
             {
                 query = query.Page(filter.RequestedPageNumber.Value, filter.PageSize);

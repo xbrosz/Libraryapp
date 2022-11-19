@@ -11,7 +11,7 @@ using Infrastructure.UnitOfWork;
 
 namespace BL.Services.Services
 {
-    public class ReservationService : GenericService<Reservation, ReservationsDto, CreateReservationDto, CreateReservationDto>, IReservationService
+    public class ReservationService : GenericService<Reservation, ReservationsDto, UpdateReservationDto, CreateReservationDto>, IReservationService
     {
         private IQueryObject<ReservationFilterDto, ReservationsDto> queryObject;
         public ReservationService(IUnitOfWork unitOfWork, IMapper mapper, IQueryObject<ReservationFilterDto, ReservationsDto> reservationQueryObject)

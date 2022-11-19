@@ -32,6 +32,8 @@ namespace Infrastructure.EFCore
                 query = Pagination(query);
             }
             
+            ClearContainers();  // clears all the containers after execution
+
             return new EFQueryResult<TEntity>() 
             { 
                 Items = query.ToList(),

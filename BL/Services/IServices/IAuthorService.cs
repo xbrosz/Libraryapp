@@ -18,6 +18,6 @@ namespace BL.Services.IServices
 
         public void Insert(AuthorDto dtoToInsert);
 
-        public AuthorDto GetAuthorByName(AuthorFilterDto filter);
+        public IEnumerable<AuthorDto> GetAuthorsByName(AuthorFilterDto filter);
     }
 }

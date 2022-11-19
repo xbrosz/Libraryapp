@@ -13,9 +13,6 @@ public class Program
     private static void Main(string[] args)
     {
 
-        int? a = null;
-        Console.WriteLine(a);
-
         var containerBuilder = new ContainerBuilder();
         containerBuilder.RegisterModule<InfrastructureInjectorModule>();
         containerBuilder.RegisterModule<BLInjectorModule>();
@@ -37,9 +34,13 @@ public class Program
 
         //Console.WriteLine(authorService.Find(1).FirstName);
 
-        var res = authorService.GetAuthorByName(new AuthorFilterDto() { FirstName = "Adriaa", LastName = "McKinty", MiddleName = "Alfonz" });
+        //var res = authorService.GetAuthorsByName(new AuthorFilterDto() { FirstName = "Adrian", LastName = "", MiddleName = "alfonz" });
 
-        Console.WriteLine(res.FirstName);
+        //foreach(var author in res)
+        //{
+        //    Console.WriteLine(author.FirstName);    
+        //}
+        
 
 
     }

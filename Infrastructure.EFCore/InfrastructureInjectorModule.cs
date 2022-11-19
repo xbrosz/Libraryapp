@@ -19,7 +19,7 @@ namespace Infrastructure.EFCore
             .InstancePerDependency();
 
             builder.RegisterGeneric(typeof(GenericQuery<>))
-            .As(typeof(IAbstractQuery<>))
+            .AsSelf()
             .InstancePerDependency();
 
             builder.RegisterType<LibraryappDbContext>()

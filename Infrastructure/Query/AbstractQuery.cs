@@ -26,6 +26,6 @@ namespace Infrastructure.Query
             return this;
         }
 
-        public abstract IEnumerable<TEntity> Execute();
+        public abstract EFQueryResult<TEntity> Execute();
     }
 }

@@ -6,26 +6,39 @@ using BL.QueryObjects.IQueryObject;
 using DAL.Data;
 using DAL.Entities;
 using Infrastructure.EFCore;
+using Infrastructure.Query;
 
 namespace BL.QueryObjects.QueryObjects
 {
     public class AuthorQueryObject : IQueryObject<AuthorFilterDto, AuthorDto>
     {
         private IMapper _mapper;
-        private GenericQuery<Author> _query;
-        public AuthorQueryObject(IMapper mapper, LibraryappDbContext dbContext)
+        private IAbstractQuery<Author> _query;
+        public AuthorQueryObject(IMapper mapper, GenericQuery<Author> query)
         {
             _mapper = mapper;
-            _query = new GenericQuery<Author>(dbContext);
+            _query = query;
         }
 
         public QueryResultDto<AuthorDto> ExecuteQuery(AuthorFilterDto filter)
         {
-            var query = _query.Where<string>(a => a.ToLower() == filter.FirstName.ToLower(), nameof(Author.FirstName));
-            //.Where<string>(a => a.ToLower() == filter.MiddleName.ToLower(), nameof(Author.MiddleName))
-            //.Where<string>(a => a.ToLower() == filter.LastName.ToLower(), nameof(Author.LastName));
+            var query = _query.Where<string>(a => a.ToLower().Contains(filter.FirstName.ToLower()), nameof(Author.FirstName));
+            //.Where<string>(a => a.ToLower().Contains(filter.MiddleName.ToLower()), nameof(Author.MiddleName))
+            //.Where<string>(a => a.ToLower().Contains(filter.LastName.ToLower()), nameof(Author.LastName));
 
-            return _mapper.Map<QueryResultDto<AuthorDto>>(query.Execute().First<Author>());
+            //var r = query.Execute().First<Author>();
+
+            //if (r == null)
+            //{
+            ///    Console.WriteLine("r = null");
+            //}
+            //else
+            //{
+            //    Console.WriteLine(r.FirstName);
+            //    Console.WriteLine(r);
+            //}
+
+            return _mapper.Map<QueryResultDto<AuthorDto>>(query.Execute());
         }
     }
 }

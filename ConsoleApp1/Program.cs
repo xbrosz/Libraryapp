@@ -1,5 +1,4 @@
-﻿
-using Autofac;
+﻿using Autofac;
 using BL;
 using BL.DTOs.Author;
 using BL.Services.IServices;
@@ -13,6 +12,10 @@ public class Program
 {
     private static void Main(string[] args)
     {
+
+        int? a = null;
+        Console.WriteLine(a);
+
         var containerBuilder = new ContainerBuilder();
         containerBuilder.RegisterModule<InfrastructureInjectorModule>();
         containerBuilder.RegisterModule<BLInjectorModule>();
@@ -32,11 +35,11 @@ public class Program
 
         var authorService = container.Resolve<IAuthorService>();
 
-        Console.WriteLine(authorService.Find(1).FirstName);
+        //Console.WriteLine(authorService.Find(1).FirstName);
 
-        //var res = authorService.GetAuthorByName(new AuthorFilterDto() { FirstName = "Adrian", LastName = "McKinty", MiddleName = "Alfonz" });
+        var res = authorService.GetAuthorByName(new AuthorFilterDto() { FirstName = "Adriaa", LastName = "McKinty", MiddleName = "Alfonz" });
 
-        //Console.WriteLine(res.FirstName);
+        Console.WriteLine(res.FirstName);
 
 
     }

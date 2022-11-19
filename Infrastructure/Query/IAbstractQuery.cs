@@ -16,6 +16,6 @@ namespace Infrastructure.Query
         /// </summary>
         IAbstractQuery<TEntity> Page(int pageToFetch, int pageSize = 10);
 
-        IEnumerable<TEntity> Execute();
+        EFQueryResult<TEntity> Execute();
     }
 }

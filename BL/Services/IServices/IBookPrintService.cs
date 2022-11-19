@@ -1,9 +1,6 @@
 ﻿using BL.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BL.DTOs.Reservation;
+
 
 namespace BL.Services.IServices
 {
@@ -12,5 +9,6 @@ namespace BL.Services.IServices
         public IEnumerable<BookPrintDto> GetBookbyBranchIDAndBookID(int branchId, int bookId);
         public IEnumerable<BookPrintDto> GetBookbyBranchID(int branchId);
         public IEnumerable<BookPrintDto> GetBookbyBookID(int bookId);
+        public IEnumerable<BookPrintDto> GetAvailableBookPrints(IEnumerable<ReservationsDto> reservations);
     }
 }

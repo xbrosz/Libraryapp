@@ -22,7 +22,7 @@ namespace BL.Services.Services
             _bookQueryObject = bookQueryObject;
         }
 
-        public IEnumerable<BookGridDto> GetBookbyAuthorID(int authorID)
+        public IEnumerable<BookGridDto> GetBooksbyAuthorID(int authorID)
         {
             
 
@@ -35,7 +35,7 @@ namespace BL.Services.Services
 
         public BookDetailDto GetBookDetailByID(int bookID)
         {
-            return this._mapper.Map<BookDetailDto>(Find(bookID));
+            return _mapper.Map<BookDetailDto>(Find(bookID));
         }
 
     }

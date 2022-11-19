@@ -48,7 +48,10 @@ namespace BL.Services.Services
 
         public IEnumerable<BookPrintDto> GetAvailableBookPrints(IEnumerable<ReservationsDto> reservations)
         {
-            throw new NotImplementedException();
+            return _bookPrintQueryObject.ExecuteQuery(new BookPrintFilterDto
+            {
+                ReservedBookPrintIDs = reservations.Select(r => r.BookPrintId).ToArray()
+            }).Items;
         }
     }
 }

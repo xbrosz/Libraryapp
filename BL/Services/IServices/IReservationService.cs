@@ -4,7 +4,7 @@ using DAL.Entities;
 
 namespace BL.Services.IServices
 {
-    public interface IReservationService : IGenericService<Reservation, ReservationsDto, CreateReservationDto, CreateReservationDto>
+    public interface IReservationService : IGenericService<Reservation, ReservationsDto, UpdateReservationDto, CreateReservationDto>
     {
         IEnumerable<ReservationsDto> GetReservationsByUserId(int userId);
         IEnumerable<ReservationsDto> GetReservationsByBookId(int bookId);

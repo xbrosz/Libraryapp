@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BL.DTOs.Reservation
 {
-    public class ReservationFormDto
+    public class ReservationCreateFormDto
     {
         public int UserId { get; set; }
         public int BookId { get; set; }

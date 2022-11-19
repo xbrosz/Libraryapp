@@ -14,9 +14,9 @@ namespace BL.Services.Services
 {
     public class BookService : GenericService<Book, BookDetailDto, BookPrintDto, BookDetailDto>, IBookService
     {
-        IQueryObject<BookFilterDto, BookDetailDto> _bookQueryObject;
+        IQueryObject<BookFilterDto, BookGridDto> _bookQueryObject;
 
-        public BookService(IUnitOfWork unitOfWork, IMapper mapper, IQueryObject<BookFilterDto,BookDetailDto> bookQueryObject) : base(unitOfWork, mapper, unitOfWork.BookRepository)
+        public BookService(IUnitOfWork unitOfWork, IMapper mapper, IQueryObject<BookFilterDto,BookGridDto> bookQueryObject) : base(unitOfWork, mapper, unitOfWork.BookRepository)
         {
 
             _bookQueryObject = bookQueryObject;
@@ -24,9 +24,9 @@ namespace BL.Services.Services
 
         public IEnumerable<BookGridDto> GetBookbyAuthorID(int authorID)
         {
-            var bookQueryObject = new BookQueryObject(_mapper);
+            
 
-            return bookQueryObject.ExecuteQuery(new BookFilterDto
+            return _bookQueryObject.ExecuteQuery(new BookFilterDto
             {
                 AuthorID = authorID,
 

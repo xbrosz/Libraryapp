@@ -6,7 +6,7 @@ using Infrastructure.UnitOfWork;
 
 namespace BL.Services.GenericService
 {
-    public abstract class GenericService<TEntity, FEntity, UEntity, IEntity>
+    public abstract class GenericService<TEntity, FEntity, UEntity, IEntity> : IGenericService<TEntity, FEntity, UEntity, IEntity>
         where TEntity : class
         where FEntity : class
         where UEntity : class

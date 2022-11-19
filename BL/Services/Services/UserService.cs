@@ -11,23 +11,19 @@ using Infrastructure.Repository;
 using BL.QueryObjects.IQueryObject;
 using Infrastructure.UnitOfWork;
 using DAL.Data;
-using BL.QueryObjects.QueryObjects;
-using BL.DTOs.Author;
-using Infrastructure.EFCore;
+using BL.DTOs.Reservation;
+using Infrastructure.Query;
 
 namespace BL.Services.Services
 {
     public class UserService : GenericService<User, UserDetailDto, UserDetailDto, CreateUserDto>, IUserService
     {
-        private IMapper mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
-        private IRepository<User> repository;
-        private LibraryappDbContext dbContext;
-        private UserQueryObject queryObject;
+        private IQueryObject<UserFilterDto, UserDetailDto> queryObject;
 
-        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IRepository<User> repository, LibraryappDbContext dbContext): base(unitOfWork, mapper, unitOfWork.UserRepository)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IQueryObject<UserFilterDto, UserDetailDto> userQueryObject)
+            : base(unitOfWork, mapper, unitOfWork.UserRepository)
         {
-            this.repository = repository;
-            this.dbContext = dbContext;
+            this.queryObject = userQueryObject;
         }
 
         public void Register(CreateUserDto registerDto)
@@ -43,8 +39,6 @@ namespace BL.Services.Services
         public bool Login(UserLoginDto loginDto)
         {
             Guard.Against.NullOrWhiteSpace(loginDto.UserName, "UserName", "Username cannot be null");
-
-            queryObject = new UserQueryObject(mapper, dbContext);
 
             var queryResult = queryObject.ExecuteQuery(new UserFilterDto() { name = loginDto.UserName, exactName = true });
 

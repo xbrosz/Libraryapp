@@ -6,17 +6,18 @@ using BL.QueryObjects.IQueryObject;
 using DAL.Data;
 using DAL.Entities;
 using Infrastructure.EFCore;
+using Infrastructure.Query;
 
 namespace BL.QueryObjects.QueryObjects
 {
     public class AuthorQueryObject : IQueryObject<AuthorFilterDto, AuthorDto>
     {
         private IMapper _mapper;
-        private GenericQuery<Author> _query;
-        public AuthorQueryObject(IMapper mapper, LibraryappDbContext dbContext)
+        private IAbstractQuery<Author> _query;
+        public AuthorQueryObject(IMapper mapper, IAbstractQuery<Author> query)
         {
             _mapper = mapper;
-            _query = new GenericQuery<Author>(dbContext);
+            _query = query;
         }
 
         public QueryResultDto<AuthorDto> ExecuteQuery(AuthorFilterDto filter)

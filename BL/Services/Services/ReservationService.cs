@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using BL.DTOs.Author;
 using BL.DTOs.Reservation;
+using BL.QueryObjects.IQueryObject;
 using BL.QueryObjects.QueryObjects;
 using BL.Services.GenericService;
 using BL.Services.IServices;
@@ -9,34 +11,29 @@ using Infrastructure.UnitOfWork;
 
 namespace BL.Services.Services
 {
-    public class ReservationService : GenericService<Reservation, ReservationsDto, ReservationsDto, ReservationsDto>, IReservationService
+    public class ReservationService : GenericService<Reservation, ReservationsDto, CreateReservationDto, CreateReservationDto>, IReservationService
     {
-        private ReservationQueryObject queryObject;
-        private LibraryappDbContext dbContext;
-        public ReservationService(IUnitOfWork unitOfWork, LibraryappDbContext dbContext, IMapper mapper) : base(unitOfWork, mapper, unitOfWork.ReservationRepository) 
+        private IQueryObject<ReservationFilterDto, ReservationsDto> queryObject;
+        public ReservationService(IUnitOfWork unitOfWork, IMapper mapper, IQueryObject<ReservationFilterDto, ReservationsDto> reservationQueryObject)
+            : base(unitOfWork, mapper, unitOfWork.ReservationRepository) 
         {
-            this.dbContext = dbContext;
+            this.queryObject = reservationQueryObject;
+
         }
 
         public IEnumerable<ReservationsDto> GetReservationsByUserId(int userId)
         {
-            queryObject = new ReservationQueryObject(_mapper, dbContext);
-
             return queryObject.ExecuteQuery(new ReservationFilterDto { UserId = userId }).Items;
         }
 
         public IEnumerable<ReservationsDto> GetReservationsByBookId(int bookId)
         {
-            queryObject = new ReservationQueryObject(_mapper, dbContext);
-
             return queryObject.ExecuteQuery(new ReservationFilterDto { BookId = bookId }).Items;
         }
 
         public IEnumerable<ReservationsDto> GetReservationsInDateRangeByBookAndBranch(
             int bookId, int branchId, DateTime fromDate, DateTime toDate)
         {
-            queryObject = new ReservationQueryObject(_mapper, dbContext);
-
             return queryObject.ExecuteQuery(new ReservationFilterDto { BookId = bookId, BranchId = branchId, FromDate = fromDate, ToDate = toDate }).Items;
         }
     }

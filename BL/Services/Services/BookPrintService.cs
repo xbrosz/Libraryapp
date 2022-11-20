@@ -45,13 +45,5 @@ namespace BL.Services.Services
                 BookId = bookId,
             }).Items;
         }
-
-        public IEnumerable<BookPrintDto> GetAvailableBookPrints(IEnumerable<ReservationsDto> reservations)
-        {
-            return _bookPrintQueryObject.ExecuteQuery(new BookPrintFilterDto
-            {
-                ReservedBookPrintIDs = reservations.Select(r => r.BookPrintId).ToArray()
-            }).Items;
-        }
     }
 }

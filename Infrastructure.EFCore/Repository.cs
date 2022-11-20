@@ -6,44 +6,49 @@ namespace Infrastructure.EFCore
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        internal LibraryappDbContext context;
-        internal DbSet<TEntity> dbSet;
+        internal LibraryappDbContext _context;
+        internal DbSet<TEntity> _dbSet;
 
         public Repository(LibraryappDbContext dbcontext)
         {
-            context = dbcontext;
-            dbSet = context.Set<TEntity>();
+            _context = dbcontext;
+            _dbSet = _context.Set<TEntity>();
         }
 
-        public virtual TEntity GetByID(object id)
+        public TEntity GetByID(object id)
         {
-            return dbSet.Find(id);
+            return _dbSet.Find(id);
         }
 
-        public virtual void Insert(TEntity entity)
+        public void Insert(TEntity entity)
         {
-            dbSet.Add(entity);
+            _dbSet.Add(entity);
         }
 
-        public virtual void Delete(object id)
+        public void Delete(object id)
         {
-            TEntity entityToDelete = dbSet.Find(id);
+            TEntity entityToDelete = _dbSet.Find(id);
             Delete(entityToDelete);
         }
 
-        public virtual void Delete(TEntity entityToDelete)
+        public void Delete(TEntity entityToDelete)
         {
-            if (context.Entry(entityToDelete).State == EntityState.Detached)
+            if (_context.Entry(entityToDelete).State == EntityState.Detached)
             {
-                dbSet.Attach(entityToDelete);
+                _dbSet.Attach(entityToDelete);
             }
-            dbSet.Remove(entityToDelete);
+            _dbSet.Remove(entityToDelete);
         }
 
-        public virtual void Update(TEntity entityToUpdate)
+        public void Update(TEntity entityToUpdate)
         {
-            dbSet.Attach(entityToUpdate);
-            context.Entry(entityToUpdate).State = EntityState.Modified;
+            _dbSet.Attach(entityToUpdate);
+            _context.Entry(entityToUpdate).State = EntityState.Modified;
+        }
+
+        public IEnumerable<TEntity> GetAll()
+        {
+            return _dbSet.ToList();
         }
     }
 }

@@ -21,9 +21,27 @@ namespace BL.QueryObjects.QueryObjects
 
         public QueryResultDto<BranchDto> ExecuteQuery(BranchFilterDto filter)
         {
-            var query = _query.Where<string>(a => a == filter.Name, nameof(Branch.Name));
+            if (!string.IsNullOrWhiteSpace(filter.Name))
+            {
+                _query.Where<string>(a => a.ToLower().Contains(filter.Name.ToLower()), nameof(Branch.Name));
+            }
 
-            return _mapper.Map<QueryResultDto<BranchDto>>(query.Execute());
+            if (!string.IsNullOrWhiteSpace(filter.Address))
+            {
+                _query.Where<string>(a => a.ToLower().Contains(filter.Address.ToLower()), nameof(Branch.Address));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
+            {
+                _query.OrderBy<string>(filter.SortCriteria, filter.SortAscending);
+            }
+
+            if (filter.RequestedPageNumber.HasValue)
+            {
+                _query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
+            }
+
+            return _mapper.Map<QueryResultDto<BranchDto>>(_query.Execute());
         }
     }
 }

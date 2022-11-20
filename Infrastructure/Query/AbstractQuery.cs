@@ -26,6 +26,13 @@ namespace Infrastructure.Query
             return this;
         }
 
+        protected void ClearContainers()
+        {
+            WherePredicate.Clear();
+            OrderByContainer = null;
+            PaginationContainer = null;
+        }
+
         public abstract EFQueryResult<TEntity> Execute();
     }
 }

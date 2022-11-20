@@ -23,7 +23,7 @@ namespace Infrastructure.UnitOfWork
 
         IRepository<User> UserRepository { get; }
 
-        public Task Commit();
+        public void Commit();
 
         public void Dispose();
     }

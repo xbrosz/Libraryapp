@@ -12,10 +12,9 @@ namespace BL.Facades
     public class ReservationFacade
     {
         private IReservationService reservationService;
-        //TODO: change to BPS interface
-        private BookPrintService bookPrintService;
+        private IBookPrintService bookPrintService;
 
-        public ReservationFacade(IReservationService reservationService, BookPrintService bpService)
+        public ReservationFacade(IReservationService reservationService, IBookPrintService bpService)
         {
             this.reservationService = reservationService;
             this.bookPrintService = bpService;
@@ -55,8 +54,7 @@ namespace BL.Facades
 
         public void UpdateReservationDate(ReservationUpdateFormDto reservationDto)
         {
-            //TODO get book id from bookprint service
-            var bookId = 2;
+            var bookId = bookPrintService.Find(reservationDto.BookPrintId).BookId;
 
             var reservedBPs = reservationService.GetReservationsInDateRangeByBookAndBranch
                 (

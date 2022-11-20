@@ -131,9 +131,9 @@ namespace Infrastructure.EFCore
             }
         }
 
-        public async Task Commit()
+        public void Commit()
         {
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public void Dispose()

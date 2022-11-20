@@ -31,16 +31,19 @@ namespace BL.Services.GenericService
         public void Delete(int id)
         {
             _repository.Delete(id);
+            _unitOfWork.Commit();       
         }
 
         public void Update(UEntity dtoToUpdate)
         {
             _repository.Update(_mapper.Map<TEntity>(dtoToUpdate));
+            _unitOfWork.Commit();           
         }
 
         public void Insert(IEntity dtoToInsert)
         {
             _repository.Insert(_mapper.Map<TEntity>(dtoToInsert));
+            _unitOfWork.Commit();           
         }
     }
 }

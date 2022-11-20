@@ -15,10 +15,10 @@ namespace BL.QueryObjects.QueryObjects
 
         private IAbstractQuery<BookPrint> myQuery;
 
-        public BookPrintQueryObject(IMapper mapper, LibraryappDbContext context)
+        public BookPrintQueryObject(IMapper mapper, IAbstractQuery<BookPrint> context)
         {
             this.mapper = mapper;
-            myQuery = new GenericQuery<BookPrint>(context);
+            myQuery = context;
         }
 
         public QueryResultDto<BookPrintDto> ExecuteQuery(BookPrintFilterDto filter)

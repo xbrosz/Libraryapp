@@ -15,10 +15,10 @@ namespace BL.QueryObjects.QueryObjects
 
         private IAbstractQuery<Book> myQuery;
 
-        public BookQueryObject(IMapper mapper, LibraryappDbContext context)
+        public BookQueryObject(IMapper mapper, IAbstractQuery<Book> context)
         {
             this.mapper = mapper;
-            myQuery = new GenericQuery<Book>(context);
+            myQuery = context;
         }
 
         public QueryResultDto<BookGridDto> ExecuteQuery(BookFilterDto filter)

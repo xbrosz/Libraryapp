@@ -9,7 +9,7 @@ using Infrastructure.Query;
 
 namespace BL.QueryObjects.QueryObjects
 {
-    public class BookQueryObject
+    public class BookQueryObject : IQueryObject<BookFilterDto, BookGridDto>
     {
         private IMapper mapper;
 

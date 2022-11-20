@@ -9,7 +9,7 @@ using Infrastructure.Query;
 
 namespace BL.QueryObjects.QueryObjects
 {
-    public class BookPrintQueryObject
+    public class BookPrintQueryObject : IQueryObject<BookPrintFilterDto, BookPrintDto>
     {
         private IMapper mapper;
 
@@ -31,6 +31,11 @@ namespace BL.QueryObjects.QueryObjects
             if (filter.BookId != null)
             {
                 query = query.Where<int>(a => a == filter.BookId, "BookId");
+            }
+
+            if (filter.ReservedBookPrintIDs != null)
+            {
+                query = query.Where<int>(a => !filter.ReservedBookPrintIDs.Contains(a), "Id");
             }
 
             if (filter.RequestedPageNumber.HasValue)

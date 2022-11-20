@@ -1,30 +1,32 @@
 ﻿using AutoMapper;
 using BL.DTOs;
+using BL.QueryObjects;
+using BL.QueryObjects.IQueryObject;
 using BL.QueryObjects.QueryObjects;
+using BL.Services.GenericService;
+using BL.Services.IServices;
 using DAL.Data;
 using DAL.Entities;
 using Infrastructure.Repository;
+using Infrastructure.UnitOfWork;
 
 namespace BL.Services.Services
 {
-    public class BookService
+    public class BookService : GenericService<Book, BookDetailDto, BookPrintDto, BookDetailDto>, IBookService
     {
-        private IMapper mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
-        private LibraryappDbContext _context;
-        private IRepository<Book> _bookRepository;
-        private BookQueryObject bookQueryObject;
+        IQueryObject<BookFilterDto, BookGridDto> _bookQueryObject;
 
-        public BookService(LibraryappDbContext context, IRepository<Book> bookRepository)
+        public BookService(IUnitOfWork unitOfWork, IMapper mapper, IQueryObject<BookFilterDto,BookGridDto> bookQueryObject) : base(unitOfWork, mapper, unitOfWork.BookRepository)
         {
-            _context = context;
-            _bookRepository = bookRepository;
+
+            _bookQueryObject = bookQueryObject;
         }
 
-        public IEnumerable<BookGridDto> GetBookbyAuthorID(int authorID)
+        public IEnumerable<BookGridDto> GetBooksbyAuthorID(int authorID)
         {
-            bookQueryObject = new BookQueryObject(mapper, _context);
+            
 
-            return bookQueryObject.ExecuteQuery(new BookFilterDto
+            return _bookQueryObject.ExecuteQuery(new BookFilterDto
             {
                 AuthorID = authorID,
 
@@ -33,7 +35,7 @@ namespace BL.Services.Services
 
         public BookDetailDto GetBookDetailByID(int bookID)
         {
-            return mapper.Map<BookDetailDto>(_bookRepository.GetByID(bookID));
+            return _mapper.Map<BookDetailDto>(Find(bookID));
         }
 
     }

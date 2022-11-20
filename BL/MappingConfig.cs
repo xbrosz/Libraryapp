@@ -20,10 +20,14 @@ namespace BL
             config.CreateMap<Rating, RatingDto>().ReverseMap();
             config.CreateMap<Author, AuthorDto>().ReverseMap();
             config.CreateMap<Book, BookDetailDto>().ForMember(dest => dest.AuthorName, act => act.MapFrom(src => src.Author.FirstName + " "
-                                                                                                                + src.Author.MiddleName + " "
-                                                                                                                + src.Author.LastName))
+                                                                                                               + src.Author.MiddleName + " "
+                                                                                                               + src.Author.LastName))
                                                    .ForMember(dest => dest.BookGenres, act => act.MapFrom(src => string.Join("/", src.Genres.Select(g => g.Name))));
-            config.CreateMap<Book, BookGridDto>().ReverseMap();
+            config.CreateMap<Book, BookGridDto>().ForMember(dest => dest.AuthorName, act => act.MapFrom(src => src.Author.FirstName + " "
+                                                                                                             + src.Author.MiddleName + " "
+                                                                                                             + src.Author.LastName))
+                                                 .ForMember(dest => dest.BookGenres, act => act.MapFrom(src => string.Join("/", src.Genres.Select(g => g.Name))))
+                                                 .ForMember(dest => dest.Rating, act => act.MapFrom(src => src.Ratings.Select(r => r.RatingNumber).Average()));
             config.CreateMap<BookPrint, BookPrintDto>().ReverseMap();
             config.CreateMap<Branch, BranchDto>().ReverseMap();
 

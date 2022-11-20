@@ -2,15 +2,14 @@
 using BL;
 using BL.DTOs.Author;
 using BL.Services.IServices;
-using BL.Services.Services;
 using DAL.Data;
 using DAL.Entities;
 using Infrastructure.EFCore;
-
+using Infrastructure.UnitOfWork;
 
 public class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
 
         var containerBuilder = new ContainerBuilder();
@@ -19,29 +18,53 @@ public class Program
 
         var container = containerBuilder.Build();
 
-        var dbcontext = container.Resolve<LibraryappDbContext>();
-
+        using var dbcontext = container.Resolve<LibraryappDbContext>();
         dbcontext.Database.EnsureDeleted();
         dbcontext.Database.EnsureCreated();
 
-        var author1 = new Author { BirthDate = DateTime.Now, FirstName = "Štefan", Id = 1, LastName = "Hemingway", MiddleName = "" };
-        var author2 = new Author { BirthDate = DateTime.Now, FirstName = "Adrian", Id = 2, LastName = "McKinty", MiddleName = "Alfonz" };
-
-        dbcontext.Author.Add(author1);
-        dbcontext.Author.Add(author2);
-
+        using var uow = container.Resolve<IUnitOfWork>();
         var authorService = container.Resolve<IAuthorService>();
 
-        //Console.WriteLine(authorService.Find(1).FirstName);
 
-        //var res = authorService.GetAuthorsByName(new AuthorFilterDto() { FirstName = "Adrian", LastName = "", MiddleName = "alfonz" });
+        var authorDto = new AuthorDto() { Id = 15, FirstName = "Richard", MiddleName = "Ondrejka", LastName = "Ondrejka", BirthDate = DateTime.Now };
 
-        //foreach(var author in res)
-        //{
-        //    Console.WriteLine(author.FirstName);    
-        //}
-        
+        Console.WriteLine("Pred: ");
+        foreach (var f in uow.AuthorRepository.GetAll())
+        {
+            Console.WriteLine(f.FirstName);
+        }
+
+        Console.WriteLine("\n");
+
+        var author1 = new AuthorDto() { FirstName = "Richard", MiddleName = "Ondrejka", LastName = "Ondrejka", BirthDate = DateTime.Now };
+        var author2 = new AuthorDto() { FirstName = "Rich", MiddleName = "Ondrejka", LastName = "Ondrejka", BirthDate = DateTime.Now };
+        var author3 = new AuthorDto() { FirstName = "Pietro", MiddleName = "Ondrejka", LastName = "Ondrejka", BirthDate = DateTime.Now };
+        var author4 = new AuthorDto() { FirstName = "Marek", MiddleName = "Ondrejka", LastName = "Ondrejka", BirthDate = DateTime.Now };
+        var author5 = new AuthorDto() { FirstName = "Hasek", MiddleName = "Ondrejka", LastName = "Ondrejka", BirthDate = DateTime.Now };
+        var author6 = new AuthorDto() { FirstName = "Richard", MiddleName = "Ondrejka", LastName = "", BirthDate = DateTime.Now };
 
 
+        await authorService.InsertAsync(author1);
+        await authorService.InsertAsync(author2);
+        await authorService.InsertAsync(author3);
+        await authorService.InsertAsync(author4);
+        await authorService.InsertAsync(author5);
+        await authorService.InsertAsync(author6);
+
+        Console.WriteLine("Po: ");
+        foreach (var f in uow.AuthorRepository.GetAll())
+        {
+            Console.WriteLine(f.FirstName);
+        }
+
+        Console.WriteLine("\n");
+
+        var res = authorService.GetAuthorsByName(new AuthorFilterDto() { FirstName = "Richard", MiddleName = "Ond", SortCriteria = nameof(Author.FirstName), SortAscending = true });
+
+        Console.WriteLine("Service: ");
+        foreach (var author in res)
+        {
+            Console.WriteLine(author.FirstName);
+        }
     }
 }

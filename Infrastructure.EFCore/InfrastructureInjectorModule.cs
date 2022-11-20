@@ -12,12 +12,12 @@ namespace Infrastructure.EFCore
         {
             builder.RegisterType<UnitOfWork>()
                 .As<IUnitOfWork>()
-            .InstancePerLifetimeScope();
+                .InstancePerLifetimeScope();
 
             builder.RegisterGeneric(typeof(Repository<>))
-            .As(typeof(IRepository<>))
-            .InstancePerDependency();
-
+                .As(typeof(IRepository<>))
+                .InstancePerDependency();
+            
             builder.RegisterGeneric(typeof(GenericQuery<>))
             .AsSelf()
             .InstancePerDependency();

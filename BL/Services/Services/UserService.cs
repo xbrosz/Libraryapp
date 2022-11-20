@@ -27,7 +27,7 @@ namespace BL.Services.Services
 
             registerDto.Password = PasswordHasher.Hash(registerDto.Password);
 
-            base.Insert(registerDto);
+            base.InsertAsync(registerDto);
         }
 
         public bool Login(UserLoginDto loginDto)

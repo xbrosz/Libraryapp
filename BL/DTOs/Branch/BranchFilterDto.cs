@@ -16,4 +16,4 @@ namespace BL.DTOs.Branch
         public bool SortAscending { get; set; }
     }
 }
-}
+

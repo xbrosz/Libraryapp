@@ -11,5 +11,7 @@
         void Delete(TEntity entityToDelete);
 
         void Update(TEntity entityToUpdate);
+
+        public IEnumerable<TEntity> GetAll();
     }
 }

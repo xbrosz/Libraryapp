@@ -15,10 +15,10 @@ namespace BL.Services.GenericService
     {
         FEntity Find(int id);
 
-        void Delete(int id);
+        Task DeleteAsync(int id);
 
-        void Update(UEntity dtoToUpdate);
+        Task UpdateAsync(UEntity dtoToUpdate);
 
-        void Insert(IEntity dtoToInsert);
+        Task InsertAsync(IEntity dtoToInsert);
     }
 }

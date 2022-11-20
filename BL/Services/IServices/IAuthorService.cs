@@ -12,12 +12,12 @@ namespace BL.Services.IServices
     {
         public AuthorDto Find(int id);
 
-        public void Delete(int id);
+        public Task DeleteAsync(int id);
 
-        public void Update(AuthorDto dtoToUpdate);
+        public Task UpdateAsync(AuthorDto dtoToUpdate);
 
-        public void Insert(AuthorDto dtoToInsert);
+        public Task InsertAsync(AuthorDto dtoToInsert);
 
-        public AuthorDto GetAuthorByName(AuthorFilterDto filter);
+        public IEnumerable<AuthorDto> GetAuthorsByName(AuthorFilterDto filter);
     }
 }

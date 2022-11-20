@@ -22,23 +22,32 @@ namespace BL.QueryObjects.QueryObjects
 
         public QueryResultDto<AuthorDto> ExecuteQuery(AuthorFilterDto filter)
         {
-            var query = _query.Where<string>(a => a.ToLower().Contains(filter.FirstName.ToLower()), nameof(Author.FirstName));
-            //.Where<string>(a => a.ToLower().Contains(filter.MiddleName.ToLower()), nameof(Author.MiddleName))
-            //.Where<string>(a => a.ToLower().Contains(filter.LastName.ToLower()), nameof(Author.LastName));
+            if (!string.IsNullOrWhiteSpace(filter.FirstName))
+            {
+                _query.Where<string>(a => a.ToLower().Contains(filter.FirstName.ToLower()), nameof(Author.FirstName));
+            }
+            
+            if (!string.IsNullOrWhiteSpace(filter.MiddleName))
+            {
+                _query.Where<string>(a => a.ToLower().Contains(filter.MiddleName.ToLower()), nameof(Author.MiddleName));
+            }
 
-            //var r = query.Execute().First<Author>();
+            if (!string.IsNullOrWhiteSpace(filter.LastName))
+            {
+                _query.Where<string>(a => a.ToLower().Contains(filter.LastName.ToLower()), nameof(Author.LastName));
+            }
+            
+            if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
+            {
+                _query.OrderBy<string>(filter.SortCriteria, filter.SortAscending);
+            }
 
-            //if (r == null)
-            //{
-            ///    Console.WriteLine("r = null");
-            //}
-            //else
-            //{
-            //    Console.WriteLine(r.FirstName);
-            //    Console.WriteLine(r);
-            //}
-
-            return _mapper.Map<QueryResultDto<AuthorDto>>(query.Execute());
+            if (filter.RequestedPageNumber.HasValue)
+            {
+                _query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
+            }
+            
+            return _mapper.Map<QueryResultDto<AuthorDto>>(_query.Execute());
         }
     }
 }

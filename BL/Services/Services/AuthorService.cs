@@ -19,9 +19,9 @@ namespace BL.Services.Services
             _authorQueryObject = authorQueryObject;
         }
 
-        public AuthorDto GetAuthorByName(AuthorFilterDto filter)
+        public IEnumerable<AuthorDto> GetAuthorsByName(AuthorFilterDto filter)
         {
-            return _authorQueryObject.ExecuteQuery(filter).Items.First();
+            return _authorQueryObject.ExecuteQuery(filter).Items;
         }
     }
 }

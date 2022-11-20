@@ -23,9 +23,7 @@ namespace DAL.Data
         {
         }
 
-        public LibraryappDbContext(DbContextOptions<LibraryappDbContext> options) : base(options)
-        {
-        }
+        public LibraryappDbContext(DbContextOptions<LibraryappDbContext> options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -49,7 +49,7 @@ namespace BL.Facades
                 EndDate = reservationDto.EndDate
             };
 
-            reservationService.Insert(createDto);
+            reservationService.InsertAsync(createDto);
         }
 
         public void UpdateReservationDate(ReservationUpdateFormDto reservationDto)

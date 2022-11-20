@@ -25,7 +25,7 @@ namespace BL
             config.CreateMap<Branch, BranchDto>().ReverseMap();
 
             config.CreateMap<QueryResultDto<AuthorDto>, EFQueryResult<Author>>().ReverseMap();
-            //config.CreateMap<QueryResultDto<Branch>, Branch>();
+            config.CreateMap<QueryResultDto<BranchDto>, EFQueryResult<Branch>>().ReverseMap();
         }
     }
 }

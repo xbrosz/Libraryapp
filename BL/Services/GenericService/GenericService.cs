@@ -28,19 +28,22 @@ namespace BL.Services.GenericService
             return _mapper.Map<FEntity>(_repository.GetByID(id));
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             _repository.Delete(id);
+            await _unitOfWork.CommitAsync();       
         }
 
-        public void Update(UEntity dtoToUpdate)
+        public async Task UpdateAsync(UEntity dtoToUpdate)
         {
             _repository.Update(_mapper.Map<TEntity>(dtoToUpdate));
+            await _unitOfWork.CommitAsync();           
         }
 
-        public void Insert(IEntity dtoToInsert)
+        public async Task InsertAsync(IEntity dtoToInsert)
         {
             _repository.Insert(_mapper.Map<TEntity>(dtoToInsert));
+            await _unitOfWork.CommitAsync();           
         }
     }
 }

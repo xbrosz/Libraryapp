@@ -19,9 +19,9 @@ namespace BL.Services.Services
             _authorQueryObject = authorQueryObject;
         }
 
-        public IEnumerable<AuthorDto> GetAuthorsByName(AuthorFilterDto filter)
+        public IEnumerable<AuthorDto> GetAuthorsByName(string firstName, string middleName, string lastName)
         {
-            return _authorQueryObject.ExecuteQuery(filter).Items;
+            return _authorQueryObject.ExecuteQuery(new AuthorFilterDto() { FirstName = firstName, MiddleName = middleName, LastName = lastName, SortCriteria = nameof(Author.FirstName), SortAscending = true }).Items;
         }
     }
 }

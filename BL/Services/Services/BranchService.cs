@@ -27,14 +27,14 @@ namespace BL.Services.Services
             _branchQueryObject = branchQueryObject;
         }
 
-        public IEnumerable<BranchDto> GetBranchesByName(BranchFilterDto filter)
+        public IEnumerable<BranchDto> GetBranchesByName(string name)
         {
-            return _branchQueryObject.ExecuteQuery(filter).Items;
+            return _branchQueryObject.ExecuteQuery(new BranchFilterDto() { Name = name, SortCriteria = nameof(Branch.Name), SortAscending = true }).Items;
         }
 
-        public IEnumerable<BranchDto> GetBranchesByAddress(BranchFilterDto filter)
+        public IEnumerable<BranchDto> GetBranchesByAddress(string address)
         {
-            return _branchQueryObject.ExecuteQuery(filter).Items;
+            return _branchQueryObject.ExecuteQuery(new BranchFilterDto() { Address = address, SortCriteria = nameof(Branch.Address), SortAscending = true }).Items;
         }
     }
 }

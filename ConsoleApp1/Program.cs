@@ -59,7 +59,7 @@ public class Program
 
         Console.WriteLine("\n");
 
-        var res = authorService.GetAuthorsByName(new AuthorFilterDto() { FirstName = "Richard", MiddleName = "Ond", SortCriteria = nameof(Author.FirstName), SortAscending = true });
+        var res = authorService.GetAuthorsByName("Richard", "Ond", "");
 
         Console.WriteLine("Service: ");
         foreach (var author in res)

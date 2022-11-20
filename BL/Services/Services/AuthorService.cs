@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Ardalis.GuardClauses;
+using AutoMapper;
 using BL.DTOs.Author;
 using BL.QueryObjects.IQueryObject;
 using BL.QueryObjects.QueryObjects;
@@ -21,6 +22,11 @@ namespace BL.Services.Services
 
         public IEnumerable<AuthorDto> GetAuthorsByName(string firstName, string middleName, string lastName)
         {
+            if (!firstName.All(char.IsLetter) || !middleName.All(char.IsLetter) || !lastName.All(char.IsLetter))
+            {
+                throw new Exception("Names should contain just letters.");
+            }
+
             return _authorQueryObject.ExecuteQuery(new AuthorFilterDto() { FirstName = firstName, MiddleName = middleName, LastName = lastName, SortCriteria = nameof(Author.FirstName), SortAscending = true }).Items;
         }
     }

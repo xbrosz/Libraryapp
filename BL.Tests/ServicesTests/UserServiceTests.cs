@@ -8,7 +8,7 @@ using DAL.Entities;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 
-namespace BL.Tests
+namespace BL.Tests.ServicesTests
 {
     public class UserServiceTests
     {
@@ -160,14 +160,15 @@ namespace BL.Tests
             _uowMock
                 .Setup(x => x.UserRepository)
                 .Returns(_repoMock.Object);
-            
+
             _queryObjectMock
                 .Setup(x => x.ExecuteQuery(It.IsAny<UserFilterDto>()))
                 .Returns(new QueryResultDto<UserDetailDto> { TotalItemsCount = 0 });
 
             var service = new UserService(_uowMock.Object, mapper, _queryObjectMock.Object);
 
-            var registerDto = new CreateUserDto() { 
+            var registerDto = new CreateUserDto()
+            {
                 UserName = "xkristof",
                 FirstName = "Kristof",
                 LastName = "Adamek",

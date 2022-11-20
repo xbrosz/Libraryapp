@@ -19,12 +19,12 @@ namespace Infrastructure.EFCore
                 .InstancePerDependency();
             
             builder.RegisterGeneric(typeof(GenericQuery<>))
-            .AsSelf()
-            .InstancePerDependency();
+                .AsSelf()
+                .InstancePerDependency();
 
             builder.RegisterType<LibraryappDbContext>()
-            .AsSelf()
-            .InstancePerLifetimeScope();
+                .AsSelf()
+                .InstancePerLifetimeScope();
         }
     }
 }

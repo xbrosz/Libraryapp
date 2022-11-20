@@ -24,7 +24,7 @@ namespace BL.Facades
         public IEnumerable<BookPrintDto> GetAvailableBookPrints(int bookId, int branchId, DateTime from, DateTime to)
         {
             var reservedBookPrints = _reservationService.GetReservationsInDateRangeByBookAndBranch(bookId, branchId, from, to).Select(r => r.BookPrintId);
-            var books = _bookPrintService.GetBookbyBranchIDAndBookID(branchId, bookId);
+            var books = _bookPrintService.GetBookPrintsByBranchIDAndBookID(branchId, bookId);
             return books.Where(b => !reservedBookPrints.Contains(b.BookId));
         }
 

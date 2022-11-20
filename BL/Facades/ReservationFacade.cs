@@ -30,7 +30,7 @@ namespace BL.Facades
                 reservationDto.EndDate
                 );
 
-            var bookPrints = bookPrintService.GetBookbyBranchIDAndBookID(reservationDto.BranchId,reservationDto.BookId);
+            var bookPrints = bookPrintService.GetBookPrintsByBranchIDAndBookID(reservationDto.BranchId,reservationDto.BookId);
 
             var availableBPs = bookPrints.Where(bp => !reservedBPs.Any(r => r.BookPrintId == bp.Id));
 
@@ -64,7 +64,7 @@ namespace BL.Facades
                 reservationDto.EndDate
                 ).Where(r => r.Id != reservationDto.Id);
 
-            var bookPrints = bookPrintService.GetBookbyBranchIDAndBookID(reservationDto.BranchId, bookId);
+            var bookPrints = bookPrintService.GetBookPrintsByBranchIDAndBookID(reservationDto.BranchId, bookId);
 
             var availableBPs = bookPrints.Where(bp => !reservedBPs.Any(r => r.BookPrintId == bp.Id));
 

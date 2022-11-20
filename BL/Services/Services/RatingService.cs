@@ -1,9 +1,13 @@
 ﻿using AutoMapper;
 using BL.DTOs;
+using BL.QueryObjects.IQueryObject;
 using BL.QueryObjects.QueryObjects;
+using BL.Services.GenericService;
+using BL.Services.IServices;
 using DAL.Data;
 using DAL.Entities;
 using Infrastructure.Repository;
+using Infrastructure.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,21 +16,21 @@ using System.Threading.Tasks;
 
 namespace BL.Services.Services
 {
-    public class RatingService
+    public class RatingService : GenericService<Rating, RatingDto, RatingDto, RatingDto>, IRatingService
     {
-        private IMapper mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
-        private LibraryappDbContext _context;
-        private IRepository<Rating> _ratingRepository;
-        private IRepository<Book> _bookRepository;
 
-        private RatingQueryObject ratingQueryObject;
 
+        private IQueryObject<RatingFilterDto, RatingDto> _ratingQueryObject;
+        public RatingService(IUnitOfWork unitOfWork, IMapper mapper, IRepository<Rating> repository, IQueryObject<RatingFilterDto, RatingDto> ratingQueryObject) : base(unitOfWork, mapper, repository)
+        {
+            _ratingQueryObject = ratingQueryObject;
+        }
 
         public double GetBookAverageRating(int bookId)
         {
-            ratingQueryObject = new RatingQueryObject(mapper, _context);
+            
 
-            return ratingQueryObject.ExecuteQuery(new RatingFilterDto
+            return _ratingQueryObject.ExecuteQuery(new RatingFilterDto
             {
                 BookId = bookId,
             }).Items.Select(r => r.RatingNumber).Average();
@@ -34,9 +38,7 @@ namespace BL.Services.Services
 
         public IEnumerable<RatingDto> GetRatingsByBook(int bookId)
         {
-            ratingQueryObject = new RatingQueryObject(mapper, _context);
-
-            return ratingQueryObject.ExecuteQuery(new RatingFilterDto
+            return _ratingQueryObject.ExecuteQuery(new RatingFilterDto
             {
                 BookId = bookId,
             }).Items;

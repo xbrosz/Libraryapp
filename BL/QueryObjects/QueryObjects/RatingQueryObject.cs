@@ -13,10 +13,10 @@ namespace BL.QueryObjects.QueryObjects
 
         private IAbstractQuery<Rating> myQuery;
 
-        public RatingQueryObject(IMapper mapper, LibraryappDbContext context)
+        public RatingQueryObject(IMapper mapper, IAbstractQuery<Rating> context)
         {
             this.mapper = mapper;
-            myQuery = new GenericQuery<Rating>(context);
+            myQuery = context;
         }
 
         public QueryResultDto<RatingDto> ExecuteQuery(RatingFilterDto filter)

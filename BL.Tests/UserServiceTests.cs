@@ -151,5 +151,36 @@ namespace BL.Tests
 
             Assert.Equal("User doesn't exist.", exception.Message);
         }
+
+        [Fact]
+        public void Register_ValidCredentials()
+        {
+            var mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
+
+            _uowMock
+                .Setup(x => x.UserRepository)
+                .Returns(_repoMock.Object);
+            
+            _queryObjectMock
+                .Setup(x => x.ExecuteQuery(It.IsAny<UserFilterDto>()))
+                .Returns(new QueryResultDto<UserDetailDto> { TotalItemsCount = 0 });
+
+            var service = new UserService(_uowMock.Object, mapper, _queryObjectMock.Object);
+
+            var registerDto = new CreateUserDto() { 
+                UserName = "xkristof",
+                FirstName = "Kristof",
+                LastName = "Adamek",
+                Address = "Brno",
+                Email = "kristof@gmail.com",
+                Password = "passwd",
+                PhoneNumber = "1234"
+            };
+
+            service.Register(registerDto);
+
+            _uowMock.Verify(x => x.UserRepository, Times.Exactly(1));
+            _repoMock.Verify(x => x.Insert(It.IsAny<User>()), Times.Once);
+        }
     }
 }

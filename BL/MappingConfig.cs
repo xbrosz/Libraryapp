@@ -21,7 +21,8 @@ namespace BL
             config.CreateMap<Author, AuthorDto>().ReverseMap();
             config.CreateMap<Book, BookDetailDto>().ForMember(dest => dest.AuthorName, act => act.MapFrom(src => src.Author.FirstName
                                                                                                                 + src.Author.MiddleName
-                                                                                                                + src.Author.LastName)).ReverseMap();
+                                                                                                                + src.Author.LastName))
+                                                   .ForMember(dest => dest.BookGenres, act => act.MapFrom(src => string.Join("/", src.Genres.Select(g => g.Name))));
             config.CreateMap<Book, BookGridDto>().ReverseMap();
             config.CreateMap<BookPrint, BookPrintDto>().ReverseMap();
             config.CreateMap<Branch, BranchDto>().ReverseMap();

@@ -44,12 +44,12 @@ public class Program
         var author6 = new AuthorDto() { FirstName = "Richard", MiddleName = "Ondrejka", LastName = "", BirthDate = DateTime.Now };
 
 
-        await authorService.InsertAsync(author1);
-        await authorService.InsertAsync(author2);
-        await authorService.InsertAsync(author3);
-        await authorService.InsertAsync(author4);
-        await authorService.InsertAsync(author5);
-        await authorService.InsertAsync(author6);
+        authorService.Insert(author1);
+        authorService.Insert(author2);
+        authorService.Insert(author3);
+        authorService.Insert(author4);
+        authorService.Insert(author5);
+        authorService.Insert(author6);
 
         Console.WriteLine("Po: ");
         foreach (var f in uow.AuthorRepository.GetAll())

@@ -29,6 +29,10 @@ namespace BL
 
             config.CreateMap<QueryResultDto<AuthorDto>, EFQueryResult<Author>>().ReverseMap();
             config.CreateMap<QueryResultDto<BranchDto>, EFQueryResult<Branch>>().ReverseMap();
+            config.CreateMap<QueryResultDto<RatingDto>, EFQueryResult<Rating>>().ReverseMap();
+            config.CreateMap<QueryResultDto<BookGridDto>, EFQueryResult<Book>>().ReverseMap();
+            config.CreateMap<QueryResultDto<BookPrintDto>, EFQueryResult<BookPrint>>().ReverseMap();
+            config.CreateMap<QueryResultDto<RatingDto>, EFQueryResult<Rating>>().ReverseMap();
         }
     }
 }

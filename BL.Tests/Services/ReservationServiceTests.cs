@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Tests
+namespace BL.Tests.Services
 {
     public class ReservationServiceTests
     {

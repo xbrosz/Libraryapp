@@ -12,7 +12,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Tests
+namespace BL.Tests.QueryObjects
 {
     public class ReservationQueryObjectTests
     {
@@ -20,7 +20,7 @@ namespace BL.Tests
         private Mock<IReservationQuery> _queryMock;
 
         public ReservationQueryObjectTests()
-        { 
+        {
             _mapperMock = new Mock<IMapper>();
             _queryMock = new Mock<IReservationQuery>();
         }
@@ -40,11 +40,11 @@ namespace BL.Tests
             };
 
             _queryMock
-                .Setup(x => x.Where<int>(It.IsAny<Expression<Func<int, bool>>>(), It.IsAny<string>()))
+                .Setup(x => x.Where(It.IsAny<Expression<Func<int, bool>>>(), It.IsAny<string>()))
                 .Returns(_queryMock.Object);
 
             _queryMock
-                .Setup(x => x.Where<BookPrint>(It.IsAny<Expression<Func<BookPrint, bool>>>(), It.IsAny<string>()))
+                .Setup(x => x.Where(It.IsAny<Expression<Func<BookPrint, bool>>>(), It.IsAny<string>()))
                 .Returns(_queryMock.Object);
 
             _queryMock
@@ -69,11 +69,12 @@ namespace BL.Tests
 
             var queryObject = new ReservationQueryObject(_mapperMock.Object, _queryMock.Object);
 
-            var filterDto = new ReservationFilterDto() { 
-                BookId = 1, 
-                BranchId = 1, 
-                UserId = 1, 
-                FromDate = DateTime.Now, 
+            var filterDto = new ReservationFilterDto()
+            {
+                BookId = 1,
+                BranchId = 1,
+                UserId = 1,
+                FromDate = DateTime.Now,
                 ToDate = DateTime.Now,
                 PageSize = 5,
                 RequestedPageNumber = 1
@@ -82,8 +83,8 @@ namespace BL.Tests
             var res = queryObject.ExecuteQuery(filterDto);
 
             Assert.Equal(queryResultDto, res);
-            _queryMock.Verify(x => x.Where<int>(It.IsAny<Expression<Func<int, bool>>>(), It.IsAny<string>()), Times.Once);
-            _queryMock.Verify(x => x.Where<BookPrint>(
+            _queryMock.Verify(x => x.Where(It.IsAny<Expression<Func<int, bool>>>(), It.IsAny<string>()), Times.Once);
+            _queryMock.Verify(x => x.Where(
                 It.IsAny<Expression<Func<BookPrint, bool>>>(), It.IsAny<string>()
                 ), Times.Exactly(2));
             _queryMock.Verify(x => x.ToFilter(filterDto.ToDate.Value), Times.Once);

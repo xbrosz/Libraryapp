@@ -12,7 +12,7 @@ namespace Infrastructure.EFCore
         {
             _dbContext = dbContext;
         }
-
+        
         public override EFQueryResult<TEntity> Execute()
         {
             IQueryable<TEntity> query = _dbContext.Set<TEntity>();

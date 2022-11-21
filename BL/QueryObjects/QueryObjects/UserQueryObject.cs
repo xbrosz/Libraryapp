@@ -9,20 +9,20 @@ namespace BL.QueryObjects.QueryObjects
 {
     public class UserQueryObject : IQueryObject<UserFilterDto, UserDetailDto>
     {
-        private IMapper mapper;
+        private IMapper _mapper;
 
-        private IAbstractQuery<User> myQuery;
+        private IAbstractQuery<User> _myQuery;
 
         public UserQueryObject(IMapper mapper, IAbstractQuery<User> query)
         {
-            this.mapper = mapper;
-            myQuery = query;
+            _mapper = mapper;
+            _myQuery = query;
         }
 
         public QueryResultDto<UserDetailDto> ExecuteQuery(UserFilterDto filter)
         {
-            var query = filter.exactName ? myQuery.Where<string>(a => a == filter.name, "UserName")
-                : myQuery.Where<string>(a => a.Contains(filter.name.ToLower()), "UserName");
+            var query = filter.exactName ? _myQuery.Where<string>(a => a == filter.name, "UserName")
+                : _myQuery.Where<string>(a => a.Contains(filter.name.ToLower()), "UserName");
 
 
             if (filter.RequestedPageNumber.HasValue)
@@ -30,7 +30,7 @@ namespace BL.QueryObjects.QueryObjects
                 query = query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
             }
 
-            return mapper.Map<QueryResultDto<UserDetailDto>>(query.Execute());
+            return _mapper.Map<QueryResultDto<UserDetailDto>>(query.Execute());
         }
     }
 }

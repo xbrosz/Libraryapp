@@ -33,6 +33,7 @@ namespace BL.Services.Services
         public bool Login(UserLoginDto loginDto)
         {
             Guard.Against.NullOrWhiteSpace(loginDto.UserName, "UserName", "Username cannot be null");
+            Guard.Against.NullOrWhiteSpace(loginDto.Password, "Password", "Password cannot be null");
 
             var queryResult = queryObject.ExecuteQuery(new UserFilterDto() { name = loginDto.UserName, exactName = true });
 

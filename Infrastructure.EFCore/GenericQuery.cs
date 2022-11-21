@@ -12,10 +12,7 @@ namespace Infrastructure.EFCore
         {
             _dbContext = dbContext;
         }
-
-        //IAbstractQuery<TEntity> Where<T>(Expression<Func<T, bool>> rootPredicate, string columnName)
       
-
         public override EFQueryResult<TEntity> Execute()
         {
             IQueryable<TEntity> query = _dbContext.Set<TEntity>();

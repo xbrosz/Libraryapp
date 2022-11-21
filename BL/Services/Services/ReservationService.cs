@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
-using BL.DTOs.Author;
 using BL.DTOs.Reservation;
 using BL.QueryObjects.IQueryObject;
-using BL.QueryObjects.QueryObjects;
 using BL.Services.GenericService;
 using BL.Services.IServices;
-using DAL.Data;
 using DAL.Entities;
 using Infrastructure.UnitOfWork;
 
@@ -15,7 +12,7 @@ namespace BL.Services.Services
     {
         private IQueryObject<ReservationFilterDto, ReservationsDto> queryObject;
         public ReservationService(IUnitOfWork unitOfWork, IMapper mapper, IQueryObject<ReservationFilterDto, ReservationsDto> reservationQueryObject)
-            : base(unitOfWork, mapper, unitOfWork.ReservationRepository) 
+            : base(unitOfWork, mapper, unitOfWork.ReservationRepository)
         {
             this.queryObject = reservationQueryObject;
 

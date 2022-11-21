@@ -1,6 +1,5 @@
 using DAL.Data;
 using DAL.Entities;
-using Infrastructure.EFCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.EFCore.Test
@@ -19,7 +18,7 @@ namespace Infrastructure.EFCore.Test
 
             dbContext = new LibraryappDbContext(dbContextOptions);
 
-            
+
 
             dbContext.Genre.Add(new Genre { Id = 1, Name = "horror" });
             dbContext.Genre.Add(new Genre { Id = 2, Name = "sci-fi" });
@@ -193,7 +192,7 @@ namespace Infrastructure.EFCore.Test
 
             Assert.Equal(ExpectedResult, result);
         }
-        
+
         [Fact]
         public void ClassroomsOrderedDescending_QueryOrderBy_Test()
         {
@@ -210,7 +209,7 @@ namespace Infrastructure.EFCore.Test
 
             Assert.Equal(ExpectedResult, result);
         }
-        
+
         [Fact]
         public void StudentsSimplePagination_QueryPagination_Test()
         {

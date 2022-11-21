@@ -1,5 +1,4 @@
-﻿using Autofac.Core;
-using BL.DTOs;
+﻿using BL.DTOs;
 using BL.DTOs.Reservation;
 using BL.Facades;
 using BL.Services.IServices;
@@ -94,7 +93,7 @@ namespace BL.Tests.Facades
                 StartDate = DateTime.Now
             };
 
-            Exception exception = Assert.Throws<Exception>(() => reservationFacade.ReserveBook(reservationForm)); 
+            Exception exception = Assert.Throws<Exception>(() => reservationFacade.ReserveBook(reservationForm));
 
             _reservationServiceMock.Verify(x => x.GetReservationsInDateRangeByBookAndBranch(
                 reservationForm.BookId,
@@ -196,7 +195,7 @@ namespace BL.Tests.Facades
                 StartDate = DateTime.Now
             };
 
-            Exception exception = Assert.Throws<Exception>(() => reservationFacade.UpdateReservationDate(updateForm)); 
+            Exception exception = Assert.Throws<Exception>(() => reservationFacade.UpdateReservationDate(updateForm));
 
             _reservationServiceMock.Verify(x => x.GetReservationsInDateRangeByBookAndBranch(
                 bookPrint1.BookId,

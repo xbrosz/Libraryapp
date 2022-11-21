@@ -17,7 +17,7 @@ namespace Infrastructure.EFCore
             builder.RegisterGeneric(typeof(Repository<>))
                 .As(typeof(IRepository<>))
                 .InstancePerDependency();
-            
+
             builder.RegisterGeneric(typeof(GenericQuery<>))
                 .As(typeof(IAbstractQuery<>))
                 .InstancePerDependency();

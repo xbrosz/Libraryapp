@@ -53,9 +53,10 @@ namespace BL.Tests.QueryObjects
                 .Setup(x => x.Page(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(_queryMock.Object);
 
-            var efQueryResult = new EFQueryResult<Reservation>() { 
-                Items = new List<Reservation>() { reservation }, 
-                TotalItemsCount = 1 
+            var efQueryResult = new EFQueryResult<Reservation>()
+            {
+                Items = new List<Reservation>() { reservation },
+                TotalItemsCount = 1
             };
 
             _queryMock

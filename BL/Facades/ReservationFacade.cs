@@ -1,11 +1,5 @@
 ﻿using BL.DTOs.Reservation;
 using BL.Services.IServices;
-using BL.Services.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL.Facades
 {
@@ -30,7 +24,7 @@ namespace BL.Facades
                 reservationDto.EndDate
                 );
 
-            var bookPrints = bookPrintService.GetBookPrintsByBranchIDAndBookID(reservationDto.BranchId,reservationDto.BookId);
+            var bookPrints = bookPrintService.GetBookPrintsByBranchIDAndBookID(reservationDto.BranchId, reservationDto.BookId);
 
             var availableBPs = bookPrints.Where(bp => !reservedBPs.Any(r => r.BookPrintId == bp.Id));
 

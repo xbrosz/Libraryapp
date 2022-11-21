@@ -1,12 +1,6 @@
 ﻿using DAL.Data;
 using DAL.Entities;
-using Infrastructure.EFCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.EFCore.Test
 {
@@ -23,13 +17,14 @@ namespace Infrastructure.EFCore.Test
                             .Options;
 
             dbContext = new LibraryappDbContext(dbContextOptions);
-            
-            dbContext.Branch.Add(new Branch 
-            { Id = 1,
+
+            dbContext.Branch.Add(new Branch
+            {
+                Id = 1,
                 Name = "City Library",
                 Address = "Botanická 69"
             });
-            
+
             dbContext.Book.Add(new Book
             {
                 Id = 1,
@@ -124,13 +119,13 @@ namespace Infrastructure.EFCore.Test
                 Title = "The Lord of the Rings: The Two Towers",
                 AuthorId = 1
             });
-            
+
             dbContext.Genre.Add(new Genre
             {
                 Id = 1,
                 Name = "Fantasy"
             });
-            
+
             dbContext.BookGenre.Add(new BookGenre
             {
                 Id = 1,
@@ -192,7 +187,7 @@ namespace Infrastructure.EFCore.Test
                 Assert.True(dbContext.Book.Count() == 1);
                 Assert.False(dbContext.Book.Select(b => b.Id).Contains(1));
             }
-            
+
 
         }
 

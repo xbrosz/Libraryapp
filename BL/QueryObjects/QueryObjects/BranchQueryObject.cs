@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using BL.DTOs;
-using BL.DTOs.Author;
 using BL.DTOs.Branch;
 using BL.QueryObjects.IQueryObject;
-using DAL.Data;
 using DAL.Entities;
-using Infrastructure.EFCore;
 using Infrastructure.Query;
 
 namespace BL.QueryObjects.QueryObjects

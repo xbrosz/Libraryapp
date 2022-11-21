@@ -1,7 +1,6 @@
 ﻿using DAL.Data;
 using DAL.Entities;
 using Infrastructure.Query;
-using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Infrastructure.EFCore.Query

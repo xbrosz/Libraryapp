@@ -14,7 +14,7 @@ namespace Infrastructure.EFCore
         }
 
         //IAbstractQuery<TEntity> Where<T>(Expression<Func<T, bool>> rootPredicate, string columnName)
-      
+
 
         public override EFQueryResult<TEntity> Execute()
         {

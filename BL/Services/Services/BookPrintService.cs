@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
 using BL.DTOs;
-using BL.DTOs.Reservation;
-using BL.QueryObjects;
 using BL.QueryObjects.IQueryObject;
 using BL.Services.GenericService;
 using BL.Services.IServices;
-using DAL.Data;
 using DAL.Entities;
-using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 
 namespace BL.Services.Services
@@ -26,7 +22,6 @@ namespace BL.Services.Services
             {
                 BookId = bookId,
                 BranchId = branchId
-
             }).Items;
         }
         public IEnumerable<BookPrintDto> GetBookPrintsByBranchID(int branchId)
@@ -34,7 +29,6 @@ namespace BL.Services.Services
             return _bookPrintQueryObject.ExecuteQuery(new BookPrintFilterDto
             {
                 BranchId = branchId
-
             }).Items;
         }
         public IEnumerable<BookPrintDto> GetBookPrintsByBookID(int bookId)

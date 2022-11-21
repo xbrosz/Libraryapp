@@ -1,14 +1,9 @@
-﻿using Autofac.Core;
-using AutoMapper;
+﻿using AutoMapper;
 using BL.DTOs;
 using BL.DTOs.Author;
 using BL.QueryObjects.IQueryObject;
 using BL.Services.Services;
-using DAL.Entities;
-using Infrastructure.Query;
-using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
-using System;
 
 namespace BL.Tests.Services
 {

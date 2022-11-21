@@ -1,18 +1,11 @@
 ﻿using AutoMapper;
 using BL.DTOs;
 using BL.QueryObjects.IQueryObject;
-using BL.QueryObjects.QueryObjects;
 using BL.Services.GenericService;
 using BL.Services.IServices;
-using DAL.Data;
 using DAL.Entities;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL.Services.Services
 {
@@ -28,8 +21,6 @@ namespace BL.Services.Services
 
         public double GetBookAverageRating(int bookId)
         {
-            
-
             return _ratingQueryObject.ExecuteQuery(new RatingFilterDto
             {
                 BookId = bookId,

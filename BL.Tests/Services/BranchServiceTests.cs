@@ -1,17 +1,9 @@
 ﻿using AutoMapper;
 using BL.DTOs;
-using BL.DTOs.Author;
 using BL.DTOs.Branch;
 using BL.QueryObjects.IQueryObject;
 using BL.Services.Services;
-using DAL.Entities;
-using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL.Tests.Services
 {

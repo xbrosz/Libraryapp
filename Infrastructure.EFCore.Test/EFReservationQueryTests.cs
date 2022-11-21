@@ -2,12 +2,6 @@
 using DAL.Entities;
 using Infrastructure.EFCore.Query;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Infrastructure.EFCore.Test
 {
@@ -30,10 +24,11 @@ namespace Infrastructure.EFCore.Test
             dbContext.Branch.Add(new Branch { Id = 1, Name = "Branch1", Address = "Havlickova 22" });
             dbContext.Branch.Add(new Branch { Id = 2, Name = "Branch2", Address = "Vaclavova 42" });
 
-            dbContext.User.Add(new User { 
-                Id = 1, 
-                UserName = "xkarel", 
-                FirstName = "Karel", 
+            dbContext.User.Add(new User
+            {
+                Id = 1,
+                UserName = "xkarel",
+                FirstName = "Karel",
                 LastName = "Zidrak",
                 Address = "Brno",
                 Email = "karel@xyz.com",

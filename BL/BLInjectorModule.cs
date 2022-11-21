@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
-using Module = Autofac.Module;
+﻿using Autofac;
 using AutoMapper;
-using Infrastructure.EFCore;
-using BL.Services.Services;
-using BL.Services.IServices;
-using BL.QueryObjects.QueryObjects;
-using BL.QueryObjects.IQueryObject;
+using BL.DTOs;
 using BL.DTOs.Author;
 using BL.DTOs.Branch;
-using BL.DTOs.User;
-using BL.DTOs;
 using BL.DTOs.Reservation;
+using BL.DTOs.User;
+using BL.QueryObjects.IQueryObject;
+using BL.QueryObjects.QueryObjects;
+using BL.Services.IServices;
+using BL.Services.Services;
+using Module = Autofac.Module;
 
 namespace BL
 {

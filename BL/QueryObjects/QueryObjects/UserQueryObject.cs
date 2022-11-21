@@ -2,9 +2,7 @@
 using BL.DTOs;
 using BL.DTOs.User;
 using BL.QueryObjects.IQueryObject;
-using DAL.Data;
 using DAL.Entities;
-using Infrastructure.EFCore;
 using Infrastructure.Query;
 
 namespace BL.QueryObjects.QueryObjects

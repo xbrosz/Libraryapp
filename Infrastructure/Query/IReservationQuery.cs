@@ -24,6 +24,6 @@ namespace Infrastructure.Query
         IReservationQuery FromFilter(DateTime from);
         IReservationQuery ToFilter(DateTime to);
 
-        IEnumerable<Reservation> Execute();
+        EFQueryResult<Reservation> Execute();
     }
 }

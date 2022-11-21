@@ -53,12 +53,17 @@ namespace BL.Tests.QueryObjects
                 .Setup(x => x.Page(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(_queryMock.Object);
 
+            var efQueryResult = new EFQueryResult<Reservation>() { 
+                Items = new List<Reservation>() { reservation }, 
+                TotalItemsCount = 1 
+            };
+
             _queryMock
                 .Setup(x => x.Execute())
-                .Returns(new List<Reservation>() { reservation });
+                .Returns(efQueryResult);
 
             _mapperMock
-                .Setup(x => x.Map<QueryResultDto<ReservationsDto>>(It.IsAny<IEnumerable<Reservation>>()))
+                .Setup(x => x.Map<QueryResultDto<ReservationsDto>>(It.IsAny<EFQueryResult<Reservation>>()))
                 .Returns(queryResultDto);
 
             var queryObject = new ReservationQueryObject(_mapperMock.Object, _queryMock.Object);

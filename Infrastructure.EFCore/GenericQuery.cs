@@ -35,14 +35,16 @@ namespace Infrastructure.EFCore
                 query = Pagination(query);
             }
 
-            ClearContainers();  // clears all the containers after execution
-
-            return new EFQueryResult<TEntity>()
+            var resultQuery = new EFQueryResult<TEntity>()
             {
                 Items = query.ToList(),
                 RequestedPageNumber = PaginationContainer != null ? PaginationContainer.Value.PageToFetch : null,
                 PageSize = PaginationContainer != null ? PaginationContainer.Value.PageSize : 0
             };
+
+            ClearContainers();  // clears all the containers after execution
+
+            return resultQuery;
         }
 
         private IQueryable<TEntity> ApplyWhere(IQueryable<TEntity> query)

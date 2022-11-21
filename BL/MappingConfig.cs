@@ -29,6 +29,8 @@ namespace BL
 
             config.CreateMap<QueryResultDto<AuthorDto>, EFQueryResult<Author>>().ReverseMap();
             config.CreateMap<QueryResultDto<BranchDto>, EFQueryResult<Branch>>().ReverseMap();
+            config.CreateMap<QueryResultDto<ReservationsDto>, EFQueryResult<Reservation>>().ReverseMap();
+            config.CreateMap<QueryResultDto<UserDetailDto>, EFQueryResult<User>>().ReverseMap();
         }
     }
 }

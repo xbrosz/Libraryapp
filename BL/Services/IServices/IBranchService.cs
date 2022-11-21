@@ -10,8 +10,8 @@ namespace BL.Services.IServices
 {
     public interface IBranchService
     {
-        public IEnumerable<BranchDto> GetBranchesByName(BranchFilterDto filter);
+        public IEnumerable<BranchDto> GetBranchesByName(string name);
 
-        public IEnumerable<BranchDto> GetBranchesByAddress(BranchFilterDto filter);
+        public IEnumerable<BranchDto> GetBranchesByAddress(string address);
     }
 }

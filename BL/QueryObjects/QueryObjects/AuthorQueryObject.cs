@@ -14,7 +14,7 @@ namespace BL.QueryObjects.QueryObjects
     {
         private IMapper _mapper;
         private IAbstractQuery<Author> _query;
-        public AuthorQueryObject(IMapper mapper, GenericQuery<Author> query)
+        public AuthorQueryObject(IMapper mapper, IAbstractQuery<Author> query)
         {
             _mapper = mapper;
             _query = query;

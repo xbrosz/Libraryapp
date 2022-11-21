@@ -6,17 +6,18 @@ using BL.QueryObjects.IQueryObject;
 using DAL.Data;
 using DAL.Entities;
 using Infrastructure.EFCore;
+using Infrastructure.Query;
 
 namespace BL.QueryObjects.QueryObjects
 {
     public class BranchQueryObject : IQueryObject<BranchFilterDto, BranchDto>
     {
         private IMapper _mapper;
-        private GenericQuery<Author> _query;
-        public BranchQueryObject(IMapper mapper, LibraryappDbContext dbContext)
+        private IAbstractQuery<Branch> _query;
+        public BranchQueryObject(IMapper mapper, IAbstractQuery<Branch> query)
         {
             _mapper = mapper;
-            _query = new GenericQuery<Author>(dbContext);
+            _query = query;
         }
 
         public QueryResultDto<BranchDto> ExecuteQuery(BranchFilterDto filter)
@@ -34,6 +35,11 @@ namespace BL.QueryObjects.QueryObjects
             if (filter.RequestedPageNumber.HasValue)
             {
                 _query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
+            {
+                _query.OrderBy<string>(filter.SortCriteria, filter.SortAscending);
             }
 
             return _mapper.Map<QueryResultDto<BranchDto>>(_query.Execute());

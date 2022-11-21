@@ -42,6 +42,8 @@ namespace Infrastructure.EFCore.Query
                 query = Pagination(query);
             }
 
+            ClearContainers();  // clears all the containers after execution
+
             return query.ToList();
         }
 

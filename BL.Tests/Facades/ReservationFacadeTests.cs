@@ -1,14 +1,7 @@
-﻿using Autofac.Core;
-using BL.DTOs;
+﻿using BL.DTOs;
 using BL.DTOs.Reservation;
 using BL.Facades;
 using BL.Services.IServices;
-using DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL.Tests.Facades
 {
@@ -22,5 +15,59 @@ namespace BL.Tests.Facades
             _bpServiceMock = new Mock<IBookPrintService>();
         }
 
+        [Fact]
+        public void ReserveBook_Successful()
+        {
+            var reservation = new ReservationsDto() { Id = 1, BookPrintId = 1, BookTitle = "title" };
+
+            var reservations = new List<ReservationsDto>() { reservation };
+
+            _reservationServiceMock
+                .Setup(x => x.GetReservationsInDateRangeByBookAndBranch(
+                    It.IsAny<int>(), It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())
+                ).Returns(reservations);
+
+            var bookPrint1 = new BookPrintDto() { Id = 1, BookId = 1, BranchId = 1 };
+            var bookPrint2 = new BookPrintDto() { Id = 2, BookId = 1, BranchId = 1 };
+
+            var bookPrints = new List<BookPrintDto>() { bookPrint1, bookPrint2 };
+
+            _bpServiceMock
+                .Setup(x => x.GetBookPrintsByBranchIDAndBookID(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(bookPrints);
+
+            var reservationFacade = new ReservationFacade(_reservationServiceMock.Object, _bpServiceMock.Object);
+
+            var reservationForm = new ReservationCreateFormDto()
+            {
+                UserId = 1,
+                BookId = 1,
+                BranchId = 1,
+                EndDate = DateTime.Now,
+                StartDate = DateTime.Now
+            };
+
+            reservationFacade.ReserveBook(reservationForm);
+
+            var expectedReservationCreateDto = new CreateReservationDto()
+            {
+                BookPrintId = bookPrint2.Id,
+                UserId = reservationForm.UserId,
+                StartDate = reservationForm.StartDate,
+                EndDate = reservationForm.EndDate
+            };
+
+            _reservationServiceMock.Verify(x => x.GetReservationsInDateRangeByBookAndBranch(
+                reservationForm.BookId,
+                reservationForm.BranchId,
+                reservationForm.StartDate,
+                reservationForm.EndDate
+                ), Times.Once
+            );
+            _bpServiceMock.Verify(x => x.GetBookPrintsByBranchIDAndBookID(reservationForm.BranchId, reservationForm.BookId),
+                Times.Once);
+            _reservationServiceMock.Verify(x => x.Insert(It.IsAny<CreateReservationDto>()), Times.Once);
+
+        }
     }
 }

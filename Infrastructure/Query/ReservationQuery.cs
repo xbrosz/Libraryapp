@@ -57,6 +57,6 @@ namespace Infrastructure.Query
             toDate = null;
         }
 
-        public abstract IEnumerable<Reservation> Execute();
+        public abstract EFQueryResult<Reservation> Execute();
     }
 }

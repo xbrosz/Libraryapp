@@ -26,6 +26,6 @@ namespace Infrastructure.Query
 
 
 
-        IEnumerable<Reservation> Execute();
+        EFQueryResult<Reservation> Execute();
     }
 }

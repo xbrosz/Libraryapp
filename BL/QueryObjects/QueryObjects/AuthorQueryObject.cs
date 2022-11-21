@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using BL.DTOs;
 using BL.DTOs.Author;
-using BL.DTOs.User;
 using BL.QueryObjects.IQueryObject;
-using DAL.Data;
 using DAL.Entities;
-using Infrastructure.EFCore;
 using Infrastructure.Query;
 
 namespace BL.QueryObjects.QueryObjects
@@ -14,7 +11,7 @@ namespace BL.QueryObjects.QueryObjects
     {
         private IMapper _mapper;
         private IAbstractQuery<Author> _query;
-        public AuthorQueryObject(IMapper mapper, GenericQuery<Author> query)
+        public AuthorQueryObject(IMapper mapper, IAbstractQuery<Author> query)
         {
             _mapper = mapper;
             _query = query;
@@ -26,7 +23,7 @@ namespace BL.QueryObjects.QueryObjects
             {
                 _query.Where<string>(a => a.ToLower().Contains(filter.FirstName.ToLower()), nameof(Author.FirstName));
             }
-            
+
             if (!string.IsNullOrWhiteSpace(filter.MiddleName))
             {
                 _query.Where<string>(a => a.ToLower().Contains(filter.MiddleName.ToLower()), nameof(Author.MiddleName));
@@ -36,7 +33,7 @@ namespace BL.QueryObjects.QueryObjects
             {
                 _query.Where<string>(a => a.ToLower().Contains(filter.LastName.ToLower()), nameof(Author.LastName));
             }
-            
+
             if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
             {
                 _query.OrderBy<string>(filter.SortCriteria, filter.SortAscending);
@@ -46,7 +43,7 @@ namespace BL.QueryObjects.QueryObjects
             {
                 _query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
             }
-            
+
             return _mapper.Map<QueryResultDto<AuthorDto>>(_query.Execute());
         }
     }

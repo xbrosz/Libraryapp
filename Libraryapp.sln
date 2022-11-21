@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.EFCore.Test"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{FF8BBEAE-A0A0-4714-A0E7-700AE45C33CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL.Tests", "BL.Tests\BL.Tests.csproj", "{C33F58A2-CD2A-41D7-8769-37A7F13578CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL.Tests", "BL.Tests\BL.Tests.csproj", "{C33F58A2-CD2A-41D7-8769-37A7F13578CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BL.DTOs;
-using BL.DTOs.Branch;
+using BL.DTOs.Author;
 using BL.QueryObjects.QueryObjects;
 using DAL.Entities;
 using Infrastructure.Query;
@@ -8,43 +8,47 @@ using System.Linq.Expressions;
 
 namespace BL.Tests.QueryObjects
 {
-    public class BranchQueryObjectTests
+    public class AuthorQueryObjectTests
     {
         private Mock<IMapper> _mapperMock;
-        private Mock<IAbstractQuery<Branch>> _queryMock;
+        private Mock<IAbstractQuery<Author>> _queryMock;
 
-        public BranchQueryObjectTests()
+        public AuthorQueryObjectTests()
         {
             _mapperMock = new Mock<IMapper>();
-            _queryMock = new Mock<IAbstractQuery<Branch>>();
+            _queryMock = new Mock<IAbstractQuery<Author>>();
         }
 
         [Fact]
-        public void FilterBranches()
+        public void FilterAuthors()
         {
-            var branch = new Branch()
+            var author = new Author()
             {
                 Id = 1,
-                Name = "Moravska kniznica",
-                Address = "Namesti svobody"
+                FirstName = "Peter",
+                MiddleName = "Petrovsky",
+                LastName = "Petrovitansky",
+                BirthDate = DateTime.Now
             };
 
-            var branchDto = new BranchDto()
+            var authorDto = new AuthorDto()
             {
                 Id = 1,
-                Name = "Moravska kniznica",
-                Address = "Namesti svobody"
+                FirstName = "Peter",
+                MiddleName = "Petrovsky",
+                LastName = "Petrovitansky",
+                BirthDate = DateTime.Now
             };
 
-            var queryResultDto = new QueryResultDto<BranchDto>()
+            var queryResultDto = new QueryResultDto<AuthorDto>()
             {
-                Items = new List<BranchDto>() { branchDto },
+                Items = new List<AuthorDto>() { authorDto },
                 TotalItemsCount = 1
             };
 
-            var efQueryResult = new EFQueryResult<Branch>()
+            var efQueryResult = new EFQueryResult<Author>()
             {
-                Items = new List<Branch>() { branch },
+                Items = new List<Author>() { author },
                 TotalItemsCount = 1
             };
 
@@ -65,25 +69,26 @@ namespace BL.Tests.QueryObjects
                 .Returns(efQueryResult);
 
             _mapperMock
-                .Setup(x => x.Map<QueryResultDto<BranchDto>>(It.IsAny<EFQueryResult<Branch>>()))
+                .Setup(x => x.Map<QueryResultDto<AuthorDto>>(It.IsAny<EFQueryResult<Author>>()))
                 .Returns(queryResultDto);
 
-            var queryObject = new BranchQueryObject(_mapperMock.Object, _queryMock.Object);
+            var queryObject = new AuthorQueryObject(_mapperMock.Object, _queryMock.Object);
 
-            var filterDto = new BranchFilterDto()
+            var filterDto = new AuthorFilterDto()
             {
-                Name = "Moravska kniznica",
-                Address = "Namesti svobody",
+                FirstName = "Peter",
+                MiddleName = "Petrovsky",
+                LastName = "Petrovitansky",
                 PageSize = 5,
                 RequestedPageNumber = 1,
-                SortCriteria = "Name",
+                SortCriteria = "FirstName",
                 SortAscending = true
             };
 
             var res = queryObject.ExecuteQuery(filterDto);
 
             Assert.Equal(queryResultDto, res);
-            _queryMock.Verify(x => x.Where(It.IsAny<Expression<Func<string, bool>>>(), It.IsAny<string>()), Times.Exactly(2));
+            _queryMock.Verify(x => x.Where(It.IsAny<Expression<Func<string, bool>>>(), It.IsAny<string>()), Times.Exactly(3));
             _queryMock.Verify(x => x.Page(It.IsAny<int>(), It.IsAny<int>()), Times.Once);
             _queryMock.Verify(x => x.OrderBy<string>(It.IsAny<string>(), It.IsAny<bool>()), Times.Once);
             _queryMock.Verify(x => x.Execute(), Times.Once);

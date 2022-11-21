@@ -1,10 +1,4 @@
 ﻿using BL.DTOs.Author;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL.Services.IServices
 {
@@ -18,6 +12,6 @@ namespace BL.Services.IServices
 
         public void Insert(AuthorDto dtoToInsert);
 
-        public IEnumerable<AuthorDto> GetAuthorsByName(AuthorFilterDto filter);
+        public IEnumerable<AuthorDto> GetAuthorsByName(string firstName, string middleName, string lastName);
     }
 }

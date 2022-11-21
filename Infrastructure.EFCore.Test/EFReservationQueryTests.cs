@@ -1,30 +1,40 @@
-using DAL.Data;
+﻿using DAL.Data;
 using DAL.Entities;
+using Infrastructure.EFCore.Query;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.EFCore.Test
 {
-    public class GenericQueryTests
+    public class EFReservationQueryTests
     {
         private readonly LibraryappDbContext dbContext;
 
-        public GenericQueryTests()
+        public EFReservationQueryTests()
         {
             var myDatabaseName = "mydatabase_" + DateTime.Now.ToFileTimeUtc();
 
             var dbContextOptions = new DbContextOptionsBuilder<LibraryappDbContext>()
                             .UseInMemoryDatabase(databaseName: myDatabaseName)
                             .Options;
-
             dbContext = new LibraryappDbContext(dbContextOptions);
-
-
 
             dbContext.Genre.Add(new Genre { Id = 1, Name = "horror" });
             dbContext.Genre.Add(new Genre { Id = 2, Name = "sci-fi" });
 
             dbContext.Branch.Add(new Branch { Id = 1, Name = "Branch1", Address = "Havlickova 22" });
             dbContext.Branch.Add(new Branch { Id = 2, Name = "Branch2", Address = "Vaclavova 42" });
+
+            dbContext.User.Add(new User
+            {
+                Id = 1,
+                UserName = "xkarel",
+                FirstName = "Karel",
+                LastName = "Zidrak",
+                Address = "Brno",
+                Email = "karel@xyz.com",
+                Password = "karolko123",
+                PhoneNumber = "1234"
+            });
 
             dbContext.Author.Add(new Author
             {
@@ -117,116 +127,69 @@ namespace Infrastructure.EFCore.Test
                         BranchId = 1
                     });
 
+            dbContext.Add(
+                    new Reservation
+                    {
+                        Id = 1,
+                        BookPrintId = 1,
+                        UserId = 1,
+                        StartDate = DateTime.Today.AddDays(5),
+                        EndDate = DateTime.Today.AddDays(15)
+                    }
+                );
+
+            dbContext.Add(
+                    new Reservation
+                    {
+                        Id = 2,
+                        BookPrintId = 1,
+                        UserId = 1,
+                        StartDate = DateTime.Today.AddDays(-20),
+                        EndDate = DateTime.Today.AddDays(-10)
+                    }
+                );
+
             dbContext.SaveChanges();
         }
 
         [Fact]
-        public void OneHorrorGenreExists_QueryWhere_Test()
+        public void OneReservationExistsBetweenDateRange_QueryWhere_Test()
         {
-            var efquery = new GenericQuery<Genre>(dbContext);
-            efquery.Where<string>(a => a == "horror", "Name");
+            var efquery = new EFReservationQuery(dbContext);
+
+            efquery.FromFilter(DateTime.Today.AddDays(-20));
+            efquery.ToFilter(DateTime.Today.AddDays(-10));
+
             var result = efquery.Execute().Items;
 
-            Assert.True(result.Count() == 1);
-
-            Assert.True(result.First().Name == "horror");
+            Assert.Single(result);
+            Assert.Equal(2, result.First().Id);
         }
 
         [Fact]
-        public void OneBranchExistsWNameBranch1_QueryWhere_Test()
+        public void TwoReservationsExistBetweenDateRange_QueryWhere_Test()
         {
-            var efquery = new GenericQuery<Branch>(dbContext);
-            efquery.Where<string>(a => a == "Branch1", "Name");
+            var efquery = new EFReservationQuery(dbContext);
+
+            efquery.FromFilter(DateTime.Today.AddDays(-15));
+            efquery.ToFilter(DateTime.Today.AddDays(10));
+
             var result = efquery.Execute().Items;
 
-            Assert.True(result.Count() == 1);
-
-            Assert.True(result.First().Name == "Branch1");
+            Assert.Equal(2, result.Count());
         }
 
         [Fact]
-        public void BranchesNameStartsWithBra_QueryWhere_Test()
+        public void ZeroReservationsExistBetweenDateRange_QueryWhere_Test()
         {
-            var efquery = new GenericQuery<Branch>(dbContext);
-            efquery.Where<string>(a => a.StartsWith("Bra"), "Name");
+            var efquery = new EFReservationQuery(dbContext);
+
+            efquery.FromFilter(DateTime.Today.AddDays(16));
+            efquery.ToFilter(DateTime.Today.AddDays(20));
+
             var result = efquery.Execute().Items;
 
-            Assert.True(result.Count() == 2);
-        }
-
-        [Fact]
-        public void OneAuthorExistsWNameMike_QueryWhere_Test()
-        {
-            var efquery = new GenericQuery<Author>(dbContext);
-            efquery.Where<string>(a => a == "Mike", "FirstName");
-            var result = efquery.Execute().Items;
-
-            Assert.True(result.Count() == 1);
-
-            Assert.True(result.First().FirstName == "Mike");
-        }
-
-        [Fact]
-        public void OneAuthorExistsWBirthDate_QueryWhere_Test()
-        {
-            var efquery = new GenericQuery<Author>(dbContext);
-            efquery.Where<DateTime>(a => a < DateTime.Today, "BirthDate");
-            var result = efquery.Execute().Items;
-
-            Assert.True(result.Count() == 1);
-        }
-
-        [Fact]
-        public void ClassroomsOrderedAscending_QueryOrderBy_Test()
-        {
-            var efquery = new GenericQuery<BookPrint>(dbContext);
-            efquery.OrderBy<int>("Id", true);
-            var result = efquery.Execute().Items
-                .Select(a => a.Id)
-                .ToList();
-
-            var ExpectedResult = dbContext.BookPrint
-                .Select(a => a.Id)
-                .OrderBy(a => a)
-                .ToList();
-
-            Assert.Equal(ExpectedResult, result);
-        }
-
-        [Fact]
-        public void ClassroomsOrderedDescending_QueryOrderBy_Test()
-        {
-            var efquery = new GenericQuery<BookPrint>(dbContext);
-            efquery.OrderBy<int>("Id", false);
-            var result = efquery.Execute().Items
-                .Select(a => a.Id)
-                .ToList();
-
-            var ExpectedResult = dbContext.BookPrint
-                .Select(a => a.Id)
-                .OrderByDescending(a => a)
-                .ToList();
-
-            Assert.Equal(ExpectedResult, result);
-        }
-
-        [Fact]
-        public void StudentsSimplePagination_QueryPagination_Test()
-        {
-            var efquery = new GenericQuery<BookPrint>(dbContext);
-            efquery.Page(3, 3);
-            var result = efquery.Execute().Items
-                .Select(a => a.Id)
-                .ToList();
-
-            var ExpectedResult = dbContext.BookPrint
-                .Skip(6)
-                .Take(3)
-                .Select(a => a.Id)
-                .ToList();
-
-            Assert.Equal(ExpectedResult, result);
+            Assert.Empty(result);
         }
     }
-
 }

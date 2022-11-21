@@ -1,33 +1,32 @@
 ﻿using AutoMapper;
 using BL.DTOs;
-using DAL.Data;
+using BL.QueryObjects.IQueryObject;
 using DAL.Entities;
-using Infrastructure.EFCore;
 using Infrastructure.Query;
 
 namespace BL.QueryObjects.QueryObjects
 {
-    public class RatingQueryObject
+    public class RatingQueryObject : IQueryObject<RatingFilterDto, RatingDto>
     {
-        private IMapper mapper;
+        private IMapper _mapper;
 
-        private IAbstractQuery<Rating> myQuery;
+        private IAbstractQuery<Rating> _myQuery;
 
-        public RatingQueryObject(IMapper mapper, IAbstractQuery<Rating> context)
+        public RatingQueryObject(IMapper mapper, IAbstractQuery<Rating> query)
         {
-            this.mapper = mapper;
-            myQuery = context;
+            _mapper = mapper;
+            _myQuery = query;
         }
 
         public QueryResultDto<RatingDto> ExecuteQuery(RatingFilterDto filter)
         {
-            var query = myQuery.Where<int>(a => a == filter.BookId, "BookId");
+            var query = _myQuery.Where<int>(a => a == filter.BookId, "BookId");
             if (filter.RequestedPageNumber.HasValue)
             {
                 query = query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
             }
 
-            return mapper.Map<QueryResultDto<RatingDto>>(query.Execute());
+            return _mapper.Map<QueryResultDto<RatingDto>>(query.Execute());
         }
     }
 }

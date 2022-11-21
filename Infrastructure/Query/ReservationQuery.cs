@@ -1,10 +1,5 @@
 ﻿using DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Query
 {
@@ -57,6 +52,6 @@ namespace Infrastructure.Query
             toDate = null;
         }
 
-        public abstract IEnumerable<Reservation> Execute();
+        public abstract EFQueryResult<Reservation> Execute();
     }
 }

@@ -32,14 +32,14 @@ namespace BL.QueryObjects.QueryObjects
                 _query.Where<string>(a => a.ToLower().Contains(filter.Address.ToLower()), nameof(Branch.Address));
             }
 
-            if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
-            {
-                _query.OrderBy<string>(filter.SortCriteria, filter.SortAscending);
-            }
-
             if (filter.RequestedPageNumber.HasValue)
             {
                 _query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
+            {
+                _query.OrderBy<string>(filter.SortCriteria, filter.SortAscending);
             }
 
             return _mapper.Map<QueryResultDto<BranchDto>>(_query.Execute());

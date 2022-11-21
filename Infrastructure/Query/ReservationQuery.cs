@@ -53,6 +53,8 @@ namespace Infrastructure.Query
             WherePredicate.Clear();
             OrderByContainer = null;
             PaginationContainer = null;
+            fromDate = null;
+            toDate = null;
         }
 
         public abstract IEnumerable<Reservation> Execute();

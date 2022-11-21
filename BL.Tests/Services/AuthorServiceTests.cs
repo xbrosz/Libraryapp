@@ -5,23 +5,24 @@ using BL.DTOs.Author;
 using BL.QueryObjects.IQueryObject;
 using BL.Services.Services;
 using DAL.Entities;
+using Infrastructure.Query;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 using System;
 
-namespace BL.Tests.ServicesTests
+namespace BL.Tests.Services
 {
     public class AuthorServiceTests
     {
         Mock<IUnitOfWork> _uowMock;
         Mock<IQueryObject<AuthorFilterDto, AuthorDto>> _queryObjectMock;
-        IMapper _mapper;
+        private Mock<IMapper> _mapperMock;
 
         public AuthorServiceTests()
         {
             _uowMock = new Mock<IUnitOfWork>();
             _queryObjectMock = new Mock<IQueryObject<AuthorFilterDto, AuthorDto>>();
-            _mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
+            _mapperMock = new Mock<IMapper>();
         }
 
         [Fact]
@@ -46,7 +47,7 @@ namespace BL.Tests.ServicesTests
                 .Setup(x => x.ExecuteQuery(It.IsAny<AuthorFilterDto>()))
                 .Returns(queryResult);
 
-            var service = new AuthorService(_uowMock.Object, _mapper, _queryObjectMock.Object);
+            var service = new AuthorService(_uowMock.Object, _mapperMock.Object, _queryObjectMock.Object);
 
             var expectedOutput = new List<AuthorDto>() { authorDto };
 
@@ -59,7 +60,7 @@ namespace BL.Tests.ServicesTests
         [Fact]
         public void GetAuthorsByName_NameWithDigits()
         {
-            var service = new AuthorService(_uowMock.Object, _mapper, _queryObjectMock.Object);
+            var service = new AuthorService(_uowMock.Object, _mapperMock.Object, _queryObjectMock.Object);
 
             var exception = Assert.Throws<Exception>(() => service.GetAuthorsByName("P6t6r", "Petrovsky", "Petrovitansky"));
 
@@ -69,7 +70,7 @@ namespace BL.Tests.ServicesTests
         [Fact]
         public void GetAuthorsByName_NameWithSpecCharacters()
         {
-            var service = new AuthorService(_uowMock.Object, _mapper, _queryObjectMock.Object);
+            var service = new AuthorService(_uowMock.Object, _mapperMock.Object, _queryObjectMock.Object);
 
             var exception = Assert.Throws<Exception>(() => service.GetAuthorsByName("Peter-", "Petrovsky", "Petrovitansky"));
 

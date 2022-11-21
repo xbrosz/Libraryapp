@@ -8,7 +8,7 @@ using DAL.Entities;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 
-namespace BL.Tests.ServicesTests
+namespace BL.Tests.Services
 {
     public class UserServiceTests
     {

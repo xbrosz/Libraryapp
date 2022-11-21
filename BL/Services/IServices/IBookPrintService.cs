@@ -7,9 +7,9 @@ namespace BL.Services.IServices
 {
     public interface IBookPrintService : IGenericService<BookPrint, BookPrintDto, BookPrintDto, BookPrintDto>
     {
-        public IEnumerable<BookPrintDto> GetBookbyBranchIDAndBookID(int branchId, int bookId);
-        public IEnumerable<BookPrintDto> GetBookbyBranchID(int branchId);
-        public IEnumerable<BookPrintDto> GetBookbyBookID(int bookId);
+        public IEnumerable<BookPrintDto> GetBookPrintsByBranchIDAndBookID(int branchId, int bookId);
+        public IEnumerable<BookPrintDto> GetBookPrintsByBranchID(int branchId);
+        public IEnumerable<BookPrintDto> GetBookPrintsByBookID(int bookId);
         
     }
 }

@@ -12,8 +12,7 @@ namespace BL.DTOs
         public string Title { get; set; }
         public DateTime Release { get; set; }
         public string AuthorName { get; set; }
-        public List<RatingDto> Ratings { get; set; }
-        public List<string> BookGenres { get; set; }
+        public string BookGenres { get; set; }
 
     }
 }

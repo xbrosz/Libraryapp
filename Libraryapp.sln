@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.EFCore.Test"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{FF8BBEAE-A0A0-4714-A0E7-700AE45C33CD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL.Tests", "BL.Tests\BL.Tests.csproj", "{C33F58A2-CD2A-41D7-8769-37A7F13578CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{84E180E3-B7B4-4FD0-9A1F-284A1E7B6161}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{FF8BBEAE-A0A0-4714-A0E7-700AE45C33CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF8BBEAE-A0A0-4714-A0E7-700AE45C33CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF8BBEAE-A0A0-4714-A0E7-700AE45C33CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C33F58A2-CD2A-41D7-8769-37A7F13578CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C33F58A2-CD2A-41D7-8769-37A7F13578CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C33F58A2-CD2A-41D7-8769-37A7F13578CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C33F58A2-CD2A-41D7-8769-37A7F13578CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84E180E3-B7B4-4FD0-9A1F-284A1E7B6161}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84E180E3-B7B4-4FD0-9A1F-284A1E7B6161}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84E180E3-B7B4-4FD0-9A1F-284A1E7B6161}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84E180E3-B7B4-4FD0-9A1F-284A1E7B6161}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

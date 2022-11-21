@@ -48,6 +48,15 @@ namespace Infrastructure.Query
             return this;
         }
 
+        protected void ClearContainers()
+        {
+            WherePredicate.Clear();
+            OrderByContainer = null;
+            PaginationContainer = null;
+            fromDate = null;
+            toDate = null;
+        }
+
         public abstract IEnumerable<Reservation> Execute();
     }
 }

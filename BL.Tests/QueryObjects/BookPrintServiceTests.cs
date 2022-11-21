@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Tests
+namespace BL.Tests.QueryObjects
 {
     public class BookPrintServiceTests
     {
@@ -50,7 +50,7 @@ namespace BL.Tests
                     Title = "C++ for begginers"
 
                 },
-                
+
                 Branch = new Branch
                 {
                     Id = 1,
@@ -85,7 +85,7 @@ namespace BL.Tests
 
             var service = new BookPrintService(_uowMock.Object, mapper, _queryObjectMock.Object);
             var result = service.GetBookPrintsByBranchIDAndBookID(1, 1);
-            
+
 
             Assert.True(result.Count() == 1 &&
                         result.First().Id == 1 &&

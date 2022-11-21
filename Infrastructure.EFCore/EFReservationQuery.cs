@@ -1,6 +1,7 @@
 ﻿using DAL.Data;
 using DAL.Entities;
 using Infrastructure.Query;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Infrastructure.EFCore.Query
@@ -13,7 +14,7 @@ namespace Infrastructure.EFCore.Query
         {
             DbContext = dbContext;
         }
-        public override IEnumerable<Reservation> Execute()
+        public override EFQueryResult<Reservation> Execute()
         {
             IQueryable<Reservation> query = DbContext.Set<Reservation>();
 
@@ -27,7 +28,7 @@ namespace Infrastructure.EFCore.Query
                 query = ApplyFromFilter(query);
             }
 
-            if (fromDate.HasValue)
+            if (toDate.HasValue)
             {
                 query = ApplyToFilter(query);
             }
@@ -42,23 +43,27 @@ namespace Infrastructure.EFCore.Query
                 query = Pagination(query);
             }
 
-            ClearContainers();  // clears all the containers after execution
+            var resultQuery = new EFQueryResult<Reservation>()
+            {
+                Items = query.ToList(),
+                TotalItemsCount = query.Count(),
+                RequestedPageNumber = PaginationContainer != null ? PaginationContainer.Value.PageToFetch : null,
+                PageSize = PaginationContainer != null ? PaginationContainer.Value.PageSize : 0
+            };
 
-            return query.ToList();
+            ClearContainers();
+
+            return resultQuery;
         }
 
         private IQueryable<Reservation> ApplyFromFilter(IQueryable<Reservation> query)
         {
-            query.Where(r => r.StartDate >= fromDate || r.EndDate >= fromDate);
-
-            return query;
+            return query.Where(r => r.StartDate >= fromDate || r.EndDate >= fromDate);
         }
 
         private IQueryable<Reservation> ApplyToFilter(IQueryable<Reservation> query)
         {
-            query.Where(r => r.StartDate <= toDate || r.EndDate <= toDate);
-
-            return query;
+            return query.Where(r => r.StartDate <= toDate || r.EndDate <= toDate);
         }
 
         private IQueryable<Reservation> ApplyWhere(IQueryable<Reservation> query)

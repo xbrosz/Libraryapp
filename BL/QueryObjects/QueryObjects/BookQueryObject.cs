@@ -15,10 +15,10 @@ namespace BL.QueryObjects.QueryObjects
 
         private IAbstractQuery<Book> myQuery;
 
-        public BookQueryObject(IMapper mapper, IAbstractQuery<Book> context)
+        public BookQueryObject(IMapper mapper, IAbstractQuery<Book> query)
         {
             this.mapper = mapper;
-            myQuery = context;
+            myQuery = query;
         }
 
         public QueryResultDto<BookGridDto> ExecuteQuery(BookFilterDto filter)
@@ -28,7 +28,10 @@ namespace BL.QueryObjects.QueryObjects
             {
                 query = query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
             }
-
+            if (query is null)
+            {
+                return null;
+            }
             return mapper.Map<QueryResultDto<BookGridDto>>(query.Execute());
         }
     }

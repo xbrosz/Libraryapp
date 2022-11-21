@@ -11,39 +11,42 @@ namespace BL.QueryObjects.QueryObjects
 {
     public class BookPrintQueryObject : IQueryObject<BookPrintFilterDto, BookPrintDto>
     {
-        private IMapper mapper;
+        private IMapper _mapper;
 
-        private IAbstractQuery<BookPrint> myQuery;
+        private IAbstractQuery<BookPrint> _query;
 
-        public BookPrintQueryObject(IMapper mapper, IAbstractQuery<BookPrint> context)
+        public BookPrintQueryObject(IMapper mapper, IAbstractQuery<BookPrint> query)
         {
-            this.mapper = mapper;
-            myQuery = context;
+            _mapper = mapper;
+            _query = query;
         }
 
         public QueryResultDto<BookPrintDto> ExecuteQuery(BookPrintFilterDto filter)
         {
-            var query = myQuery;
             if (filter.BranchId != null)
             {
-                query = query.Where<int>(a => a == filter.BranchId, "BranchId");
+                _query = _query.Where<int>(a => a == filter.BranchId, "BranchId");
             }
-            if (filter.BookId != null)
+            if (filter.BookId != null && _query != null)
             {
-                query = query.Where<int>(a => a == filter.BookId, "BookId");
+                _query = _query.Where<int>(a => a == filter.BookId, "BookId");
             }
 
             if (filter.ReservedBookPrintIDs != null)
             {
-                query = query.Where<int>(a => !filter.ReservedBookPrintIDs.Contains(a), "Id");
+                _query = _query.Where<int>(a => !filter.ReservedBookPrintIDs.Contains(a), "Id");
             }
 
             if (filter.RequestedPageNumber.HasValue)
             {
-                query = query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
+                _query = _query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
             }
-
-            return mapper.Map<QueryResultDto<BookPrintDto>>(query.Execute());
+            if (_query is null)
+            {
+                return null;
+            }
+            var res = _query.Execute();
+            return _mapper.Map<QueryResultDto<BookPrintDto>>(res);
         }
     }
 }

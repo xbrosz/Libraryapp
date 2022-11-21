@@ -15,10 +15,10 @@ namespace BL.QueryObjects.QueryObjects
 
         private IReservationQuery myQuery;
 
-        public ReservationQueryObject(IMapper mapper, LibraryappDbContext dbx)
+        public ReservationQueryObject(IMapper mapper, IReservationQuery query)
         {
             this.mapper = mapper;
-            myQuery = new EFReservationQuery(dbx);
+            myQuery = query;
         }
 
         public QueryResultDto<ReservationsDto> ExecuteQuery(ReservationFilterDto filter)
@@ -54,8 +54,8 @@ namespace BL.QueryObjects.QueryObjects
             {
                 query = query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
             }
-
-            return mapper.Map<QueryResultDto<ReservationsDto>>(query.Execute());
+            var res = query.Execute();
+            return mapper.Map<QueryResultDto<ReservationsDto>>(res);
         }
     }
 }

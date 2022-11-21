@@ -15,10 +15,10 @@ namespace BL.QueryObjects.QueryObjects
 
         private IAbstractQuery<User> myQuery;
 
-        public UserQueryObject(IMapper mapper, LibraryappDbContext dbx)
+        public UserQueryObject(IMapper mapper, IAbstractQuery<User> query)
         {
             this.mapper = mapper;
-            myQuery = new GenericQuery<User>(dbx);
+            myQuery = query;
         }
 
         public QueryResultDto<UserDetailDto> ExecuteQuery(UserFilterDto filter)

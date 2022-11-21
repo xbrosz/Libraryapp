@@ -5,13 +5,11 @@ namespace BL.Facades
 {
     public class BookFacade
     {
-        private IBookService _bookService { get; set; }
         private IBookPrintService _bookPrintService { get; set; }
         private IReservationService _reservationService { get; set; }
 
-        public BookFacade(IBookService bookService, IBookPrintService bookPrintService, IReservationService reservationService)
+        public BookFacade(IBookPrintService bookPrintService, IReservationService reservationService)
         {
-            _bookService = bookService;
             _bookPrintService = bookPrintService;
             _reservationService = reservationService;
         }

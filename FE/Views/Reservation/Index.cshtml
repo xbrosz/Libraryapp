@@ -1,0 +1,24 @@
+﻿@model ReservationIndexViewModel
+
+<h4>Courses</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Book</th>
+            <th>From date</th>
+            <th>To date</th>
+            <th>Branch</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservation in Model.reservations)
+        {
+            <tr>
+                <td>@reservation.BookTitle</td>
+                <td>@reservation.StartDate</td>
+                <td>@reservation.EndDate</td>
+                <td>@reservation.Branch.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>

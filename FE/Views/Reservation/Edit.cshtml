@@ -1,0 +1,33 @@
+﻿@model ReservationEditViewModel
+
+<h4>Reservation</h4>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.BookTitle)
+    @Html.AntiForgeryToken()
+    
+    <div class="form-group">
+        @Html.LabelFor(x => x.StartDate)
+
+        <link href="~/jqueryui/jquery-ui.css" rel="stylesheet" />
+        <input asp-for="StartDate" type="text" class="form-control" placeholder="Start date" />
+        @Html.LabelFor(x => x.EndDate)
+        <input asp-for="EndDate" type="text" class="form-control" placeholder="End date" />
+
+        @section scripts{
+        <script src="~/jqueryui/jquery-ui.js"></script>
+        <script>
+            $(function () {
+                $("#StartDate").datepicker({ dateFormat: 'dd-mm-yy' });
+            });
+        </script>
+        <script>
+            $(function () {
+                $("#EndDate").datepicker({ dateFormat: 'dd-mm-yy' });
+            });
+        </script>
+    }
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+}

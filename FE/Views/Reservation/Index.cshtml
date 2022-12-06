@@ -1,6 +1,6 @@
 ﻿@model ReservationIndexViewModel
 
-<h4>Courses</h4>
+<h4>Reservations</h4>
 <table class="table">
     <thead>
         <tr>
@@ -8,6 +8,7 @@
             <th>From date</th>
             <th>To date</th>
             <th>Branch</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -18,6 +19,13 @@
                 <td>@reservation.StartDate</td>
                 <td>@reservation.EndDate</td>
                 <td>@reservation.Branch.Name</td>
+                <td>
+                    @if (reservation.StartDate >= DateTime.UtcNow)
+                    {
+                        <a class="btn btn-secondary my-1" href="@Url.Action("Edit", new { Id = reservation.Id })">Edit</a>
+                    }
+                    <input class="btn btn-secondary my-1" type="submit" value="Delete" />
+                </td>
             </tr>
         }
     </tbody>

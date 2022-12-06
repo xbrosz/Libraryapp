@@ -11,6 +11,8 @@ using Infrastructure.EFCore;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
+using System.Xml.Linq;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +32,12 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 
 
 var app = builder.Build();
+
+// For testing purposes
+//using var dbcontext = app.Services.GetAutofacRoot().Resolve<LibraryappDbContext>();
+//dbcontext.Database.EnsureDeleted();
+//dbcontext.Database.EnsureCreated();
+//using var uow = app.Services.GetAutofacRoot().Resolve<IUnitOfWork>();
 
 
 // Configure the HTTP request pipeline.

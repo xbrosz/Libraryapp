@@ -1,5 +1,6 @@
 ﻿using BL.DTOs.Branch;
 using BL.DTOs.Reservation;
+using BL.Facades;
 using BL.Services.IServices;
 using BL.Services.Services;
 using DAL.Entities;
@@ -11,10 +12,12 @@ namespace FE.Controllers
     public class ReservationController : Controller
     {
         private readonly IReservationService _reservationService;
+        private readonly IReservationFacade _reservationFacade;
 
-        public ReservationController(IReservationService reservationService)
+        public ReservationController(IReservationService reservationService, IReservationFacade reservationFacade)
         {
             _reservationService = reservationService;
+            _reservationFacade = reservationFacade;
         }
 
         public IActionResult Index()
@@ -31,17 +34,7 @@ namespace FE.Controllers
         }
         public IActionResult Edit(int id)
         {
-            //var dto = repo.Get(id);
-
-            var dto = new ReservationsDto
-            {
-                BookTitle = "title",
-                Branch = new BranchDto { Name = "branch" }
-                ,
-                Id = 1,
-                EndDate = DateTime.Now.AddDays(-10),
-                StartDate = DateTime.Now.AddDays(4)
-            };
+            var dto = _reservationService.Find(id);
 
             if (dto == null)
             {
@@ -50,15 +43,15 @@ namespace FE.Controllers
 
             var model = new ReservationEditViewModel
             {
-                BookTitle = "title",
-                Branch = new BranchDto { Name = "branch" }
+                BookTitle = dto.BookTitle,
+                Branch = dto.Branch
                  ,
-                Id = 1,
-                EndDate = DateTime.Now.AddDays(-10),
-                StartDate = DateTime.Now.AddDays(4)
+                BookPrintId = dto.BookPrintId,
+                Id = dto.Id,
+                EndDate = dto.EndDate,
+                StartDate = dto.StartDate
             };
 
-            //var model = dto.Adapt<ReservationEditViewModel>();
             return View(model);
         }
 
@@ -66,29 +59,36 @@ namespace FE.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(ReservationEditViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            //if (!ModelState.IsValid)
+            //{
+             //   return View(model);
+            //}
 
-            //var dto = model.ToDto();
-            //_reservationService.Update(dto);
+            var dto = new ReservationUpdateFormDto
+            {   
+                Id = model.Id,
+                EndDate = model.EndDate,
+                StartDate = model.StartDate,
+                UserId = 1,
+                BranchId = 1,
+                BookPrintId = model.BookPrintId
+            };
+
+            _reservationFacade.UpdateReservationDate(dto);
 
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            var dto = new ReservationsDto();
-            //var dto =_reservationService.Get(id);
+            var dto =_reservationService.Find(id);
             if (dto == null)
             {
                 return NotFound();
             }
 
-            //_studentRepository.Delete(dto);
+            _reservationService.Delete(dto.Id);
 
             return RedirectToAction(nameof(Index));
         }

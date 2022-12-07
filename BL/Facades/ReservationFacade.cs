@@ -3,7 +3,7 @@ using BL.Services.IServices;
 
 namespace BL.Facades
 {
-    public class ReservationFacade
+    public class ReservationFacade : IReservationFacade
     {
         private IReservationService reservationService;
         private IBookPrintService bookPrintService;

@@ -15,6 +15,7 @@ namespace BL
         {
             config.CreateMap<Reservation, ReservationsDto>()
                 .ForMember(dest => dest.BookTitle, act => act.MapFrom(src => src.BookPrint.Book.Title)).ReverseMap();
+            config.CreateMap<Reservation, UpdateReservationDto>().ReverseMap();
             config.CreateMap<User, UserDetailDto>().ReverseMap();
             config.CreateMap<User, CreateUserDto>().ReverseMap();
             config.CreateMap<Rating, RatingDto>().ReverseMap();

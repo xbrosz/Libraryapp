@@ -7,7 +7,11 @@ namespace BL.Services.IServices
     public interface IUserService : IGenericService<User, UserDetailDto, UserDetailDto, CreateUserDto>
     {
         IEnumerable<UserDetailDto> GetUsersBySubstringName(string substring);
+
         void Register(CreateUserDto registerDto);
-        bool Login(UserLoginDto userLogin);
+
+        public int Login(UserLoginDto loginDto);
+
+        UserDetailDto? GetUserByUserName(string name);
     }
 }

@@ -1,10 +1,9 @@
-﻿using DAL.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
-namespace BL.DTOs.User
+namespace FE.Models.Identity
 {
-    public class CreateUserDto
+    public class RegisterModel
     {
         [Required]
         [StringLength(64)]
@@ -45,6 +44,5 @@ namespace BL.DTOs.User
         public string? ConfirmPassword { get; set; }
 
         public string? ReturnUrl { get; set; }
-        public int RoleId { get; set; }
     }
 }

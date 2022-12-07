@@ -1,9 +1,10 @@
 ﻿using BL.DTOs.Reservation;
+using BL.Facades.IFacades;
 using BL.Services.IServices;
 
-namespace BL.Facades
+namespace BL.Facades.Facades
 {
-    public class ReservationFacade
+    public class ReservationFacade : IReservationFacade
     {
         private IReservationService reservationService;
         private IBookPrintService bookPrintService;
@@ -11,7 +12,7 @@ namespace BL.Facades
         public ReservationFacade(IReservationService reservationService, IBookPrintService bpService)
         {
             this.reservationService = reservationService;
-            this.bookPrintService = bpService;
+            bookPrintService = bpService;
         }
 
         public void ReserveBook(ReservationCreateFormDto reservationDto)

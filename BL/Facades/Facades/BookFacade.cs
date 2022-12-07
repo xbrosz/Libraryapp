@@ -1,9 +1,10 @@
 ﻿using BL.DTOs;
+using BL.Facades.IFacades;
 using BL.Services.IServices;
 
-namespace BL.Facades
+namespace BL.Facades.Facades
 {
-    public class BookFacade
+    public class BookFacade : IBookFacade
     {
         private IBookPrintService _bookPrintService { get; set; }
         private IReservationService _reservationService { get; set; }

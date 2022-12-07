@@ -4,6 +4,7 @@ using BL.DTOs.User;
 using BL.QueryObjects.IQueryObject;
 using DAL.Entities;
 using Infrastructure.Query;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BL.QueryObjects.QueryObjects
 {
@@ -21,16 +22,23 @@ namespace BL.QueryObjects.QueryObjects
 
         public QueryResultDto<UserDetailDto> ExecuteQuery(UserFilterDto filter)
         {
-            var query = filter.exactName ? _myQuery.Where<string>(a => a == filter.name, "UserName")
-                : _myQuery.Where<string>(a => a.Contains(filter.name.ToLower()), "UserName");
+            if (!string.IsNullOrWhiteSpace(filter.Name))
+            {
+                _myQuery = filter.ExactName ? _myQuery.Where<string>(a => a == filter.Name, "UserName")
+                : _myQuery.Where<string>(a => a.Contains(filter.Name.ToLower()), "UserName");
+            }
 
+            if (!string.IsNullOrWhiteSpace(filter.UserName))
+            {
+                _myQuery.Where<string>(a => a == filter.UserName, nameof(User.UserName));
+            }
 
             if (filter.RequestedPageNumber.HasValue)
             {
-                query = query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
+                _myQuery.Page(filter.RequestedPageNumber.Value, filter.PageSize);
             }
 
-            return _mapper.Map<QueryResultDto<UserDetailDto>>(query.Execute());
+            return _mapper.Map<QueryResultDto<UserDetailDto>>(_myQuery.Execute());
         }
     }
 }

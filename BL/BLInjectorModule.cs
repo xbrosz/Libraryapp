@@ -5,6 +5,8 @@ using BL.DTOs.Author;
 using BL.DTOs.Branch;
 using BL.DTOs.Reservation;
 using BL.DTOs.User;
+using BL.Facades.Facades;
+using BL.Facades.IFacades;
 using BL.QueryObjects.IQueryObject;
 using BL.QueryObjects.QueryObjects;
 using BL.Services.IServices;
@@ -34,6 +36,10 @@ namespace BL
             builder.RegisterType<BookService>().As<IBookService>().InstancePerDependency();
             builder.RegisterType<BookPrintService>().As<IBookPrintService>().InstancePerDependency();
             builder.RegisterType<RatingService>().As<IRatingService>().InstancePerDependency();
+
+            builder.RegisterType<BookFacade>().As<IBookFacade>().InstancePerDependency();
+            builder.RegisterType<UserFacade>().As<IUserFacade>().InstancePerDependency();
+            builder.RegisterType<ReservationFacade>().As<IReservationFacade>().InstancePerDependency();
         }
     }
 }

@@ -12,12 +12,12 @@ namespace BL.Services.Services
 {
     public class UserService : GenericService<User, UserDetailDto, UserDetailDto, CreateUserDto>, IUserService
     {
-        private IQueryObject<UserFilterDto, UserDetailDto> queryObject;
+        private IQueryObject<UserFilterDto, UserDetailDto> _queryObject;
 
         public UserService(IUnitOfWork unitOfWork, IMapper mapper, IQueryObject<UserFilterDto, UserDetailDto> userQueryObject)
             : base(unitOfWork, mapper, unitOfWork.UserRepository)
         {
-            this.queryObject = userQueryObject;
+            _queryObject = userQueryObject;
         }
 
         public void Register(CreateUserDto registerDto)
@@ -30,12 +30,12 @@ namespace BL.Services.Services
             base.Insert(registerDto);
         }
 
-        public bool Login(UserLoginDto loginDto)
+        public int Login(UserLoginDto loginDto)
         {
             Guard.Against.NullOrWhiteSpace(loginDto.UserName, "UserName", "Username cannot be null");
             Guard.Against.NullOrWhiteSpace(loginDto.Password, "Password", "Password cannot be null");
 
-            var queryResult = queryObject.ExecuteQuery(new UserFilterDto() { name = loginDto.UserName, exactName = true });
+            var queryResult = _queryObject.ExecuteQuery(new UserFilterDto() { Name = loginDto.UserName, ExactName = true });
 
             if (queryResult.TotalItemsCount == 0)
             {
@@ -46,12 +46,28 @@ namespace BL.Services.Services
 
             var user = _unitOfWork.UserRepository.GetByID(userDto.Id);
 
-            return PasswordHasher.Verify(loginDto.Password, user.Password);
+            if (!PasswordHasher.Verify(loginDto.Password, user.Password))
+            {
+                throw new Exception("Password is incorrect");
+            }
+
+            return user.Id;
         }
 
         public IEnumerable<UserDetailDto> GetUsersBySubstringName(string substring)
         {
-            return queryObject.ExecuteQuery(new UserFilterDto() { name = substring, exactName = false }).Items;
+            return _queryObject.ExecuteQuery(new UserFilterDto() { Name = substring, ExactName = false }).Items;
+        }
+
+        public UserDetailDto? GetUserByUserName(string userName)
+        {
+            var queryResult = _queryObject.ExecuteQuery(new UserFilterDto() { UserName = userName });
+  
+            if (queryResult.TotalItemsCount == 0)
+            {
+                return null;
+            }
+            return queryResult.Items.First();
         }
     }
 }

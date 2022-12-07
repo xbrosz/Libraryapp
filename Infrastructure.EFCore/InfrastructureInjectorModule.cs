@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using DAL.Data;
+using Infrastructure.EFCore.Query;
 using Infrastructure.Query;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
@@ -12,6 +13,10 @@ namespace Infrastructure.EFCore
         {
             builder.RegisterType<UnitOfWork>()
                 .As<IUnitOfWork>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<EFReservationQuery>()
+                .As<IReservationQuery>()
                 .InstancePerLifetimeScope();
 
             builder.RegisterGeneric(typeof(Repository<>))

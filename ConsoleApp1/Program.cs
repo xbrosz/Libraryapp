@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using BL;
 using BL.DTOs.Author;
+using BL.Facades.IFacades;
 using BL.Services.IServices;
 using DAL.Data;
 using DAL.Entities;
@@ -25,46 +26,24 @@ public class Program
         using var uow = container.Resolve<IUnitOfWork>();
         var authorService = container.Resolve<IAuthorService>();
 
+        var userFacade = container.Resolve<IUserFacade>();
+        var userService = container.Resolve<IUserService>();
 
-        var authorDto = new AuthorDto() { Id = 15, FirstName = "Richard", MiddleName = "Ondrejka", LastName = "Ondrejka", BirthDate = DateTime.Now };
+        userFacade.Register(new BL.DTOs.User.CreateUserDto() { UserName = "Ricko48", FirstName = "Richard", LastName = "Ondrejka", Password = "1234456", Address="Brno", Email="dgdf@gfg.com", PhoneNumber="0987654"});
 
-        Console.WriteLine("Pred: ");
-        foreach (var f in uow.AuthorRepository.GetAll())
+
+        var name = userService.GetUserByUserName("Ricko48").UserName;
+
+
+        if (name == null)
         {
-            Console.WriteLine(f.FirstName);
+            Console.WriteLine("NULL");
+        } else
+        {
+            Console.WriteLine(name);
+            
         }
 
-        Console.WriteLine("\n");
 
-        var author1 = new AuthorDto() { FirstName = "Richard", MiddleName = "Ondrejka", LastName = "Ondrejka", BirthDate = DateTime.Now };
-        var author2 = new AuthorDto() { FirstName = "Rich", MiddleName = "Ondrejka", LastName = "Ondrejka", BirthDate = DateTime.Now };
-        var author3 = new AuthorDto() { FirstName = "Pietro", MiddleName = "Ondrejka", LastName = "Ondrejka", BirthDate = DateTime.Now };
-        var author4 = new AuthorDto() { FirstName = "Marek", MiddleName = "Ondrejka", LastName = "Ondrejka", BirthDate = DateTime.Now };
-        var author5 = new AuthorDto() { FirstName = "Hasek", MiddleName = "Ondrejka", LastName = "Ondrejka", BirthDate = DateTime.Now };
-        var author6 = new AuthorDto() { FirstName = "Richard", MiddleName = "Ondrejka", LastName = "", BirthDate = DateTime.Now };
-
-
-        authorService.Insert(author1);
-        authorService.Insert(author2);
-        authorService.Insert(author3);
-        authorService.Insert(author4);
-        authorService.Insert(author5);
-        authorService.Insert(author6);
-
-        Console.WriteLine("Po: ");
-        foreach (var f in uow.AuthorRepository.GetAll())
-        {
-            Console.WriteLine(f.FirstName);
-        }
-
-        Console.WriteLine("\n");
-
-        var res = authorService.GetAuthorsByName("Richard", "Ond", "");
-
-        Console.WriteLine("Service: ");
-        foreach (var author in res)
-        {
-            Console.WriteLine(author.FirstName);
-        }
     }
 }

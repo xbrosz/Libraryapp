@@ -24,6 +24,8 @@ namespace FE.Controllers
         {
             int userId = 1;
 
+            var res = _reservationService.GetReservationsByUserId(userId);
+
              var model = new ReservationIndexViewModel()
             {
                reservations = _reservationService.GetReservationsByUserId(userId)
@@ -40,12 +42,11 @@ namespace FE.Controllers
             {
                 return NotFound();
             }
-
+            
             var model = new ReservationEditViewModel
             {
                 BookTitle = dto.BookTitle,
-                Branch = dto.Branch
-                 ,
+                BranchId = dto.Branch.Id,
                 BookPrintId = dto.BookPrintId,
                 Id = dto.Id,
                 EndDate = dto.EndDate,
@@ -59,10 +60,10 @@ namespace FE.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(ReservationEditViewModel model)
         {
-            //if (!ModelState.IsValid)
-            //{
-             //   return View(model);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
             var dto = new ReservationUpdateFormDto
             {   
@@ -83,6 +84,7 @@ namespace FE.Controllers
         public IActionResult Delete(int id)
         {
             var dto =_reservationService.Find(id);
+
             if (dto == null)
             {
                 return NotFound();

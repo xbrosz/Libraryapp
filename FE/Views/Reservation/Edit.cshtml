@@ -6,6 +6,7 @@
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.BookTitle)
     @Html.HiddenFor(x => x.BookPrintId)
+    @Html.HiddenFor(x => x.BranchId)
     @Html.AntiForgeryToken()
     
     <div class="form-group">
@@ -13,19 +14,20 @@
 
         <link href="~/jqueryui/jquery-ui.css" rel="stylesheet" />
         <input asp-for="StartDate" type="text" class="form-control" placeholder="Start date" />
+        @Html.ValidationMessageFor(x => x.StartDate, null, new { @class = "text-danger" })
         @Html.LabelFor(x => x.EndDate)
         <input asp-for="EndDate" type="text" class="form-control" placeholder="End date" />
-
+        @Html.ValidationMessageFor(x => x.EndDate, null, new { @class = "text-danger" })
         @section scripts{
         <script src="~/jqueryui/jquery-ui.js"></script>
         <script>
             $(function () {
-                $("#StartDate").datepicker({ dateFormat: 'dd-mm-yy' });
+                $("#StartDate").datepicker({ dateFormat: 'dd-MM-yy' });
             });
         </script>
         <script>
             $(function () {
-                $("#EndDate").datepicker({ dateFormat: 'dd-mm-yy' });
+                $("#EndDate").datepicker({ dateFormat: 'dd-MM-yy' });
             });
         </script>
     }

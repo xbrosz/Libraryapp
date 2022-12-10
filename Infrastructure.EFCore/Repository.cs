@@ -1,10 +1,12 @@
-﻿using DAL.Data;
+﻿using Castle.Components.DictionaryAdapter.Xml;
+using DAL.Data;
+using DAL.Entities;
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.EFCore
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
         internal LibraryappDbContext _context;
         internal DbSet<TEntity> _dbSet;
@@ -42,8 +44,12 @@ namespace Infrastructure.EFCore
 
         public void Update(TEntity entityToUpdate)
         {
-            _dbSet.Attach(entityToUpdate);
-            _context.Entry(entityToUpdate).State = EntityState.Modified;
+            var res = _context.Set<TEntity>().First(r => r.Id == entityToUpdate.Id);
+            _context.Entry(res).CurrentValues.SetValues(entityToUpdate);
+            _context.SaveChanges();
+            //return true;
+            //_dbSet.Attach(entityToUpdate);
+            //_context.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
         public IEnumerable<TEntity> GetAll()

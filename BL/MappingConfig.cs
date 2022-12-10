@@ -13,8 +13,10 @@ namespace BL
     {
         public static void ConfigureMapping(IMapperConfigurationExpression config)
         {
+            config.CreateMap<Branch, BranchDto>().ReverseMap();
             config.CreateMap<Reservation, ReservationsDto>()
-                .ForMember(dest => dest.BookTitle, act => act.MapFrom(src => src.BookPrint.Book.Title)).ReverseMap();
+                .ForMember(dest => dest.BookTitle, act => act.MapFrom(src => src.BookPrint.Book.Title))
+                .ForMember(dest => dest.Branch, act => act.MapFrom(src => src.BookPrint.Branch));;
             config.CreateMap<Reservation, UpdateReservationDto>().ReverseMap();
             config.CreateMap<User, UserDetailDto>().ReverseMap();
             config.CreateMap<User, CreateUserDto>().ReverseMap();
@@ -30,7 +32,7 @@ namespace BL
                                                  .ForMember(dest => dest.BookGenres, act => act.MapFrom(src => string.Join("/", src.Genres.Select(g => g.Name))))
                                                  .ForMember(dest => dest.Rating, act => act.MapFrom(src => src.Ratings.Select(r => r.RatingNumber).Average()));
             config.CreateMap<BookPrint, BookPrintDto>().ReverseMap();
-            config.CreateMap<Branch, BranchDto>().ReverseMap();
+            
 
             config.CreateMap<QueryResultDto<AuthorDto>, EFQueryResult<Author>>().ReverseMap();
             config.CreateMap<QueryResultDto<BranchDto>, EFQueryResult<Branch>>().ReverseMap();

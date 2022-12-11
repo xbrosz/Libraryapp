@@ -1,43 +1,26 @@
 using Autofac;
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
 using BL;
+using BL.Services.IServices;
+using BL.Services.Services;
 using DAL.Data;
+using DAL.Entities;
+using FE.Controllers;
 using Infrastructure.EFCore;
+using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
+var builder = WebApplication.CreateBuilder(args);
 
-var builder = WebApplication.CreateBuilder();
-
-//builder.Services.AddDbContext<LibraryappDbContext>(options =>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<LibraryappDbContext>();
-
-builder.Services.AddSession(options =>
-{
-    //sessions hold for 20 minutes
-    options.IdleTimeout = TimeSpan.FromMinutes(20);
-});
 builder.Services.AddControllersWithViews();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
-// Register services directly with Autofac here. Don't
-// call builder.Populate(), that happens in AutofacServiceProviderFactory.
 builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 {
     builder.RegisterModule<BLInjectorModule>();
@@ -45,39 +28,39 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 }
 );
 
-builder.Services.AddRazorPages();
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-        .AddCookie(o => o.LoginPath = new PathString("/User/Login"));
-//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<LibraryappDbContext>();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o => o.LoginPath = new PathString("/User/Login"));
 
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())                                                  // Just for Testing !!!!
 {
-    app.UseDeveloperExceptionPage();
+    scope.ServiceProvider.GetRequiredService<LibraryappDbContext>().Database.EnsureDeleted();
+    scope.ServiceProvider.GetRequiredService<LibraryappDbContext>().Database.EnsureCreated();
 }
-else
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseCookiePolicy();
-app.UseSession();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-    endpoints.MapRazorPages();
-});
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+

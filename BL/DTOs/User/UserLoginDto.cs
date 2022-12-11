@@ -15,5 +15,6 @@ namespace BL.DTOs.User
         public string? Password { get; set; }
 
         public string? ReturnUrl { get; set; }
+
     }
 }

@@ -33,7 +33,9 @@ namespace BL.Facades.Facades
 
         public int Login(UserLoginDto loginDto)
         {
-            return _userService.Login(loginDto);
+            var a = _userService.Login(loginDto);
+            Console.WriteLine(loginDto.UserName + " was logged in!");
+            return a;
         }
     }
 }

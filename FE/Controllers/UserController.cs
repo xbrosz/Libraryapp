@@ -1,103 +1,108 @@
-﻿using BL.Facades.IFacades;
-using Microsoft.AspNetCore.Mvc;
+﻿using BL.DTOs.User;
+using BL.Facades.IFacades;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using BL.DTOs.User;
-using DAL.Entities;
 
-namespace FE.Controllers
+namespace MVCPresentationLayer.Controllers;
+
+[Route("[controller]")]
+public class UserController : Controller
 {
-    [Route("[controller]")]
-    public class UserController : Controller
+    readonly IUserFacade _userFacade;
+
+    public UserController(IUserFacade userFacade)
     {
-        readonly IUserFacade _userFacade;
+        _userFacade = userFacade;
+    }
 
-        public UserController(IUserFacade userFacade)
+    [HttpGet("Register")]
+    public IActionResult Register()
+    {
+        if (User.Identity.IsAuthenticated)
         {
-            _userFacade = userFacade;
-        }
-
-        [HttpGet("Register")]
-        public IActionResult Register()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            return View();
-        }
-
-        [HttpPost("Register")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RegisterAsync(CreateUserDto user)
-        {
-            try
-            {
-                _userFacade.Register(user);
-                return RedirectToAction("Login", "User");
-            }
-            catch (Exception)
-            {
-                ModelState.AddModelError("Username", "Account with that username already exists!");
-                return View("Register");
-            }
-        }
-
-        [HttpGet("Login")]
-        public IActionResult Login()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            return View();
-        }
-
-        [HttpGet("Logout")]
-        public IActionResult Logout()
-        {
-            HttpContext.SignOutAsync("Cookies");
+            Console.WriteLine("Uz si zaregistrovany");
             return RedirectToAction("Index", "Home");
         }
+        return View();
+    }
 
-        [HttpPost("Login")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginAsync(UserLoginDto userLogin)
+    [HttpPost("Register")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> RegisterAsync(CreateUserDto user)
+    {
+        try
         {
-            try
-            {
-                var userId = _userFacade.Login(userLogin);        // async
+            _userFacade.Register(user);
 
-                await CreateClaimsAndSignInAsync(userId);
+            return RedirectToAction("Login", "User");
 
-                return RedirectToAction("Index", "Home");
-            }
-            catch (Exception)
-            {
-                ModelState.AddModelError("Username", "Invalid credentials combination!");
-                return View("Login");
-            }
+
         }
-
-        private async Task CreateClaimsAndSignInAsync(int userId)
+        catch (Exception)
         {
-            var claims = new List<Claim>
-        {
-            //Set User Identity Name to actual user Id - easier access with user connected operations
-            new Claim(ClaimTypes.Name, userId.ToString())
-        };
-            
-            claims.Add(new Claim(ClaimTypes.Role, "User"));
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(identity));
-
+            ModelState.AddModelError("Username", "Account with that username already exists!");
+            return View("Register");
         }
     }
+
+    [HttpGet("Login")]
+    public IActionResult Login()
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            Console.WriteLine("Uz si prihlaseny");
+            return RedirectToAction("Index", "Home");
+        }
+        return View();
+    }
+
+    [HttpGet("Logout")]
+    public IActionResult Logout()
+    {
+        HttpContext.SignOutAsync("Cookies");
+        return RedirectToAction("Index", "Home");
+    }
+
+    [HttpPost("Login")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> LoginAsync(UserLoginDto userLogin)
+    {
+        try
+        {
+            var userId = _userFacade.Login(userLogin);
+
+            await CreateClaimsAndSignInAsync(userId);
+
+            return RedirectToAction("Index", "Home");
+        }
+        catch (Exception)
+        {
+            ModelState.AddModelError("Username", "Invalid credentials combination!");
+            return View("Login");
+        }
+    }
+
+    private async Task CreateClaimsAndSignInAsync(int userId)
+    {
+        var claims = new List<Claim>
+        {
+            //Set User Identity Name to actual user Id - easier access with user connected operations
+            new Claim(ClaimTypes.Name, userId.ToString()),
+            new Claim(ClaimTypes.Role, "User")
+        };
+
+        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+        await HttpContext.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            new ClaimsPrincipal(identity));
+    }
+
+
 }

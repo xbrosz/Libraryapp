@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -22,21 +25,22 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
+                        <li class="nav-item">
                                 @Html.ActionLink("Reservations", "Index", "Reservation", null, new {@class = "nav-link text-dark"})
-   
                             </li>
-                        }
-                        @if (User.IsInRole("Admin"))
+                        @if (SignInManager.IsSignedIn(User))
                         {
-                            <li class="nav-item">
-                                
-                            </li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">SIGNED INN</a>
                         }
+
+
+
+
+
                     </ul>
+
                     <partial name="_LoginPartial" />
+
                 </div>
             </div>
         </nav>

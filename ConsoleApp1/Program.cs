@@ -29,7 +29,14 @@ public class Program
         var userFacade = container.Resolve<IUserFacade>();
         var userService = container.Resolve<IUserService>();
 
-        userFacade.Register(new BL.DTOs.User.CreateUserDto() { UserName = "Ricko48", FirstName = "Richard", LastName = "Ondrejka", Password = "1234456", Address="Brno", Email="dgdf@gfg.com", PhoneNumber="0987654"});
+        foreach(var a in uow.UserRepository.GetAll())
+        {
+            Console.WriteLine(a.FirstName+ " " + a.LastName);
+        }
+
+        Console.WriteLine("\n");
+
+        userFacade.Register(new BL.DTOs.User.CreateUserDto() { UserName = "Ricko48", FirstName = "Richard", LastName = "Ondrejka", Password = "1234456", Address = "Brno", Email = "dgdf@gfg.com", PhoneNumber = "0987654" });
 
 
         var name = userService.GetUserByUserName("Ricko48").UserName;
@@ -38,10 +45,11 @@ public class Program
         if (name == null)
         {
             Console.WriteLine("NULL");
-        } else
+        }
+        else
         {
             Console.WriteLine(name);
-            
+
         }
 
 

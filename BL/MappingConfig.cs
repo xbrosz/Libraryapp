@@ -22,12 +22,12 @@ namespace BL
             config.CreateMap<Reservation, UpdateReservationDto>().ReverseMap();
 
             config.CreateMap<User, UserDetailDto>().ReverseMap();
-            config.CreateMap<User, CreateUserDto>().ReverseMap();
 
+            config.CreateMap<User, CreateUserDto>().ReverseMap();
+            config.CreateMap<User, UserLoginResponseDto>().ReverseMap();
             config.CreateMap<Rating, RatingDto>()
                 .ForMember(dest => dest.BookTitle, act => act.MapFrom(src => src.Book.Title));
             config.CreateMap<RatingDto, Rating>();
-
             config.CreateMap<Author, AuthorDto>().ReverseMap();
 
             config.CreateMap<Book, BookDetailDto>().ForMember(dest => dest.AuthorName, act => act.MapFrom(src => src.Author.FirstName + " "

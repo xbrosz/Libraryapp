@@ -4,11 +4,11 @@ using DAL.Entities;
 
 namespace BL.Services.IServices
 {
-    public interface IUserService : IGenericService<User, UserDetailDto, UserDetailDto, CreateUserDto>
+    public interface IUserService : IGenericService<User, UserLoginResponseDto, UserDetailDto, UserCreateDto>
     {
         IEnumerable<UserDetailDto> GetUsersBySubstringName(string substring);
 
-        void Register(CreateUserDto registerDto);
+        void Register(UserCreateDto registerDto);
 
         public int Login(UserLoginDto loginDto);
 

@@ -67,13 +67,13 @@ namespace BL.Tests.Services
 
             var loginDto = new UserLoginDto() { UserName = "xkristof", Password = "passwd" };
 
-            var userId = service.Login(loginDto);
+            var role = service.Login(loginDto);
 
             _repoMock.Verify(x => x.GetByID(1), Times.Once);
             _uowMock.Verify(x => x.UserRepository, Times.Exactly(2));
             _queryObjectMock.Verify(x => x.ExecuteQuery(It.IsAny<UserFilterDto>()), Times.Once);
 
-            Assert.True(userId == user.Id);
+            Assert.True(role.Id == user.RoleId);
         }
 
         [Fact]
@@ -219,7 +219,7 @@ namespace BL.Tests.Services
 
             var service = new UserService(_uowMock.Object, mapper, _queryObjectMock.Object);
 
-            var registerDto = new CreateUserDto()
+            var registerDto = new UserCreateDto()
             {
                 UserName = "xkristof",
                 FirstName = "Kristof",
@@ -251,7 +251,7 @@ namespace BL.Tests.Services
 
             var service = new UserService(_uowMock.Object, mapper, _queryObjectMock.Object);
 
-            var registerDto = new CreateUserDto() { UserName = null, Password = "passwwwd" };
+            var registerDto = new UserCreateDto() { UserName = null, Password = "passwwwd" };
 
             ArgumentNullException exception = Assert.Throws<ArgumentNullException>(() => service.Register(registerDto));
 
@@ -276,7 +276,7 @@ namespace BL.Tests.Services
 
             var service = new UserService(_uowMock.Object, mapper, _queryObjectMock.Object);
 
-            var registerDto = new CreateUserDto() { UserName = "xkarel", Password = null };
+            var registerDto = new UserCreateDto() { UserName = "xkarel", Password = null };
 
             ArgumentNullException exception = Assert.Throws<ArgumentNullException>(() => service.Register(registerDto));
 

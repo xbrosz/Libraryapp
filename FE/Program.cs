@@ -36,11 +36,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())                                                  // Just for Testing !!!!
-{
-    scope.ServiceProvider.GetRequiredService<LibraryappDbContext>().Database.EnsureDeleted();
-    scope.ServiceProvider.GetRequiredService<LibraryappDbContext>().Database.EnsureCreated();
-}
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -61,6 +57,25 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+using (var scope = app.Services.CreateScope())                                                  // Just for Testing !!!!
+{
+    scope.ServiceProvider.GetRequiredService<LibraryappDbContext>().Database.EnsureDeleted();
+    scope.ServiceProvider.GetRequiredService<LibraryappDbContext>().Database.EnsureCreated();
+
+    scope.ServiceProvider.GetRequiredService<IUserService>().Register(new BL.DTOs.User.UserCreateDto()
+    {
+        Address = "Brno",
+        Password = "Heslo_je_123",
+        UserName = "Ricko48",
+        FirstName = "Richard",
+        LastName = "Cernansky",
+        PhoneNumber = "+4219873645",
+        Email = "lalalala@gmail.com",
+        RoleId = 2
+    });
+}
 
 app.Run();
 

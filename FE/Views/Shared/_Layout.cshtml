@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,25 +24,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
- 
+                        @if (User.Identity.IsAuthenticated)
+                        {
                             <li class="nav-item">
                                 @Html.ActionLink("Reservations", "Index", "Reservation", null, new {@class = "nav-link text-dark"})
                             </li>
                             <li class="nav-item">
                                 @Html.ActionLink("Ratings", "Index", "Rating", null, new {@class = "nav-link text-dark"})
                             </li>
-                        
+                        }
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
                                 <span class="nav-link text-dark">Hello Admin!</span>
                             </li>
                         }
-
-
-
-
-
 
                     </ul>
 

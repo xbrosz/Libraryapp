@@ -36,17 +36,21 @@ public class UserController : Controller
 
     [HttpPost("Register")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> RegisterAsync(UserCreateDto user)
+    public async Task<IActionResult> RegisterAsync(UserRegisterViewModel user)
     {
-        if (user.Password != user.ConfirmPassword)
-        {
-            ModelState.AddModelError("Password", "Confirmation password does't match with your password");
-            return View("Register");
-        }
-
         try
         {
-            _userFacade.Register(user);
+            _userFacade.Register(new UserCreateDto()
+            {
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Password = user.Password,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Address = user.Address
+            });
+            
             return RedirectToAction("Login", "User");
 
         }
@@ -68,6 +72,61 @@ public class UserController : Controller
         return View();
     }
 
+    [HttpGet("Edit")]
+    public IActionResult Edit()
+    {
+        if (!User.Identity.IsAuthenticated)
+        {
+            return RedirectToAction("Login", "User");
+        }
+
+        var userDetail = _userFacade.GetUserById(int.Parse(User.Identity.Name));
+
+        return View(new UserEditViewModel()
+        {
+            UserName = userDetail.UserName,
+            FirstName = userDetail.FirstName,
+            LastName = userDetail.LastName,
+            Email = userDetail.Email,
+            Address = userDetail.Address,
+            PhoneNumber = userDetail.PhoneNumber,
+        });
+    }
+
+    [HttpPost("Edit")]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(UserEditViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        _userFacade.UpdateUser(new UserUpdateDto()
+        {
+            Id = int.Parse(User.Identity.Name),
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            PhoneNumber = model.PhoneNumber,
+            Address = model.Address,
+            Email = model.Email,
+            UserName = model.UserName
+        });
+
+        return RedirectToAction("Index", "User");
+    }
+
+    [HttpGet("ChangePasswordView")]
+    public IActionResult ChangePasswordView()
+    {
+        if (!User.Identity.IsAuthenticated)
+        {
+            return RedirectToAction("Login", "User");
+        }
+        return View();
+    }
+
+    [HttpGet("Index")]
     public IActionResult Index()
     {
         if (!User.Identity.IsAuthenticated)
@@ -77,7 +136,15 @@ public class UserController : Controller
 
         var userDetailDto = _userFacade.GetUserById(int.Parse(User.Identity.Name));
 
-        return View(userDetailDto);
+        return View(new UserIndexViewModel()
+        {
+            UserName= userDetailDto.UserName,
+            FirstName= userDetailDto.FirstName,
+            LastName= userDetailDto.LastName,
+            Email= userDetailDto.Email,
+            Address= userDetailDto.Address,
+            PhoneNumber= userDetailDto.PhoneNumber,
+        });
     }
 
     [HttpGet("Logout")]
@@ -89,11 +156,11 @@ public class UserController : Controller
 
     [HttpPost("Login")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> LoginAsync(UserLoginDto userLogin)
+    public async Task<IActionResult> LoginAsync(UserLoginViewModel userLogin)
     {
         try { 
 
-            var user = _userFacade.Login(userLogin);
+            var user = _userFacade.Login(userLogin.UserName, userLogin.Password);
 
             await CreateClaimsAndSignInAsync(user);
 

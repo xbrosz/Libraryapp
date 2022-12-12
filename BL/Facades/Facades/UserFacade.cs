@@ -29,9 +29,9 @@ namespace BL.Facades.Facades
             _userService.Register(user);
         }
 
-        public UserDetailDto Login(UserLoginDto loginDto)
+        public UserDetailDto Login(string userName, string password)
         {
-            return _userService.Login(loginDto);
+            return _userService.Login(userName, password);
         }
 
         public UserDetailDto? GetUserByUserName(string userName)
@@ -42,6 +42,11 @@ namespace BL.Facades.Facades
         public UserDetailDto? GetUserById(int id)
         {
             return _userService.Find(id);
+        }
+
+        public void UpdateUser(UserUpdateDto userDto)
+        {
+            _userService.UpdateUser(userDto);
         }
     }
 }

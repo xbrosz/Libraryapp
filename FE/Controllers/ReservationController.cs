@@ -22,8 +22,6 @@ namespace FE.Controllers
         {
             int userId = 1;
 
-            Console.WriteLine("User id: " + User.Identity.Name);
-
             var res = _reservationService.GetReservationsByUserId(userId);
 
              var model = new ReservationIndexViewModel()

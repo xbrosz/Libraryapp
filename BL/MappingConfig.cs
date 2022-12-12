@@ -24,6 +24,7 @@ namespace BL
             config.CreateMap<User, UserDetailDto>().ForMember(dest => dest.RoleName, act => act.MapFrom(src => src.Role.Name));
 
             config.CreateMap<User, UserCreateDto>().ReverseMap();
+            config.CreateMap<User, UserUpdateDto>().ReverseMap();
             config.CreateMap<Rating, RatingDto>()
                 .ForMember(dest => dest.BookTitle, act => act.MapFrom(src => src.Book.Title));
             config.CreateMap<RatingDto, Rating>();

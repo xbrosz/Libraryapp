@@ -20,10 +20,21 @@ namespace BL.QueryObjects.QueryObjects
 
         public QueryResultDto<RatingDto> ExecuteQuery(RatingFilterDto filter)
         {
-            var query = _myQuery.Where<int>(a => a == filter.BookId, "BookId");
+            var query = _myQuery;
+            
             if (filter.RequestedPageNumber.HasValue)
             {
                 query = query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
+            }
+
+            if (filter.BookId.HasValue)
+            {
+                query = query.Where<int>(a => a == filter.BookId, "BookId");
+            }
+
+            if (filter.UserId.HasValue)
+            {
+                query = query.Where<int>(a => a == filter.UserId, "UserId");
             }
 
             return _mapper.Map<QueryResultDto<RatingDto>>(query.Execute());

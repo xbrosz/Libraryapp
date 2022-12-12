@@ -47,9 +47,6 @@ namespace Infrastructure.EFCore
             var res = _context.Set<TEntity>().First(r => r.Id == entityToUpdate.Id);
             _context.Entry(res).CurrentValues.SetValues(entityToUpdate);
             _context.SaveChanges();
-            //return true;
-            //_dbSet.Attach(entityToUpdate);
-            //_context.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
         public IEnumerable<TEntity> GetAll()

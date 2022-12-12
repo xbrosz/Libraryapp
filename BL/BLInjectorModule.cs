@@ -37,6 +37,7 @@ namespace BL
             builder.RegisterType<RatingService>().As<IRatingService>().InstancePerDependency();
 
             builder.RegisterType<ReservationFacade>().As<IReservationFacade>().InstancePerDependency();
+            builder.RegisterType<RatingFacade>().As<IRatingFacade>().InstancePerDependency();
         }
     }
 }

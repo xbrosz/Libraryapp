@@ -26,15 +26,22 @@ namespace BL.Facades.Facades
                 throw new Exception("User name already exists");
             }
 
-            // id for role "User"
-            user.RoleId = 2;
-
             _userService.Register(user);
         }
 
-        public int Login(UserLoginDto loginDto)
+        public UserDetailDto Login(UserLoginDto loginDto)
         {
             return _userService.Login(loginDto);
+        }
+
+        public UserDetailDto? GetUserByUserName(string userName)
+        {
+            return _userService.GetUserByUserName(userName);
+        }
+
+        public UserDetailDto? GetUserById(int id)
+        {
+            return _userService.Find(id);
         }
     }
 }

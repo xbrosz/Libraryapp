@@ -6,7 +6,7 @@
     @if (User.Identity.IsAuthenticated)
     {
         <li class="nav-item">
-            <span class="nav-link text-dark">Hello @User.Identity?.Name!</span>
+            <a class="nav-link text-dark" href="@Url.Action("Index", "User")">Account</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" href="@Url.Action("Logout", "User")">Logout</a>

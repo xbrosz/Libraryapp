@@ -67,13 +67,13 @@ namespace BL.Tests.Services
 
             var loginDto = new UserLoginDto() { UserName = "xkristof", Password = "passwd" };
 
-            var role = service.Login(loginDto);
+            var roleId = service.Login(loginDto);
 
             _repoMock.Verify(x => x.GetByID(1), Times.Once);
             _uowMock.Verify(x => x.UserRepository, Times.Exactly(2));
             _queryObjectMock.Verify(x => x.ExecuteQuery(It.IsAny<UserFilterDto>()), Times.Once);
 
-            Assert.True(role.Id == user.RoleId);
+            Assert.True(roleId == user.RoleId);
         }
 
         [Fact]

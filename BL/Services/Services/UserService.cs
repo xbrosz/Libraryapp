@@ -10,7 +10,7 @@ using Infrastructure.UnitOfWork;
 
 namespace BL.Services.Services
 {
-    public class UserService : GenericService<User, UserLoginResponseDto, UserDetailDto, UserCreateDto>, IUserService
+    public class UserService : GenericService<User, UserDetailDto, UserDetailDto, UserCreateDto>, IUserService
     {
         private IQueryObject<UserFilterDto, UserDetailDto> _queryObject;
 
@@ -30,12 +30,12 @@ namespace BL.Services.Services
             Insert(registerDto);
         }
 
-        public int Login(UserLoginDto loginDto)
+        public UserDetailDto Login(UserLoginDto loginDto)
         {
             Guard.Against.NullOrWhiteSpace(loginDto.UserName, "UserName", "Username cannot be null");
             Guard.Against.NullOrWhiteSpace(loginDto.Password, "Password", "Password cannot be null");
 
-            var queryResult = _queryObject.ExecuteQuery(new UserFilterDto() { Name = loginDto.UserName, ExactName = true });
+            var queryResult = _queryObject.ExecuteQuery(new UserFilterDto() { Name = loginDto.UserName });
 
             if (queryResult.TotalItemsCount == 0)
             {
@@ -44,14 +44,14 @@ namespace BL.Services.Services
 
             var userDto = queryResult.Items.First();
 
-            var userCheckLoginDto = Find(userDto.Id);
+            var user = _unitOfWork.UserRepository.GetByID(userDto.Id);
 
-            if (!PasswordHasher.Verify(loginDto.Password, userCheckLoginDto.Password))
+            if (!PasswordHasher.Verify(loginDto.Password, user.Password))
             {
-                throw new Exception("Password is incorrect");
+                throw new Exception("Incorrect password");
             }
 
-            return userCheckLoginDto.RoleId;
+            return userDto;
         }
 
         public IEnumerable<UserDetailDto> GetUsersBySubstringName(string substring)

@@ -12,6 +12,10 @@ namespace BL.Facades.IFacades
     {
         void Register(UserCreateDto user);
 
-        int Login(UserLoginDto loginDto);
+        UserDetailDto Login(UserLoginDto loginDto);
+
+        UserDetailDto? GetUserByUserName(string userName);
+
+        UserDetailDto? GetUserById(int id);
     }
 }

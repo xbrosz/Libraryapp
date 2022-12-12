@@ -48,6 +48,6 @@ namespace BL.DTOs.User
         [Display(Name = "Address")]
         public string Address { get; set; }
 
-        public int RoleId { get; set; }
+        public int RoleId { get; set; } = 2;    // User by default
     }
 }

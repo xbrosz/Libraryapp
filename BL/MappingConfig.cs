@@ -21,10 +21,9 @@ namespace BL
                 .ForMember(dest => dest.BookId, act => act.MapFrom(src => src.BookPrint.Book.Id));
             config.CreateMap<Reservation, UpdateReservationDto>().ReverseMap();
 
-            config.CreateMap<User, UserDetailDto>().ReverseMap();
+            config.CreateMap<User, UserDetailDto>().ForMember(dest => dest.RoleName, act => act.MapFrom(src => src.Role.Name));
 
-            config.CreateMap<User, CreateUserDto>().ReverseMap();
-            config.CreateMap<User, UserLoginResponseDto>().ReverseMap();
+            config.CreateMap<User, UserCreateDto>().ReverseMap();
             config.CreateMap<Rating, RatingDto>()
                 .ForMember(dest => dest.BookTitle, act => act.MapFrom(src => src.Book.Title));
             config.CreateMap<RatingDto, Rating>();

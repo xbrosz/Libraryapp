@@ -1,6 +1,8 @@
 ﻿using BL.DTOs.User;
+using BL.Facades.Facades;
 using BL.Facades.IFacades;
 using DAL.Entities;
+using FE.Models;
 using FE.Models.User;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -66,6 +68,18 @@ public class UserController : Controller
         return View();
     }
 
+    public IActionResult Index()
+    {
+        if (!User.Identity.IsAuthenticated)
+        {
+            return RedirectToAction("Login", "User");
+        }
+
+        var userDetailDto = _userFacade.GetUserById(int.Parse(User.Identity.Name));
+
+        return View(userDetailDto);
+    }
+
     [HttpGet("Logout")]
     public IActionResult Logout()
     {
@@ -77,28 +91,27 @@ public class UserController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> LoginAsync(UserLoginDto userLogin)
     {
-        try
-        {
-            var roleId = _userFacade.Login(userLogin);
+        try { 
 
-            await CreateClaimsAndSignInAsync(userLogin.UserName, roleId);
+            var user = _userFacade.Login(userLogin);
+
+            await CreateClaimsAndSignInAsync(user);
 
             return RedirectToAction("Index", "Home");
-        }
-        catch (Exception)
+
+        } catch (Exception)
         {
             ModelState.AddModelError("Username", "Invalid credentials combination!");
             return View("Login");
         }
     }
 
-    private async Task CreateClaimsAndSignInAsync(string userName, int roleId)
+    private async Task CreateClaimsAndSignInAsync(UserDetailDto user)
     {
         var claims = new List<Claim>
         {
-            //Set User Identity Name to actual user Id - easier access with user connected operations
-            new Claim(ClaimTypes.Name, userName),
-            new Claim(ClaimTypes.Role, roleId.ToString())
+            new Claim(ClaimTypes.Name, user.Id.ToString()),
+            new Claim(ClaimTypes.Role, user.RoleName),
         };
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

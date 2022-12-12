@@ -31,14 +31,17 @@ namespace DAL.Data
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder
-                .UseSqlServer(ConnectionString);
+                .UseSqlServer(ConnectionString)
+                .UseLazyLoadingProxies();
             }
 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Seed();
+
 
             base.OnModelCreating(modelBuilder);
         }

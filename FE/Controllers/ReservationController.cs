@@ -1,8 +1,7 @@
 ﻿using BL.DTOs.Branch;
 using BL.DTOs.Reservation;
+using BL.Facades.IFacades;
 using BL.Services.IServices;
-using BL.Services.Services;
-using DAL.Entities;
 using FE.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,15 +10,19 @@ namespace FE.Controllers
     public class ReservationController : Controller
     {
         private readonly IReservationService _reservationService;
+        private readonly IReservationFacade _reservationFacade;
 
-        public ReservationController(IReservationService reservationService)
+        public ReservationController(IReservationService reservationService, IReservationFacade reservationFacade)
         {
             _reservationService = reservationService;
+            _reservationFacade = reservationFacade;
         }
 
         public IActionResult Index()
         {
             int userId = 1;
+
+            var res = _reservationService.GetReservationsByUserId(userId);
 
              var model = new ReservationIndexViewModel()
             {
@@ -31,34 +34,23 @@ namespace FE.Controllers
         }
         public IActionResult Edit(int id)
         {
-            //var dto = repo.Get(id);
-
-            var dto = new ReservationsDto
-            {
-                BookTitle = "title",
-                Branch = new BranchDto { Name = "branch" }
-                ,
-                Id = 1,
-                EndDate = DateTime.Now.AddDays(-10),
-                StartDate = DateTime.Now.AddDays(4)
-            };
+            var dto = _reservationService.Find(id);
 
             if (dto == null)
             {
                 return NotFound();
             }
-
+            
             var model = new ReservationEditViewModel
             {
-                BookTitle = "title",
-                Branch = new BranchDto { Name = "branch" }
-                 ,
-                Id = 1,
-                EndDate = DateTime.Now.AddDays(-10),
-                StartDate = DateTime.Now.AddDays(4)
+                BookTitle = dto.BookTitle,
+                BranchId = dto.Branch.Id,
+                BookPrintId = dto.BookPrintId,
+                Id = dto.Id,
+                EndDate = dto.EndDate,
+                StartDate = dto.StartDate
             };
 
-            //var model = dto.Adapt<ReservationEditViewModel>();
             return View(model);
         }
 
@@ -71,24 +63,32 @@ namespace FE.Controllers
                 return View(model);
             }
 
-            //var dto = model.ToDto();
-            //_reservationService.Update(dto);
+            var dto = new ReservationUpdateFormDto
+            {   
+                Id = model.Id,
+                EndDate = model.EndDate,
+                StartDate = model.StartDate,
+                UserId = 1,
+                BranchId = 1,
+                BookPrintId = model.BookPrintId
+            };
+
+            _reservationFacade.UpdateReservationDate(dto);
 
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            var dto = new ReservationsDto();
-            //var dto =_reservationService.Get(id);
+            var dto =_reservationService.Find(id);
+
             if (dto == null)
             {
                 return NotFound();
             }
 
-            //_studentRepository.Delete(dto);
+            _reservationService.Delete(dto.Id);
 
             return RedirectToAction(nameof(Index));
         }

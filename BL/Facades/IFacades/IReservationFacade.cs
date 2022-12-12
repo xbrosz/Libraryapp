@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BL.DTOs.Reservation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,8 @@ namespace BL.Facades.IFacades
 {
     public interface IReservationFacade
     {
+        public void ReserveBook(ReservationCreateFormDto reservationDto);
+        public void UpdateReservationDate(ReservationUpdateFormDto reservationDto);
+
     }
 }

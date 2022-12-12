@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DAL.Entities;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace FE.Models.User
 {
-    public class UserEditDto
+    public class UserRegisterViewModel
     {
         [Required]
         [StringLength(64)]
@@ -24,6 +25,7 @@ namespace FE.Models.User
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
+        [Compare(nameof(Password))]
         public string? ConfirmPassword { get; set; }
 
         [Required]
@@ -33,20 +35,20 @@ namespace FE.Models.User
 
         [Required]
         [StringLength(255)]
-        [Display(Name = "Laste name")]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
 
         [Required]
         [StringLength(40)]
-        // ToDo require correct phone number format
+                                                // ToDo require correct phone number format
         [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
 
         [Required]
-        [StringLength(255)]
+        [StringLength(255)]                           
         [Display(Name = "Address")]
         public string Address { get; set; }
 
-        public int RoleId { get; set; }
+        public int RoleId { get; set; } = 2;    // User by default
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
-namespace BL.DTOs.User
+namespace FE.Models.User
 {
-    public class UserLoginDto
+    public class UserLoginViewModel
     {
         [Required]
         [Display(Name = "Username")]

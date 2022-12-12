@@ -1,5 +1,52 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model FE.Models.User.UserEditViewModel
 @{
+    ViewData["Title"] = Model.UserName;
 }
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <hr />
+            @Html.ValidationSummary(null, new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(x => x.UserName)
+                @Html.TextBoxFor(x => x.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.UserName, null, new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Email)
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Email, null, new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.FirstName)
+                @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.FirstName, null, new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.LastName)
+                @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.LastName, null, new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.PhoneNumber)
+                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.PhoneNumber, null, new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Address)
+                @Html.TextBoxFor(x => x.Address, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Address, null, new { @class = "text-danger" })
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        }
+    </div>
+</div>

@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,14 +36,9 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                
+                                <span class="nav-link text-dark">Hello Admin!</span>
                             </li>
                         }
-
-
-
-
-
 
                     </ul>
 

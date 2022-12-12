@@ -1,5 +1,7 @@
 ﻿using BL.DTOs.User;
 using BL.Facades.IFacades;
+using DAL.Entities;
+using FE.Models.User;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +27,6 @@ public class UserController : Controller
     {
         if (User.Identity.IsAuthenticated)
         {
-            Console.WriteLine("Uz si zaregistrovany");
             return RedirectToAction("Index", "Home");
         }
         return View();
@@ -33,14 +34,18 @@ public class UserController : Controller
 
     [HttpPost("Register")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> RegisterAsync(CreateUserDto user)
+    public async Task<IActionResult> RegisterAsync(UserCreateDto user)
     {
+        if (user.Password != user.ConfirmPassword)
+        {
+            ModelState.AddModelError("Password", "Confirmation password does't match with your password");
+            return View("Register");
+        }
+
         try
         {
             _userFacade.Register(user);
-
             return RedirectToAction("Login", "User");
-
 
         }
         catch (Exception)
@@ -56,7 +61,6 @@ public class UserController : Controller
     {
         if (User.Identity.IsAuthenticated)
         {
-            Console.WriteLine("Uz si prihlaseny");
             return RedirectToAction("Index", "Home");
         }
         return View();
@@ -75,9 +79,9 @@ public class UserController : Controller
     {
         try
         {
-            var userId = _userFacade.Login(userLogin);
+            var roleId = _userFacade.Login(userLogin);
 
-            await CreateClaimsAndSignInAsync(userId);
+            await CreateClaimsAndSignInAsync(userLogin.UserName, roleId);
 
             return RedirectToAction("Index", "Home");
         }
@@ -88,13 +92,13 @@ public class UserController : Controller
         }
     }
 
-    private async Task CreateClaimsAndSignInAsync(int userId)
+    private async Task CreateClaimsAndSignInAsync(string userName, int roleId)
     {
         var claims = new List<Claim>
         {
             //Set User Identity Name to actual user Id - easier access with user connected operations
-            new Claim(ClaimTypes.Name, userId.ToString()),
-            new Claim(ClaimTypes.Role, "User")
+            new Claim(ClaimTypes.Name, userName),
+            new Claim(ClaimTypes.Role, roleId.ToString())
         };
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

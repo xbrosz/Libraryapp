@@ -20,22 +20,21 @@ namespace BL.Facades.Facades
             _userService = userService;
         }
 
-        public void Register(CreateUserDto user)
+        public void Register(UserCreateDto user)
         {
             if (_userService.GetUserByUserName(user.UserName) != null) {
                 throw new Exception("User name already exists");
             }
 
-            user.RoleId = 2;    // id for role "User"
+            // id for role "User"
+            user.RoleId = 2;
 
             _userService.Register(user);
         }
 
         public int Login(UserLoginDto loginDto)
         {
-            var a = _userService.Login(loginDto);
-            Console.WriteLine(loginDto.UserName + " was logged in!");
-            return a;
+            return _userService.Login(loginDto);
         }
     }
 }

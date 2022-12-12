@@ -1,10 +1,9 @@
-﻿using DAL.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
-namespace BL.DTOs.User
+namespace FE.Models.User
 {
-    public class CreateUserDto
+    public class UserEditDto
     {
         [Required]
         [StringLength(64)]
@@ -25,7 +24,6 @@ namespace BL.DTOs.User
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare(nameof(Password))]
         public string? ConfirmPassword { get; set; }
 
         [Required]
@@ -40,16 +38,14 @@ namespace BL.DTOs.User
 
         [Required]
         [StringLength(40)]
-                                                // ToDo require correct phone number format
+        // ToDo require correct phone number format
         [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
 
         [Required]
-        [StringLength(255)]                           
+        [StringLength(255)]
         [Display(Name = "Address")]
         public string Address { get; set; }
-
-        public string? ReturnUrl { get; set; }
 
         public int RoleId { get; set; }
     }

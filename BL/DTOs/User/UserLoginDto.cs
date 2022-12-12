@@ -14,7 +14,6 @@ namespace BL.DTOs.User
         [Display(Name = "Password")]
         public string? Password { get; set; }
 
-        public string? ReturnUrl { get; set; }
 
     }
 }

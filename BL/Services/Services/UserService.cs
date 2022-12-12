@@ -10,7 +10,7 @@ using Infrastructure.UnitOfWork;
 
 namespace BL.Services.Services
 {
-    public class UserService : GenericService<User, UserDetailDto, UserDetailDto, CreateUserDto>, IUserService
+    public class UserService : GenericService<User, UserLoginResponseDto, UserDetailDto, UserCreateDto>, IUserService
     {
         private IQueryObject<UserFilterDto, UserDetailDto> _queryObject;
 
@@ -20,14 +20,14 @@ namespace BL.Services.Services
             _queryObject = userQueryObject;
         }
 
-        public void Register(CreateUserDto registerDto)
+        public void Register(UserCreateDto registerDto)
         {
             Guard.Against.NullOrWhiteSpace(registerDto.UserName, "UserName", "Username cannot be null");
             Guard.Against.NullOrWhiteSpace(registerDto.Password, "Password", "Password cannot be null");
 
             registerDto.Password = PasswordHasher.Hash(registerDto.Password);
 
-            base.Insert(registerDto);
+            Insert(registerDto);
         }
 
         public int Login(UserLoginDto loginDto)
@@ -44,14 +44,14 @@ namespace BL.Services.Services
 
             var userDto = queryResult.Items.First();
 
-            var user = _unitOfWork.UserRepository.GetByID(userDto.Id);
+            var userCheckLoginDto = Find(userDto.Id);
 
-            if (!PasswordHasher.Verify(loginDto.Password, user.Password))
+            if (!PasswordHasher.Verify(loginDto.Password, userCheckLoginDto.Password))
             {
                 throw new Exception("Password is incorrect");
             }
 
-            return user.Id;
+            return userCheckLoginDto.RoleId;
         }
 
         public IEnumerable<UserDetailDto> GetUsersBySubstringName(string substring)

@@ -31,12 +31,12 @@ public class Program
 
         foreach(var a in uow.UserRepository.GetAll())
         {
-            Console.WriteLine(a.FirstName+ " " + a.LastName);
+            Console.WriteLine(a.FirstName+ " " + a.LastName + " has role " + a.Role.Name);
         }
 
         Console.WriteLine("\n");
 
-        userFacade.Register(new BL.DTOs.User.CreateUserDto() { UserName = "Ricko48", FirstName = "Richard", LastName = "Ondrejka", Password = "1234456", Address = "Brno", Email = "dgdf@gfg.com", PhoneNumber = "0987654" });
+        userFacade.Register(new BL.DTOs.User.UserCreateDto() { UserName = "Ricko48", FirstName = "Richard", LastName = "Ondrejka", Password = "1234456", Address = "Brno", Email = "dgdf@gfg.com", PhoneNumber = "0987654", RoleId = 1 });
 
 
         var name = userService.GetUserByUserName("Ricko48").UserName;

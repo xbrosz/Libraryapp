@@ -5,6 +5,9 @@ namespace DAL.Entities
 {
     public class User : BaseEntity
     {
+        public int RoleId { get; set; }
+        public virtual Role Role { get; set; }
+
         [MaxLength(64)]
         public string UserName { get; set; }
 
@@ -19,8 +22,7 @@ namespace DAL.Entities
         public string PhoneNumber { get; set; }
         [MaxLength(255)]
         public string Address { get; set; }
-        public int RoleId { get; set; }
-        public virtual Role Role { get; set; }
+        
         public virtual List<Reservation> Reservations { get; set; }
     }
 }

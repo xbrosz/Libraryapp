@@ -13,5 +13,7 @@
         void Update(UEntity dtoToUpdate);
 
         void Insert(IEntity dtoToInsert);
+
+        IEnumerable<FEntity> GetAll();
     }
 }

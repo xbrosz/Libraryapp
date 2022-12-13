@@ -3,10 +3,12 @@ using BL.DTOs.Reservation;
 using BL.Facades.IFacades;
 using BL.Services.IServices;
 using FE.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FE.Controllers
 {
+    [Authorize(Roles = "User, Admin")]
     public class ReservationController : Controller
     {
         private readonly IReservationService _reservationService;
@@ -17,18 +19,26 @@ namespace FE.Controllers
             _reservationService = reservationService;
             _reservationFacade = reservationFacade;
         }
-
+        
         public IActionResult Index()
         {
-            int userId = 1;
+            int userId = getUserId();
+            IEnumerable<ReservationsDto> reservations = new List<ReservationsDto>();
 
-            var res = _reservationService.GetReservationsByUserId(userId);
+            if (isAdmin())
+            {
+                 reservations = _reservationService.GetAll();
+            }
+            else
+            {
+                reservations = _reservationService.GetReservationsByUserId(userId);
+            }
+
 
              var model = new ReservationIndexViewModel()
             {
-               reservations = _reservationService.GetReservationsByUserId(userId)
+               reservations = reservations
             };
-
 
             return View(model);
         }
@@ -39,6 +49,13 @@ namespace FE.Controllers
             if (dto == null)
             {
                 return NotFound();
+            }
+
+            int userId = getUserId();
+
+            if (!isAdmin() && dto.UserId != userId)
+            { 
+                return Unauthorized();
             }
             
             var model = new ReservationEditViewModel
@@ -58,6 +75,8 @@ namespace FE.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(ReservationEditViewModel model)
         {
+            int userId = getUserId();
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -68,8 +87,8 @@ namespace FE.Controllers
                 Id = model.Id,
                 EndDate = model.EndDate,
                 StartDate = model.StartDate,
-                UserId = 1,
-                BranchId = 1,
+                UserId = userId,
+                BranchId = model.BranchId,
                 BookPrintId = model.BookPrintId
             };
 
@@ -88,9 +107,29 @@ namespace FE.Controllers
                 return NotFound();
             }
 
+            if (!isAdmin() || dto.UserId != getUserId())
+            {
+                return Unauthorized();
+            }
+
             _reservationService.Delete(dto.Id);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        private bool isAdmin()
+        {
+            return HttpContext.User.IsInRole("Admin");
+        }
+
+        private bool isUser()
+        {
+            return HttpContext.User.IsInRole("User");
+        }
+
+        private int getUserId()
+        {
+            return int.Parse(User.Identity.Name);
         }
     }
 }

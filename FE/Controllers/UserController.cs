@@ -38,6 +38,11 @@ public class UserController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> RegisterAsync(UserRegisterViewModel user)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(user);
+        }
+
         try
         {
             _userFacade.Register(new UserCreateDto()

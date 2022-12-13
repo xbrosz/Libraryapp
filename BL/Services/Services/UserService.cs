@@ -30,12 +30,19 @@ namespace BL.Services.Services
             Insert(registerDto);
         }
 
-        public UserDetailDto Login(string userName, string password)
+        public bool CheckPassword(string password, int userId)
         {
-            Guard.Against.NullOrWhiteSpace(userName, "UserName", "Username cannot be null");
-            Guard.Against.NullOrWhiteSpace(password, "Password", "Password cannot be null");
+            var user = _unitOfWork.UserRepository.GetByID(userId);
 
-            var queryResult = _queryObject.ExecuteQuery(new UserFilterDto() { Name = userName });
+            return PasswordHasher.Verify(password, user.Password);
+        }
+
+        public UserDetailDto Login(UserLoginDto userLoginDto)
+        {
+            Guard.Against.NullOrWhiteSpace(userLoginDto.UserName, "UserName", "Username cannot be null");
+            Guard.Against.NullOrWhiteSpace(userLoginDto.Password, "Password", "Password cannot be null");
+
+            var queryResult = _queryObject.ExecuteQuery(new UserFilterDto() { Name = userLoginDto.UserName });
 
             if (queryResult.TotalItemsCount == 0)
             {
@@ -44,9 +51,7 @@ namespace BL.Services.Services
 
             var userDto = queryResult.Items.First();
 
-            var user = _unitOfWork.UserRepository.GetByID(userDto.Id);
-
-            if (!PasswordHasher.Verify(password, user.Password))
+            if (!CheckPassword(userLoginDto.Password, userDto.Id))
             {
                 throw new Exception("Incorrect password");
             }
@@ -72,19 +77,31 @@ namespace BL.Services.Services
 
         public void UpdateUser(UserUpdateDto userDto)
         {
-            if (userDto.RoleId == null)
-            {
-                userDto.RoleId = _unitOfWork.UserRepository.GetByID(userDto.Id).RoleId;
-            }
+            var user = _unitOfWork.UserRepository.GetByID(userDto.Id);
 
-            if (userDto.Password == null) {
-                userDto.Password = _unitOfWork.UserRepository.GetByID(userDto.Id).Password;
-            } else
-            {
-                userDto.Password = PasswordHasher.Hash(userDto.Password);
-            }
+            var toUpdateDto = new UserUpdateDto() { 
 
-            Update(userDto);
+                Id= userDto.Id,
+
+                FirstName = userDto.FirstName != null ? userDto.FirstName : user.FirstName,
+
+                LastName = userDto.LastName != null ? userDto.LastName : user.LastName,
+
+                UserName = userDto.UserName != null ? userDto.UserName : user.UserName,
+
+                Email = userDto.Email != null ? userDto.Email : user.Email,
+
+                Address = userDto.Address != null ? userDto.Address : user.Address,
+
+                Password = userDto.Password != null ? PasswordHasher.Hash(userDto.Password) : user.Password,
+
+                RoleId = userDto.RoleId != null ? userDto.RoleId : user.RoleId,
+
+                PhoneNumber = userDto.PhoneNumber != null? userDto.PhoneNumber : user.PhoneNumber,
+
+            };
+
+            Update(toUpdateDto);
         }
     }
 }

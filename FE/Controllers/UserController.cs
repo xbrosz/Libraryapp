@@ -38,6 +38,11 @@ public class UserController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> RegisterAsync(UserRegisterViewModel user)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(user);
+        }
+
         try
         {
             _userFacade.Register(new UserCreateDto()
@@ -102,7 +107,7 @@ public class UserController : Controller
             return View(model);
         }
 
-        _userFacade.UpdateUser(new UserUpdateDto()
+        _userFacade.UpdateUserData(new UserUpdateDto()
         {
             Id = int.Parse(User.Identity.Name),
             FirstName = model.FirstName,
@@ -116,14 +121,39 @@ public class UserController : Controller
         return RedirectToAction("Index", "User");
     }
 
-    [HttpGet("ChangePasswordView")]
-    public IActionResult ChangePasswordView()
+    [HttpGet("ChangePassword")]
+    public IActionResult ChangePassword()
     {
         if (!User.Identity.IsAuthenticated)
         {
             return RedirectToAction("Login", "User");
         }
         return View();
+    }
+
+    [HttpPost("ChangePassword")]
+    public IActionResult ChangePassword(UserChangePasswordViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var userChangePasswordDto = new UserChangePasswordDto()
+        {
+            CurrentPassword = model.CurrentPassword,
+            NewPassword = model.NewPassword,
+            Id = int.Parse(User.Identity.Name)
+        };
+
+        if (!_userFacade.UpdateUserPassword(userChangePasswordDto))
+        {
+            ModelState.AddModelError("Current password", "Current password is not valid");
+            return View(new UserChangePasswordViewModel());
+        }
+
+        return RedirectToAction("Index", "User");
+        
     }
 
     [HttpGet("Index")]
@@ -160,7 +190,11 @@ public class UserController : Controller
     {
         try { 
 
-            var user = _userFacade.Login(userLogin.UserName, userLogin.Password);
+            var user = _userFacade.Login(new UserLoginDto()
+            {
+                UserName = userLogin.UserName,
+                Password = userLogin.Password
+            });
 
             await CreateClaimsAndSignInAsync(user);
 

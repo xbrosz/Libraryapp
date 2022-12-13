@@ -67,13 +67,16 @@ namespace BL.Tests.Services
 
             var loginDto = new UserLoginDto() { UserName = "xkristof", Password = "passwd" };
 
-            var roleId = service.Login(loginDto);
+            var result = service.Login(loginDto);
 
             _repoMock.Verify(x => x.GetByID(1), Times.Once);
             _uowMock.Verify(x => x.UserRepository, Times.Exactly(2));
             _queryObjectMock.Verify(x => x.ExecuteQuery(It.IsAny<UserFilterDto>()), Times.Once);
 
-            Assert.True(roleId == user.RoleId);
+            Assert.True(result.Id == user.Id);
+            Assert.True(result.UserName == user.UserName);
+            Assert.True(result.FirstName == user.FirstName);
+            Assert.True(result.LastName == user.LastName);
         }
 
         [Fact]
@@ -126,7 +129,7 @@ namespace BL.Tests.Services
             _uowMock.Verify(x => x.UserRepository, Times.Exactly(2));
             _queryObjectMock.Verify(x => x.ExecuteQuery(It.IsAny<UserFilterDto>()), Times.Once);
 
-            Assert.Equal("Password is incorrect", exception.Message);
+            Assert.Equal("Incorrect password", exception.Message);
         }
 
         [Fact]

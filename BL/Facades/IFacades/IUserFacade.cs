@@ -12,12 +12,14 @@ namespace BL.Facades.IFacades
     {
         void Register(UserCreateDto user);
 
-        UserDetailDto Login(string userName, string password);
+        UserDetailDto Login(UserLoginDto userloginDto);
 
         UserDetailDto? GetUserByUserName(string userName);
 
         UserDetailDto? GetUserById(int id);
 
-        void UpdateUser(UserUpdateDto userDto);
+        void UpdateUserData(UserUpdateDto userDto);
+
+        public bool UpdateUserPassword(UserChangePasswordDto userDto);
     }
 }

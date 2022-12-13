@@ -29,9 +29,9 @@ namespace BL.Facades.Facades
             _userService.Register(user);
         }
 
-        public UserDetailDto Login(string userName, string password)
+        public UserDetailDto Login(UserLoginDto userloginDto)
         {
-            return _userService.Login(userName, password);
+            return _userService.Login(userloginDto);
         }
 
         public UserDetailDto? GetUserByUserName(string userName)
@@ -44,9 +44,25 @@ namespace BL.Facades.Facades
             return _userService.Find(id);
         }
 
-        public void UpdateUser(UserUpdateDto userDto)
+        public void UpdateUserData(UserUpdateDto userDto)
         {
             _userService.UpdateUser(userDto);
+        }
+
+        public bool UpdateUserPassword(UserChangePasswordDto userDto)
+        {
+            if (!_userService.CheckPassword(userDto.CurrentPassword, userDto.Id))
+            {
+                return false;
+            }
+
+            _userService.UpdateUser(new UserUpdateDto()
+            {
+                Password = userDto.NewPassword,
+                Id = userDto.Id,
+            });
+
+            return true;
         }
     }
 }

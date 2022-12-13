@@ -10,10 +10,12 @@ namespace BL.Services.IServices
 
         void Register(UserCreateDto registerDto);
 
-        UserDetailDto Login(string userName, string password);
+        UserDetailDto Login(UserLoginDto userLoginDto);
 
         UserDetailDto? GetUserByUserName(string name);
 
         void UpdateUser(UserUpdateDto userDto);
+
+        bool CheckPassword(string password, int userId);
     }
 }

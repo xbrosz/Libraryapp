@@ -43,5 +43,10 @@ namespace BL.Services.GenericService
             _repository.Insert(_mapper.Map<TEntity>(dtoToInsert));
             _unitOfWork.Commit();
         }
+
+        public IEnumerable<FEntity> GetAll()
+        {
+            return _mapper.Map<IEnumerable<FEntity>>(_repository.GetAll());
+        }
     }
 }

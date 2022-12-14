@@ -30,6 +30,7 @@ namespace BL.Facades.Facades
             return GetAvailableBookPrints(bookId, branchId, from, to).Count();
         }
 
+
         public IEnumerable<Book> GetAllBooksSortedByRating()
         {
             // dorobit sortovanie podla ratingu
@@ -55,6 +56,11 @@ namespace BL.Facades.Facades
             }
 
             return new List<BookGridDto>();
+
+        public BookDetailDto GetBookDetailByID(int bookID)
+        {
+            return _bookService.GetBookDetailByID(bookID);
+
         }
     }
 }

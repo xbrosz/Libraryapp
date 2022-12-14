@@ -17,7 +17,7 @@ namespace MVCPresentationLayer.Controllers;
 [Route("[controller]")]
 public class UserController : Controller
 {
-    readonly IUserFacade _userFacade;
+    private readonly IUserFacade _userFacade;
 
     public UserController(IUserFacade userFacade)
     {

@@ -3,6 +3,7 @@ using BL.DTOs;
 using BL.QueryObjects.IQueryObject;
 using DAL.Entities;
 using Infrastructure.Query;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BL.QueryObjects.QueryObjects
 {
@@ -20,16 +21,39 @@ namespace BL.QueryObjects.QueryObjects
 
         public QueryResultDto<BookGridDto> ExecuteQuery(BookFilterDto filter)
         {
-            var query = myQuery.Where<int>(a => a == filter.AuthorID, "AuthorId");
+            if (filter.AuthorID.HasValue)
+            {
+                myQuery.Where<int>(a => a == filter.AuthorID, nameof(Book.AuthorId));
+            }
+            
+            if (string.IsNullOrWhiteSpace(filter.Title))
+            {
+                myQuery.Where<string>(a => a == filter.Title, nameof(Book.Title));
+            }
+
+            if (string.IsNullOrWhiteSpace(filter.AuthorName))
+            {
+                //myQuery.Where<string>(a => a == filter.AuthorName, nameof(Book.Author.));
+            }
+
+            if (filter.Ratings!= null && filter.Ratings.Any())
+            {
+                filter.Ratings.Sort();
+
+                //myQuery.Where<int>(a => a == filter.AuthorID, nameof(Book.AuthorId));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
+            {
+                myQuery.OrderBy<string>(filter.SortCriteria, filter.SortAscending);
+            }
+
             if (filter.RequestedPageNumber.HasValue)
             {
-                query = query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
+                myQuery.Page(filter.RequestedPageNumber.Value, filter.PageSize);
             }
-            if (query is null)
-            {
-                return null;
-            }
-            return mapper.Map<QueryResultDto<BookGridDto>>(query.Execute());
+
+            return mapper.Map<QueryResultDto<BookGridDto>>(myQuery.Execute());
         }
     }
 }

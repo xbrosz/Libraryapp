@@ -26,10 +26,13 @@ public class Program
         using var uow = container.Resolve<IUnitOfWork>();
         var authorService = container.Resolve<IAuthorService>();
 
-        var userFacade = container.Resolve<IUserFacade>();
+        var bookFacade = container.Resolve<IBookFacade>();
         var userService = container.Resolve<IUserService>();
-
-
+        Console.WriteLine("ANO!");
+        foreach(var b in bookFacade.GetAllBooksSortedByRating())
+        {
+            Console.WriteLine(b.Title);
+        }
 
 
     }

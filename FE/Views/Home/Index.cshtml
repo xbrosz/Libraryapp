@@ -1,8 +1,28 @@
-﻿@{
+﻿@model BookListViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Welcome to Library app</a>.</p>
-</div>
+
+<h4>Home</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Book title</th>
+            <th>Author</th>
+            <th>Release</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model.Books)
+        {
+                <tr>
+                    <td>@book.Title</td>
+                    <td>@book.Author.FirstName, @book.Author.LastName</td>
+                    <td>@book.Release.ToString("dd-MM-yyyy")</td>
+                
+                </tr>
+        }
+    </tbody>
+</table>

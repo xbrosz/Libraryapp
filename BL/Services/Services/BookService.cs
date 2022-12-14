@@ -31,5 +31,14 @@ namespace BL.Services.Services
             return _mapper.Map<BookDetailDto>(Find(bookID));
         }
 
+        public IEnumerable<BookGridDto> GetBooksbyFilter(BookFilterDto filter)
+        {
+            return _bookQueryObject.ExecuteQuery(filter).Items;
+        }
+
+        public IEnumerable<Book> GetAll()
+        {
+            return _unitOfWork.BookRepository.GetAll();
+        }
     }
 }

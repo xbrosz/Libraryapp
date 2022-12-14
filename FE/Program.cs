@@ -3,6 +3,8 @@ using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using BL;
+using BL.DTOs.Reservation;
+using BL.Facades.IFacades;
 using BL.Services.IServices;
 using BL.Services.Services;
 using DAL.Data;
@@ -76,7 +78,39 @@ using (var scope = app.Services.CreateScope())                                  
         RoleId = 2
     });
 
+    scope.ServiceProvider.GetRequiredService<IUserService>().Register(new BL.DTOs.User.UserCreateDto()
+    {
+        Address = "Praha",
+        Password = "Heslo_je_123",
+        UserName = "Admin",
+        FirstName = "Peter",
+        LastName = "Biely",
+        PhoneNumber = "+4219873645",
+        Email = "admin@gmail.com",
+        RoleId = 1
+    });
 
+    var dto = new ReservationCreateFormDto()
+    {
+        BookId = 1,
+        BranchId = 1,
+        StartDate = DateTime.Now,
+        EndDate = DateTime.Now.AddDays(10),
+        UserId = 3
+    };
+
+    scope.ServiceProvider.GetRequiredService<IReservationFacade>().ReserveBook(dto);
+
+    var dto2 = new ReservationCreateFormDto()
+    {
+        BookId = 1,
+        BranchId = 1,
+        StartDate = DateTime.Now.AddDays(-20),
+        EndDate = DateTime.Now.AddDays(-14),
+        UserId = 3
+    };
+
+    scope.ServiceProvider.GetRequiredService<IReservationFacade>().ReserveBook(dto2);
 }
 
 app.Run();

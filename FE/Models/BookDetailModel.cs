@@ -6,11 +6,9 @@ namespace FE.Models
 {
     public class BookDetailModel
     {
-        private readonly BookFacade _bookFacade;
-
-        public BookDetailModel(BookFacade bookFacade)
-        {
-            _bookFacade = bookFacade;
-        }
+        public string BookTitle { get; set; }
+        public DateTime ReleaseDate { get; set; }
+        public string AuthorName { get; set; }
+        public string Genres { get; set; }
     }
 }

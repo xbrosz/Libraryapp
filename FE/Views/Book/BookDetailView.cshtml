@@ -1,0 +1,28 @@
+﻿@model BookDetailModel
+
+<h4>Book detail</h4>
+<div class="row">
+    <div class="col-md-4">
+        <table class="table">
+        <tbody>
+                <tr>
+                    <td>Book title:</td>
+                    <td>@Model.BookTitle</td>
+                </tr>
+                <tr>
+                    <td>Author:</td>
+                    <td>@Model.AuthorName</td>
+                </tr>
+                <tr>
+                    <td>Release date:</td>
+                    <td>@Model.ReleaseDate</td>
+                </tr>
+                <tr>
+                    <td>Genres:</td>
+                    <td>@Model.Genres</td>
+                </tr>
+                
+        </tbody>
+        </table>
+    </div>
+</div>

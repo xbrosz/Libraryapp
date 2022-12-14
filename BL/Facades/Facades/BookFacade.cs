@@ -8,11 +8,13 @@ namespace BL.Facades.Facades
     {
         private IBookPrintService _bookPrintService { get; set; }
         private IReservationService _reservationService { get; set; }
+        private IBookService _bookService { get; set; }
 
-        public BookFacade(IBookPrintService bookPrintService, IReservationService reservationService)
+        public BookFacade(IBookPrintService bookPrintService, IReservationService reservationService, IBookService bookService)
         {
             _bookPrintService = bookPrintService;
             _reservationService = reservationService;
+            _bookService = bookService;
         }
 
         public IEnumerable<BookPrintDto> GetAvailableBookPrints(int bookId, int branchId, DateTime from, DateTime to)
@@ -25,6 +27,10 @@ namespace BL.Facades.Facades
         public int GetNumOfAvailablePrints(int bookId, int branchId, DateTime from, DateTime to)
         {
             return GetAvailableBookPrints(bookId, branchId, from, to).Count();
+        }
+        public BookDetailDto GetBookDetailByID(int bookID)
+        {
+            return _bookService.GetBookDetailByID(bookID);
         }
     }
 }

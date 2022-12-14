@@ -9,8 +9,10 @@ namespace FE.Models
         public int Id { get; set; }
         public string BookTitle { get; set; }
         public int BookPrintId { get; set; }
+        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
+        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
         public int BranchId { get; set; }
@@ -22,6 +24,12 @@ namespace FE.Models
             {
                 errors.Add(new ValidationResult($"{nameof(EndDate)} needs to be greater than Start date.", new List<string> { nameof(EndDate) }));
             }
+
+            if (EndDate <= DateTime.Today)
+            {
+                errors.Add(new ValidationResult($"{nameof(EndDate)} needs to be greater than Today.", new List<string> { nameof(EndDate) }));
+            }
+
             return errors;
         }
     }

@@ -92,7 +92,16 @@ namespace FE.Controllers
                 BookPrintId = model.BookPrintId
             };
 
-            _reservationFacade.UpdateReservationDate(dto);
+            try
+            {
+                _reservationFacade.UpdateReservationDate(dto);
+            }
+            catch (InvalidOperationException e) 
+            {
+                ModelState.AddModelError(nameof(ReservationEditViewModel.EndDate), "Book is not available in given date range.");
+                return View(model);
+            }
+            
 
             return RedirectToAction(nameof(Index));
         }

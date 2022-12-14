@@ -11,6 +11,7 @@ namespace BL.Facades.IFacades
     {
         public void ReserveBook(ReservationCreateFormDto reservationDto);
         public void UpdateReservationDate(ReservationUpdateFormDto reservationDto);
+        public void GetAllBranches();
 
     }
 }

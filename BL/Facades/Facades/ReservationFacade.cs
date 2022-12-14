@@ -1,4 +1,5 @@
-﻿using BL.DTOs.Reservation;
+﻿using BL.DTOs.Branch;
+using BL.DTOs.Reservation;
 using BL.Facades.IFacades;
 using BL.Services.IServices;
 
@@ -8,11 +9,13 @@ namespace BL.Facades.Facades
     {
         private IReservationService reservationService;
         private IBookPrintService bookPrintService;
+        private IBranchService branchService;
 
-        public ReservationFacade(IReservationService reservationService, IBookPrintService bpService)
+        public ReservationFacade(IReservationService reservationService, IBookPrintService bpService, IBranchService branchService)
         {
             this.reservationService = reservationService;
             bookPrintService = bpService;
+            this.branchService = branchService;
         }
 
         public void ReserveBook(ReservationCreateFormDto reservationDto)
@@ -80,6 +83,10 @@ namespace BL.Facades.Facades
             };
 
             reservationService.Update(updateDto);
+        }
+        public IEnumerable<BranchDto> GetAllBranches()
+        {
+            return branchService.GetAllBranches();
         }
     }
 }

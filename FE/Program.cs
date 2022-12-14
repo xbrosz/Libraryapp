@@ -75,6 +75,8 @@ using (var scope = app.Services.CreateScope())                                  
         Email = "lalalala@gmail.com",
         RoleId = 2
     });
+
+
 }
 
 app.Run();

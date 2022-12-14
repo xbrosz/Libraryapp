@@ -21,7 +21,9 @@
                     <td>@book.Title</td>
                     <td>@book.Author.FirstName, @book.Author.LastName</td>
                     <td>@book.Release.ToString("dd-MM-yyyy")</td>
-                
+
+                <td><a class="btn btn-secondary my-1" href="@Url.Action("Index", "Book", new { book.Id })">Preview</a></td>
+
                 </tr>
         }
     </tbody>

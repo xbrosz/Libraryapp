@@ -42,20 +42,21 @@ namespace BL.Facades.Facades
             var substrings = substring.ToLower().Split(' ').ToList().Select(a => a != " ");
 
             Console.WriteLine(substring);
-            foreach(var a in substrings)
+            foreach (var a in substrings)
             {
                 Console.WriteLine(a);
             }
 
-            List<BookGridDto> books= new List<BookGridDto>();
+            List<BookGridDto> books = new List<BookGridDto>();
 
-            foreach(var str in substrings)
+            foreach (var str in substrings)
             {
                 //books.Union(_bookService.GetBooksByAuthorName(str));
                 //books.Union(_bookService.GetBooksByBookTitle(str));
             }
 
             return new List<BookGridDto>();
+        }
 
         public BookDetailDto GetBookDetailByID(int bookID)
         {

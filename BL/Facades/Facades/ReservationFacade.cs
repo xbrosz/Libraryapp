@@ -31,7 +31,7 @@ namespace BL.Facades.Facades
 
             if (availableBPs.Count() == 0)
             {
-                throw new Exception("No book print is available in given date range.");
+                throw new InvalidOperationException("No book print is available in given date range.");
             }
 
             var availableBP = availableBPs.First();
@@ -49,6 +49,14 @@ namespace BL.Facades.Facades
 
         public void UpdateReservationDate(ReservationUpdateFormDto reservationDto)
         {
+            var reservation = reservationService.Find(reservationDto.Id);
+
+            if (reservation.EndDate.Date < DateTime.Today)
+            {
+                throw new InvalidOperationException("Ended reservation cannot be edited.");
+            }
+
+
             var bookId = bookPrintService.Find(reservationDto.BookPrintId).BookId;
 
             var reservedBPs = reservationService.GetReservationsInDateRangeByBookAndBranch
@@ -65,7 +73,7 @@ namespace BL.Facades.Facades
 
             if (availableBPs.Count() == 0)
             {
-                throw new Exception("No book print is available in given date range.");
+                throw new InvalidOperationException("No book print is available in given date range.");
             }
 
             var availableBP = availableBPs.First();

@@ -12,7 +12,7 @@ namespace BL.Facades.IFacades
     {
         IEnumerable<BookGridDto> GetBooksBySubstring(string substring);
 
-        IEnumerable<Book> GetAllBooksSortedByRating();
+        IEnumerable<BookGridDto> GetAllBooksSortedByRating(int page, int pageSize);
 
         BookDetailDto GetBookDetailByID(int bookID);
     }

@@ -5,8 +5,8 @@ namespace FE.Models
 {
     public class BookListViewModel
     {
-        public IEnumerable<Book> Books { get; set; }
+        public IEnumerable<BookGridDto> Books { get; set; }
 
-
+        public PaginationViewModel Pagination { get; set; }
     }
 }

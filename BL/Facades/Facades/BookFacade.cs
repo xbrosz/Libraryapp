@@ -10,12 +10,14 @@ namespace BL.Facades.Facades
         private IBookPrintService _bookPrintService { get; set; }
         private IReservationService _reservationService { get; set; }
         private IBookService _bookService { get; set; }
+        private IAuthorService _authorService { get; set; }
 
-        public BookFacade(IBookPrintService bookPrintService, IReservationService reservationService, IBookService bookService)
+        public BookFacade(IBookPrintService bookPrintService, IReservationService reservationService, IBookService bookService, IAuthorService authorService)
         {
             _bookPrintService = bookPrintService;
             _reservationService = reservationService;
             _bookService = bookService;
+            _authorService = authorService;
         }
 
         public IEnumerable<BookPrintDto> GetAvailableBookPrints(int bookId, int branchId, DateTime from, DateTime to)
@@ -31,11 +33,12 @@ namespace BL.Facades.Facades
         }
 
 
-        public IEnumerable<Book> GetAllBooksSortedByRating()
+        public IEnumerable<BookGridDto> GetAllBooksSortedByRating(int page, int pageSize)
         {
-            // dorobit sortovanie podla ratingu
-            return _bookService.GetAll();
+            return _bookService.GetBooksbyFilter(new BookFilterDto() { PageSize = pageSize, RequestedPageNumber = page, SortCriteria = nameof(Book.RatingNumber) });
         }
+
+        // Pri vyhladavanie podla mena autora, najskor ziskat id autora z databazy a potom podla jeho id az vyhladavat knihu
 
         public IEnumerable<BookGridDto> GetBooksBySubstring(string substring)
         {
@@ -51,6 +54,8 @@ namespace BL.Facades.Facades
 
             foreach (var str in substrings)
             {
+                // duplicity!!!
+
                 //books.Union(_bookService.GetBooksByAuthorName(str));
                 //books.Union(_bookService.GetBooksByBookTitle(str));
             }
@@ -61,7 +66,6 @@ namespace BL.Facades.Facades
         public BookDetailDto GetBookDetailByID(int bookID)
         {
             return _bookService.GetBookDetailByID(bookID);
-
         }
     }
 }

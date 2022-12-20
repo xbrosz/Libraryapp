@@ -1,4 +1,5 @@
-﻿using BL.Facades.IFacades;
+﻿using BL.DTOs;
+using BL.Facades.IFacades;
 using DAL.Entities;
 using FE.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -7,13 +8,13 @@ using System.Diagnostics;
 
 namespace FE.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
         private readonly IBookFacade _bookFacade;
 
-        public IEnumerable<Book> Books { get; set; }
+        public IEnumerable<BookGridDto> Books { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string? SearchString { get; set; }
@@ -29,12 +30,16 @@ namespace FE.Controllers
             _bookFacade = bookFacade;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
+            var books = _bookFacade.GetAllBooksSortedByRating(page, PageSize);
+
             var model = new BookListViewModel()
             {
-                Books = _bookFacade.GetAllBooksSortedByRating()
-        };
+                Books = books,
+                Pagination = new PaginationViewModel(page, books.Count(), PageSize)
+            };
+
             return View(model);
         }
 
@@ -56,7 +61,7 @@ namespace FE.Controllers
             //if (string.IsNullOrWhiteSpace(SearchString))
             //{
             //Books = _bookFacade.GetAllBooksSortedByRating();
-            //    return;
+                //return;
             //}
 
             //Books = _bookFacade.GetBooksBySubstring(SearchString);

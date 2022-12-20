@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BL.DTOs;
+using BL.DTOs.BookGenre;
 using BL.QueryObjects.IQueryObject;
 using BL.Services.Services;
 using DAL.Entities;
@@ -13,12 +14,14 @@ namespace BL.Tests.Services
         Mock<IUnitOfWork> _uowMock;
         Mock<IQueryObject<BookFilterDto, BookGridDto>> _queryObjectMock;
         Mock<IRepository<Book>> _repoMock;
+        Mock<IQueryObject<BookGenreFilterDto, BookGenreDto>> _genreQueryObject;
 
         public BookServiceTests()
         {
             _uowMock = new Mock<IUnitOfWork>();
             _queryObjectMock = new Mock<IQueryObject<BookFilterDto, BookGridDto>>();
             _repoMock = new Mock<IRepository<Book>>();
+            _genreQueryObject = new Mock<IQueryObject<BookGenreFilterDto, BookGenreDto>>();
         }
 
         [Fact]
@@ -64,7 +67,7 @@ namespace BL.Tests.Services
                 .Setup(x => x.BookRepository)
                 .Returns(_repoMock.Object);
 
-            var service = new BookService(_uowMock.Object, mapper, _queryObjectMock.Object);
+            var service = new BookService(_uowMock.Object, mapper, _queryObjectMock.Object, _genreQueryObject.Object);
             var resultDto = service.GetBookDetailByID(1);
             Assert.True(resultDto.Release == new DateTime(2000, 6, 6) &&
                         resultDto.Id == 1 &&

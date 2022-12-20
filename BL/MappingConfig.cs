@@ -1,6 +1,7 @@
 using AutoMapper;
 using BL.DTOs;
 using BL.DTOs.Author;
+using BL.DTOs.BookGenre;
 using BL.DTOs.Branch;
 using BL.DTOs.Reservation;
 using BL.DTOs.User;
@@ -32,16 +33,18 @@ namespace BL
 
             config.CreateMap<Book, BookDetailDto>().ForMember(dest => dest.AuthorName, act => act.MapFrom(src => src.Author.FirstName + " "
                                                                                                                + src.Author.MiddleName + " "
-                                                                                                               + src.Author.LastName))
-                                                   .ForMember(dest => dest.BookGenres, act => act.MapFrom(src => string.Join("/", src.Genres.Select(g => g.Name))));
+                                                                                                               + src.Author.LastName));
+                                                 //.ForMember(dest => dest.BookGenres, act => act.MapFrom(src => string.Join("/", src.Genres.Select(g => g.Name))));
+
             config.CreateMap<Book, BookGridDto>().ForMember(dest => dest.AuthorName, act => act.MapFrom(src => src.Author.FirstName + " "
                                                                                                              + src.Author.MiddleName + " "
-                                                                                                             + src.Author.LastName))
-                                                 .ForMember(dest => dest.BookGenres, act => act.MapFrom(src => string.Join("/", src.Genres.Select(g => g.Name))))
-                                                 .ForMember(dest => dest.Rating, act => act.MapFrom(src => src.Ratings.Select(r => r.RatingNumber).Average()));
+                                                                                                             + src.Author.LastName));
+                                                 //.ForMember(dest => dest.BookGenres, act => act.MapFrom(src => string.Join("/", src.Genres.Select(g => g.Name))))
+                                                 //.ForMember(dest => dest.Rating, act => act.MapFrom(src => src.Ratings.Select(r => r.RatingNumber).Average()));
             
             config.CreateMap<BookPrint, BookPrintDto>().ReverseMap();
-            
+
+            config.CreateMap<BookGenre, BookGenreDto>().ReverseMap();
 
             config.CreateMap<QueryResultDto<AuthorDto>, EFQueryResult<Author>>().ReverseMap();
             config.CreateMap<QueryResultDto<BranchDto>, EFQueryResult<Branch>>().ReverseMap();
@@ -51,6 +54,7 @@ namespace BL
             config.CreateMap<QueryResultDto<RatingDto>, EFQueryResult<Rating>>().ReverseMap();
             config.CreateMap<QueryResultDto<ReservationsDto>, EFQueryResult<Reservation>>().ReverseMap();
             config.CreateMap<QueryResultDto<UserDetailDto>, EFQueryResult<User>>().ReverseMap();
+            config.CreateMap<QueryResultDto<BookGenreDto>, EFQueryResult<BookGenre>>().ReverseMap();
 
             config.CreateMap<CreateReservationDto, Reservation>().ReverseMap();
         }

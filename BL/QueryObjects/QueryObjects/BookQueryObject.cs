@@ -9,51 +9,49 @@ namespace BL.QueryObjects.QueryObjects
 {
     public class BookQueryObject : IQueryObject<BookFilterDto, BookGridDto>
     {
-        private IMapper mapper;
+        private IMapper _mapper;
 
-        private IAbstractQuery<Book> myQuery;
+        private IAbstractQuery<Book> _query;
 
         public BookQueryObject(IMapper mapper, IAbstractQuery<Book> query)
         {
-            this.mapper = mapper;
-            myQuery = query;
+            _mapper = mapper;
+            _query = query;
         }
 
-        public QueryResultDto<BookGridDto> ExecuteQuery(BookFilterDto filter)
+        public QueryResultDto<BookGridDto> ExecuteQuery(BookFilterDto filter)    
         {
             if (filter.AuthorID.HasValue)
             {
-                myQuery.Where<int>(a => a == filter.AuthorID, nameof(Book.AuthorId));
+                _query.Where<int>(a => a == filter.AuthorID, nameof(Book.AuthorId));
             }
             
-            if (string.IsNullOrWhiteSpace(filter.Title))
+            if (!string.IsNullOrWhiteSpace(filter.Title))
             {
-                myQuery.Where<string>(a => a == filter.Title, nameof(Book.Title));
+                _query.Where<string>(a => a.ToLower().Contains(filter.Title.ToLower()), nameof(Book.Title));
             }
 
-            if (string.IsNullOrWhiteSpace(filter.AuthorName))
+            if (filter.LowestRating.HasValue)
             {
-                //myQuery.Where<string>(a => a == filter.AuthorName, nameof(Book.Author.));
+                _query.Where<int>(a => a >= filter.LowestRating, nameof(Book.RatingNumber));
             }
 
-            if (filter.Ratings!= null && filter.Ratings.Any())
+            if (filter.HighestRating.HasValue)
             {
-                filter.Ratings.Sort();
-
-                //myQuery.Where<int>(a => a == filter.AuthorID, nameof(Book.AuthorId));
+                _query.Where<int>(a => a <= filter.HighestRating, nameof(Book.RatingNumber));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
             {
-                myQuery.OrderBy<string>(filter.SortCriteria, filter.SortAscending);
+                _query.OrderBy<double>(filter.SortCriteria, filter.SortAscending);
             }
 
             if (filter.RequestedPageNumber.HasValue)
             {
-                myQuery.Page(filter.RequestedPageNumber.Value, filter.PageSize);
+                _query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
             }
 
-            return mapper.Map<QueryResultDto<BookGridDto>>(myQuery.Execute());
+            return _mapper.Map<QueryResultDto<BookGridDto>>(_query.Execute());
         }
     }
 }

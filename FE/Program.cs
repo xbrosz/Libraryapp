@@ -30,6 +30,11 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 }
 );
 
+builder.Services.AddSession(options =>
+{
+    //sessions hold for 20 minutes
+    options.IdleTimeout = TimeSpan.FromMinutes(20);
+});
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<LibraryappDbContext>();
@@ -52,7 +57,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -5,6 +5,7 @@ using FE.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace FE.Controllers
 {
@@ -12,14 +13,13 @@ namespace FE.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+
         private readonly IBookFacade _bookFacade;
 
         public IEnumerable<BookGridDto> Books { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public string? SearchString { get; set; }
-
         public SelectList? Genres { get; set; }
+
 
         [BindProperty(SupportsGet = true)]
         public string? BookGenre { get; set; }
@@ -30,8 +30,24 @@ namespace FE.Controllers
             _bookFacade = bookFacade;
         }
 
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(int page = 1, string? searchString = null)
         {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+               var books = _bookFacade.GetBooksBySubstring(searchString);
+
+                var model = new BookListViewModel()
+                {
+                    Books = books,
+                    Pagination = new PaginationViewModel(page, books.Count(), PageSize)
+                };
+
+                return View(model);
+            } else
+            {
+
+           
+
             var books = _bookFacade.GetAllBooksSortedByRating(page, PageSize);
 
             var model = new BookListViewModel()
@@ -41,6 +57,8 @@ namespace FE.Controllers
             };
 
             return View(model);
+
+            }
         }
 
         public IActionResult Privacy()
@@ -55,16 +73,16 @@ namespace FE.Controllers
         }
 
        
-        //public async Task OnGetAsync()
+        //public IActionResult Search(BookListViewModel model)
         //{
+        //    if (string.IsNullOrWhiteSpace(model.SearchString))
+        //    {
+        //        return View(model);
+        //    }
 
-            //if (string.IsNullOrWhiteSpace(SearchString))
-            //{
-            //Books = _bookFacade.GetAllBooksSortedByRating();
-                //return;
-            //}
+        //    model.Books = _bookFacade.GetBooksBySubstring(model.SearchString);
 
-            //Books = _bookFacade.GetBooksBySubstring(SearchString);
+        //    return View(model);
         //}
     }
 }

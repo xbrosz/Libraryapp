@@ -6,12 +6,30 @@
 
 
 <h4>Books</h4>
+
+
+
+
+    
+
+
+        <form asp-controller="Home" asp-action="Index">
+    <p>
+        Search: <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+       
+
+
 <table class="table">
     <thead>
         <tr>
             <th>Book title</th>
             <th>Author</th>
-            <th>Release</th>
+            <th>Rating</th>
+            <th>Genres</th>
+            <th>Released</th>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +38,8 @@
                 <tr>
                     <td>@book.Title</td>
                     <td>@book.AuthorName</td>
+                    <td>@book.RatingNumber /5</td>
+                    <td>@book.BookGenres</td>
                     <td>@book.Release.ToString("dd-MM-yyyy")</td>
 
                 <td><a class="btn btn-secondary my-1" href="@Url.Action("Index", "Book", new { book.Id })">Preview</a></td>

@@ -2,6 +2,7 @@
 using BL;
 using BL.DTOs;
 using BL.DTOs.Author;
+using BL.Facades.IFacades;
 using BL.QueryObjects.IQueryObject;
 using BL.Services.IServices;
 using DAL.Data;
@@ -25,7 +26,10 @@ public class Program
         dbcontext.Database.EnsureCreated();
 
         using var uow = container.Resolve<IUnitOfWork>();
-        var query = container.Resolve<IQueryObject<BookFilterDto, BookGridDto>>();
+
+        var bookFacade = container.Resolve<IBookFacade>();
+
+        //var query = container.Resolve<IQueryObject<BookFilterDto, BookGridDto>>();
 
         //var query2 = container.Resolve<IQueryObject<AuthorFilterDto, AuthorDto>>();
 
@@ -33,18 +37,14 @@ public class Program
 
         //Console.WriteLine(res1.Items.First().FirstName);
 
-        var book = container.Resolve<IBookService>();
-        foreach(var g in book.GetGenresForBookId(2))
-        {
-            Console.WriteLine(g.Name);
-        }
-        
 
-        var res = query.ExecuteQuery(new BookFilterDto() {Title = "the" });
 
-        foreach(var a in res.Items)
+
+        //var res = query.ExecuteQuery(new BookFilterDto() {Title = "the" });
+
+        foreach (var a in bookFacade.GetBooksBySubstring("ad"))
         {
-            //Console.WriteLine(a.Title);
+            Console.WriteLine("Book: " + a.Title);
         }
         
     }

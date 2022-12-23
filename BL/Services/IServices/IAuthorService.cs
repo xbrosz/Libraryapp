@@ -4,14 +4,14 @@ namespace BL.Services.IServices
 {
     public interface IAuthorService
     {
-        public AuthorDto Find(int id);
+        AuthorDto Find(int id);
 
-        public void Delete(int id);
+        void Delete(int id);
 
-        public void Update(AuthorDto dtoToUpdate);
+        void Update(AuthorDto dtoToUpdate);
 
-        public void Insert(AuthorDto dtoToInsert);
+        void Insert(AuthorDto dtoToInsert);
 
-        public IEnumerable<AuthorDto> GetAuthorsByName(string firstName, string middleName, string lastName);
+        IEnumerable<AuthorDto> GetAuthorsByName(string name);
     }
 }

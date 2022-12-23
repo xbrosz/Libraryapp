@@ -38,10 +38,11 @@ namespace BL
 
             config.CreateMap<Book, BookGridDto>().ForMember(dest => dest.AuthorName, act => act.MapFrom(src => src.Author.FirstName + " "
                                                                                                              + src.Author.MiddleName + " "
-                                                                                                             + src.Author.LastName));
-                                                 //.ForMember(dest => dest.BookGenres, act => act.MapFrom(src => string.Join("/", src.Genres.Select(g => g.Name))))
-                                                 //.ForMember(dest => dest.Rating, act => act.MapFrom(src => src.Ratings.Select(r => r.RatingNumber).Average()));
-            
+                                                                                                             + src.Author.LastName))
+                                                .ForMember(dest => dest.RatingNumber, act => act.MapFrom(src => Math.Truncate(src.RatingNumber * 10) / 10));
+            //.ForMember(dest => dest.BookGenres, act => act.MapFrom(src => string.Join("/", src.Genres.Select(g => g.Name))))
+
+
             config.CreateMap<BookPrint, BookPrintDto>().ReverseMap();
 
             config.CreateMap<BookGenre, BookGenreDto>().ReverseMap();

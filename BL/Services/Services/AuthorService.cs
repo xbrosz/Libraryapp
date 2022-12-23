@@ -17,14 +17,16 @@ namespace BL.Services.Services
             _authorQueryObject = authorQueryObject;
         }
 
-        public IEnumerable<AuthorDto> GetAuthorsByName(string firstName, string middleName, string lastName)
+        public IEnumerable<AuthorDto> GetAuthorsByName(string name)
         {
-            if (!firstName.All(char.IsLetter) || !middleName.All(char.IsLetter) || !lastName.All(char.IsLetter))
-            {
-                throw new Exception("Names should contain just letters.");
-            }
+            //if (!firstName.All(char.IsLetter) || !middleName.All(char.IsLetter) || !lastName.All(char.IsLetter))
+            //{
+            //    throw new Exception("Names should contain just letters.");
+            //}
 
-            return _authorQueryObject.ExecuteQuery(new AuthorFilterDto() { FirstName = firstName, MiddleName = middleName, LastName = lastName, SortCriteria = nameof(Author.FirstName), SortAscending = true }).Items;
+            var authors = _authorQueryObject.ExecuteQuery(new AuthorFilterDto() { FirstName = name }).Items;
+            authors.Union(_authorQueryObject.ExecuteQuery(new AuthorFilterDto() { MiddleName = name }).Items);
+            return authors.Union(_authorQueryObject.ExecuteQuery(new AuthorFilterDto() { LastName = name }).Items);
         }
     }
 }

@@ -12,8 +12,8 @@ namespace BL.Services.Services
 {
     public class BookService : GenericService<Book, BookDetailDto, BookPrintDto, BookDetailDto>, IBookService
     {
-        IQueryObject<BookFilterDto, BookGridDto> _bookQueryObject;
-        IQueryObject<BookGenreFilterDto, BookGenreDto> _bookGenreQueryObject;
+        private readonly IQueryObject<BookFilterDto, BookGridDto> _bookQueryObject;
+        private readonly IQueryObject<BookGenreFilterDto, BookGenreDto> _bookGenreQueryObject;
 
         public BookService(IUnitOfWork unitOfWork, IMapper mapper, IQueryObject<BookFilterDto, BookGridDto> bookQueryObject, IQueryObject<BookGenreFilterDto, BookGenreDto> bookGenreQueryObject) : base(unitOfWork, mapper, unitOfWork.BookRepository)
         {
@@ -21,28 +21,27 @@ namespace BL.Services.Services
             _bookGenreQueryObject = bookGenreQueryObject;
         }
 
-        public IEnumerable<BookGridDto> GetBooksbyAuthorID(int authorID)
+        public IEnumerable<BookGridDto> AddGenresToBooks(IEnumerable<BookGridDto> books)
         {
-            return _bookQueryObject.ExecuteQuery(new BookFilterDto
+            foreach (var book in books)
             {
-                AuthorID = authorID,
+                book.BookGenres = string.Join("/", _bookGenreQueryObject.ExecuteQuery(new BookGenreFilterDto() { BookId = book.Id}).Items.Select(x => x.Genre.Name));
+            }
 
-            }).Items;
-        }
-
-        public IEnumerable<Genre> GetGenresForBookId(int bookId)
-        {
-            return _bookGenreQueryObject.ExecuteQuery(new BookGenreFilterDto() { BookId = bookId}).Items.Select(x => x.Genre);
+            return books;
         }
 
         public BookDetailDto GetBookDetailByID(int bookID)
         {
-            return _mapper.Map<BookDetailDto>(Find(bookID));
+            var book = _mapper.Map<BookDetailDto>(Find(bookID));
+            book.BookGenres = string.Join("/", _bookGenreQueryObject.ExecuteQuery(new BookGenreFilterDto() { BookId = bookID }).Items.Select(x => x.Genre.Name));
+            return book;
         }
 
         public IEnumerable<BookGridDto> GetBooksbyFilter(BookFilterDto filter)
         {
-            return _bookQueryObject.ExecuteQuery(filter).Items;
+            var books = _bookQueryObject.ExecuteQuery(filter).Items;
+            return AddGenresToBooks(books);
         }
     }
 }

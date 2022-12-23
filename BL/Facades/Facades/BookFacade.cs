@@ -2,6 +2,7 @@
 using BL.Facades.IFacades;
 using BL.Services.IServices;
 using DAL.Entities;
+using System.Linq;
 
 namespace BL.Facades.Facades
 {
@@ -32,7 +33,6 @@ namespace BL.Facades.Facades
             return GetAvailableBookPrints(bookId, branchId, from, to).Count();
         }
 
-
         public IEnumerable<BookGridDto> GetAllBooksSortedByRating(int page, int pageSize)
         {
             return _bookService.GetBooksbyFilter(new BookFilterDto() { PageSize = pageSize, RequestedPageNumber = page, SortCriteria = nameof(Book.RatingNumber) });
@@ -42,25 +42,33 @@ namespace BL.Facades.Facades
 
         public IEnumerable<BookGridDto> GetBooksBySubstring(string substring)
         {
-            var substrings = substring.ToLower().Split(' ').ToList().Select(a => a != " ");
+            var substrings = substring.ToLower().Split(' ').ToList().Where(a => a != " ");
 
-            Console.WriteLine(substring);
             foreach (var a in substrings)
             {
-                Console.WriteLine(a);
+                Console.WriteLine("Substring: " + a);
             }
 
-            List<BookGridDto> books = new List<BookGridDto>();
+            var books = new List<BookGridDto>();
 
             foreach (var str in substrings)
             {
-                // duplicity!!!
-
-                //books.Union(_bookService.GetBooksByAuthorName(str));
-                //books.Union(_bookService.GetBooksByBookTitle(str));
+                books = books.Union(GetBooksForAuthorName(str)).ToList();
+                books = books.Union(_bookService.GetBooksbyFilter(new BookFilterDto() { Title = str })).ToList();
             }
 
-            return new List<BookGridDto>();
+            return books;
+        }
+
+        private IEnumerable<BookGridDto> GetBooksForAuthorName(string name)
+        {
+            var authors = _authorService.GetAuthorsByName(name);
+            var books = new List<BookGridDto>();
+            foreach(var author in authors)
+            {
+                books = books.Union(_bookService.GetBooksbyFilter(new BookFilterDto() { AuthorID = author.Id })).ToList();
+            }
+            return books;
         }
 
         public BookDetailDto GetBookDetailByID(int bookID)

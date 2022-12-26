@@ -140,56 +140,52 @@ namespace Infrastructure.EFCore.Test
             });
 
             dbContext.SaveChanges();
-
-
-            [Fact]
-            void GenericRepoGetBookByIDTest()
-            {
-                var efRepository = new Repository<Book>(dbContext);
-                var book = efRepository.GetByID(1);
-                Assert.True(book.Title.Equals("The Lord of the Rings: The Fellowship of the Ring"));
-                Assert.True(book.Author.Id == 1);
-
-            }
-            [Fact]
-            void GenericRepoInsertBookTest()
-            {
-                var efRepository = new Repository<Book>(dbContext);
-                efRepository.Insert(new Book
-                {
-                    AuthorId = 1,
-                    Ratings = new List<Rating>(),
-                    Title = "The Lord of the Rings: Return of the King",
-                    Release = new DateTime(1955, 10, 20),
-                    BookPrints = new List<BookPrint>()
-                });
-                dbContext.SaveChanges();
-                Assert.True(dbContext.Book.Count() == 3);
-            }
-            [Fact]
-            void GenericRepoUpdateBookTest()
-            {
-                var efRepository = new Repository<Book>(dbContext);
-                var bookToUpdate = efRepository.GetByID(1);
-                bookToUpdate.Title = "Updated name";
-                efRepository.Update(bookToUpdate);
-                dbContext.SaveChanges();
-                Assert.True(efRepository.GetByID(1).Title.Equals(bookToUpdate.Title));
-
-            }
-            [Fact]
-            void GenericDeleteBookTest()
-            {
-                var efRepository = new Repository<Book>(dbContext);
-                var bookToDelete = efRepository.GetByID(1);
-                efRepository.Delete(bookToDelete);
-                dbContext.SaveChanges();
-                Assert.True(dbContext.Book.Count() == 1);
-                Assert.False(dbContext.Book.Select(b => b.Id).Contains(1));
-            }
-
-
         }
 
+        [Fact]
+        public void GenericRepoGetBookByIDTest()
+        {
+            var efRepository = new Repository<Book>(dbContext);
+            var book = efRepository.GetByID(1);
+            Assert.True(book.Title.Equals("The Lord of the Rings: The Fellowship of the Ring"));
+            Assert.True(book.Author.Id == 1);
+
+        }
+        [Fact]
+        public void GenericRepoInsertBookTest()
+        {
+            var efRepository = new Repository<Book>(dbContext);
+            efRepository.Insert(new Book
+            {
+                AuthorId = 1,
+                Ratings = new List<Rating>(),
+                Title = "The Lord of the Rings: Return of the King",
+                Release = new DateTime(1955, 10, 20),
+                BookPrints = new List<BookPrint>()
+            });
+            dbContext.SaveChanges();
+            Assert.True(dbContext.Book.Count() == 3);
+        }
+        [Fact]
+        public void GenericRepoUpdateBookTest()
+        {
+            var efRepository = new Repository<Book>(dbContext);
+            var bookToUpdate = efRepository.GetByID(1);
+            bookToUpdate.Title = "Updated name";
+            efRepository.Update(bookToUpdate);
+            dbContext.SaveChanges();
+            Assert.True(efRepository.GetByID(1).Title.Equals(bookToUpdate.Title));
+
+        }
+        [Fact]
+        public void GenericDeleteBookTest()
+        {
+            var efRepository = new Repository<Book>(dbContext);
+            var bookToDelete = efRepository.GetByID(1);
+            efRepository.Delete(bookToDelete);
+            dbContext.SaveChanges();
+            Assert.True(dbContext.Book.Count() == 1);
+            Assert.False(dbContext.Book.Select(b => b.Id).Contains(1));
+        }
     }
 }

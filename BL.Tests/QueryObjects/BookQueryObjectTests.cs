@@ -72,7 +72,7 @@ namespace BL.Tests.QueryObjects
                 AuthorID = 2
             };
             var result = queryObject.ExecuteQuery(filter);
-            Assert.True(result is null);
+            Assert.Empty(result.Items);
         }
     }
 }

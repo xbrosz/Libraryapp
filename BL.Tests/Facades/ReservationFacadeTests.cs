@@ -94,7 +94,7 @@ namespace BL.Tests.Facades
                 StartDate = DateTime.Now
             };
 
-            Exception exception = Assert.Throws<Exception>(() => reservationFacade.ReserveBook(reservationForm));
+            Exception exception = Assert.Throws<InvalidOperationException>(() => reservationFacade.ReserveBook(reservationForm));
 
             _reservationServiceMock.Verify(x => x.GetReservationsInDateRangeByBookAndBranch(
                 reservationForm.BookId,
@@ -113,9 +113,20 @@ namespace BL.Tests.Facades
         [Fact]
         public void UpdateBook_Successful()
         {
-            var reservation = new ReservationsDto() { Id = 1, BookPrintId = 1, BookTitle = "title" };
+            var reservation = new ReservationsDto() 
+            { 
+                Id = 1, 
+                BookPrintId = 1, 
+                BookTitle = "title", 
+                StartDate = DateTime.Now.AddDays(-5),
+                EndDate = DateTime.Now.AddDays(2)
+            };
 
             var reservations = new List<ReservationsDto>() { reservation };
+
+            _reservationServiceMock
+                .Setup(x => x.Find(It.IsAny<int>()))
+                .Returns(reservation);
 
             _reservationServiceMock
                 .Setup(x => x.GetReservationsInDateRangeByBookAndBranch(
@@ -163,26 +174,26 @@ namespace BL.Tests.Facades
         [Fact]
         public void UpdateBook_NoBookPrintsAvailable()
         {
-            var reservation = new ReservationsDto() { Id = 2, BookPrintId = 1, BookTitle = "title" };
-
+            var reservation = new ReservationsDto() { Id = 2, BookPrintId = 1, BookTitle = "title",
+                StartDate = DateTime.Now.AddDays(-5),
+                EndDate = DateTime.Now.AddDays(2)
+            };
             var reservations = new List<ReservationsDto>() { reservation };
 
-            _reservationServiceMock
-                .Setup(x => x.GetReservationsInDateRangeByBookAndBranch(
-                    It.IsAny<int>(), It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())
-                ).Returns(reservations);
-
             var bookPrint1 = new BookPrintDto() { Id = 1, BookId = 1, BranchId = 1 };
+            var bookPrints = new List<BookPrintDto>() { };
 
-            var bookPrints = new List<BookPrintDto>() { bookPrint1 };
+            _bpServiceMock
+                .Setup(x => x.Find(It.IsAny<int>()))
+                .Returns(bookPrint1);
 
             _bpServiceMock
                 .Setup(x => x.GetBookPrintsByBranchIDAndBookID(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(bookPrints);
 
-            _bpServiceMock
+            _reservationServiceMock
                 .Setup(x => x.Find(It.IsAny<int>()))
-                .Returns(bookPrint1);
+                .Returns(reservation);
 
             var reservationFacade = new ReservationFacade(_reservationServiceMock.Object, _bpServiceMock.Object);
 
@@ -192,17 +203,22 @@ namespace BL.Tests.Facades
                 UserId = 1,
                 BookPrintId = 1,
                 BranchId = 1,
-                EndDate = DateTime.Now,
+                EndDate = DateTime.Now.AddDays(1),
                 StartDate = DateTime.Now
             };
 
-            Exception exception = Assert.Throws<Exception>(() => reservationFacade.UpdateReservationDate(updateForm));
+            Exception exception = Assert.Throws<InvalidOperationException>(() => reservationFacade.UpdateReservationDate(updateForm));
+
+            _reservationServiceMock
+                .Setup(x => x.GetReservationsInDateRangeByBookAndBranch(
+                    It.IsAny<int>(), It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>())
+                ).Returns(reservations);
 
             _reservationServiceMock.Verify(x => x.GetReservationsInDateRangeByBookAndBranch(
-                bookPrint1.BookId,
-                updateForm.BranchId,
-                updateForm.StartDate,
-                updateForm.EndDate
+                It.IsAny<int>(),
+                It.IsAny<int>(),
+                It.IsAny<DateTime>(),
+                It.IsAny<DateTime>()
                 ), Times.Once
             );
             _bpServiceMock.Verify(x => x.GetBookPrintsByBranchIDAndBookID(updateForm.BranchId, bookPrint1.BookId),

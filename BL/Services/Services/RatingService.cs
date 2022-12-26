@@ -34,5 +34,13 @@ namespace BL.Services.Services
                 BookId = bookId,
             }).Items;
         }
+
+        public IEnumerable<RatingDto> GetRatingsByUser(int userId)
+        {
+            return _ratingQueryObject.ExecuteQuery(new RatingFilterDto
+            {
+                UserId = userId,
+            }).Items;
+        }
     }
 }

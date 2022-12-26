@@ -1,0 +1,38 @@
+﻿@model FE.Models.User.UserIndexViewModel
+@{
+    ViewData["Title"] = Model.UserName;
+}
+
+<h3>@ViewData["Title"]</h3>
+
+<div class="row">
+    <div class="col-md-4">
+               
+        <table class="table">
+        <tbody>
+                <tr>
+                    <td>First name:</td>
+                    <td>@Model.FirstName</td>
+                </tr>
+                <tr>
+                    <td>Last name:</td>
+                    <td>@Model.LastName</td>
+                </tr>
+                <tr>
+                    <td>E-mail:</td>
+                    <td>@Model.Email</td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td>@Model.Address</td>
+                </tr>
+                <tr>
+                    <td>Phone number:</td>
+                    <td>@Model.PhoneNumber</td>
+                </tr>
+        </tbody>
+        </table>
+            <a class="nav-link text-blue" href="@Url.Action("Edit", "User")">Edit account</a>
+            <a class="nav-link text-blue" href="@Url.Action("ChangePassword", "User")">Change pasword</a>
+    </div>
+</div>

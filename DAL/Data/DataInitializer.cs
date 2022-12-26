@@ -41,11 +41,11 @@ namespace DAL.Data
             var branch = new Branch { Address = "botanicka 68A", Id = 1, Name = "Pobocka" };
             var bookPrint1 = new BookPrint { BranchId = 1, Id = 1, BookId = 1 };
             var bookPrint2 = new BookPrint { BranchId = 1, Id = 2, BookId = 2 };
-            var rating = new Rating { Id = 1, RatingNumber = 4, Comment = "Super", BookId = 1 };
+            var rating = new Rating { Id = 1, RatingNumber = 4, Comment = "Super", BookId = 1, UserId = 1 };
             var book1 = new Book { AuthorId = 1, Id = 1, Title = "Space", Release = DateTime.Now };
             var book2 = new Book { AuthorId = 2, Id = 2, Title = "The chain", Release = DateTime.Now };
-            var reservation1 = new Reservation { BookPrintId = 1, Id = 1, UserId = 1, StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(4) };
-            var reservation2 = new Reservation { BookPrintId = 2, Id = 2, UserId = 1, StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(2) };
+            //var reservation1 = new Reservation { BookPrintId = 1, Id = 1, UserId = 1, StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(4) };
+            //var reservation2 = new Reservation { BookPrintId = 2, Id = 2, UserId = 1, StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(2) };
             var bookgenre1 = new BookGenre { Id = 1, BookId = 1, GenreId = 1 };
             var bookgenre2 = new BookGenre { Id = 2, BookId = 2, GenreId = 3 };
 
@@ -67,8 +67,8 @@ namespace DAL.Data
             modelBuilder.Entity<BookPrint>().HasData(bookPrint2);
             modelBuilder.Entity<Rating>().HasData(rating);
 
-            modelBuilder.Entity<Reservation>().HasData(reservation1);
-            modelBuilder.Entity<Reservation>().HasData(reservation2);
+            //modelBuilder.Entity<Reservation>().HasData(reservation1);
+            //modelBuilder.Entity<Reservation>().HasData(reservation2);
             modelBuilder.Entity<BookGenre>().HasData(bookgenre1);
             modelBuilder.Entity<BookGenre>().HasData(bookgenre2);
         }

@@ -1,0 +1,30 @@
+﻿@model BookListViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<h4>Books</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Book title</th>
+            <th>Author</th>
+            <th>Release</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model.Books)
+        {
+                <tr>
+                    <td>@book.Title</td>
+                    <td>@book.Author.FirstName, @book.Author.LastName</td>
+                    <td>@book.Release.ToString("dd-MM-yyyy")</td>
+
+                <td><a class="btn btn-secondary my-1" href="@Url.Action("Index", "Book", new { book.Id })">Preview</a></td>
+
+                </tr>
+        }
+    </tbody>
+</table>

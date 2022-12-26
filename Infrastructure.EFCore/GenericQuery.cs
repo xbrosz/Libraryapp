@@ -32,9 +32,12 @@ namespace Infrastructure.EFCore
                 query = Pagination(query);
             }
 
+            var items = query.ToList();
+
             var resultQuery = new EFQueryResult<TEntity>()
             {
-                Items = query.ToList(),
+                Items = items,
+                TotalItemsCount= items.Count(),
                 RequestedPageNumber = PaginationContainer != null ? PaginationContainer.Value.PageToFetch : null,
                 PageSize = PaginationContainer != null ? PaginationContainer.Value.PageSize : 0
             };

@@ -1,9 +1,11 @@
 ﻿using DAL.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Data
 {
-    public class LibraryappDbContext : DbContext
+    public class LibraryappDbContext : IdentityDbContext
     {
         private const string ConnectionString = $"Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database=Libraryapp;Trusted_Connection=True;";
 
@@ -30,14 +32,17 @@ namespace DAL.Data
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder
-                .UseSqlServer(ConnectionString);
+                .UseSqlServer(ConnectionString)
+                .UseLazyLoadingProxies();
             }
 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Seed();
+
 
             base.OnModelCreating(modelBuilder);
         }

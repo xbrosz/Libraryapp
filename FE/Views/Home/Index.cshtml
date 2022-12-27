@@ -6,12 +6,55 @@
 
 
 <h4>Books</h4>
+
+
+
+<div class="row">
+    <div class="col-md-4">
+        
+    <form asp-controller="Home" asp-action="Index">
+    
+        <p>
+            <div>
+            Title: <input type="text" name="SearchString"  />
+            <input type="submit" value="Search" />
+            </div>
+            <div>
+            Genre: <select name="Genre" asp-items="Model.Genres">
+            <option value="">All</option>
+            </select>
+            </div>
+            <div>
+            Rating: <select name="rating">
+            <option value="">None</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            </select>
+            </div>
+        </p>
+    
+    </form>
+        
+        <div>
+             <a class="nav-link text-blue" href="@Url.Action("Index", "Author")">Search by author</a>
+        </div>
+             </div>
+    </div>
+
+    
+
+
 <table class="table">
     <thead>
         <tr>
             <th>Book title</th>
             <th>Author</th>
-            <th>Release</th>
+            <th>Rating</th>
+            <th>Genres</th>
+            <th>Released</th>
         </tr>
     </thead>
     <tbody>
@@ -19,12 +62,20 @@
         {
                 <tr>
                     <td>@book.Title</td>
-                    <td>@book.Author.FirstName, @book.Author.LastName</td>
+                    <td>@book.AuthorName</td>
+                    <td>@book.RatingNumber /5</td>
+                    <td>@book.BookGenres</td>
                     <td>@book.Release.ToString("dd-MM-yyyy")</td>
 
-                <td><a class="btn btn-secondary my-1" href="@Url.Action("Index", "Book", new { book.Id })">Preview</a></td>
+                <td><a class="btn btn-secondary my-1" href="@Url.Action("Index", "Book", new { book.Id })">View</a></td>
 
                 </tr>
         }
     </tbody>
 </table>
+
+<div>
+    @{
+        await Html.RenderPartialAsync("_PaginationPartial", Model.Pagination);
+    }
+</div

@@ -46,7 +46,7 @@ namespace BL.Tests.Services
 
             var expectedOutput = new List<AuthorDto>() { authorDto };
 
-            var realOutput = service.GetAuthorsByName("Peter", "Petrovsky", "Petrovitansky");
+            var realOutput = service.GetAuthorsByName("Peter");
 
             _queryObjectMock.Verify(x => x.ExecuteQuery(It.IsAny<AuthorFilterDto>()), Times.Once);
             Assert.Equal(expectedOutput, realOutput);
@@ -57,7 +57,7 @@ namespace BL.Tests.Services
         {
             var service = new AuthorService(_uowMock.Object, _mapperMock.Object, _queryObjectMock.Object);
 
-            var exception = Assert.Throws<Exception>(() => service.GetAuthorsByName("P6t6r", "Petrovsky", "Petrovitansky"));
+            var exception = Assert.Throws<Exception>(() => service.GetAuthorsByName("P6t6r"));
 
             Assert.Equal("Names should contain just letters.", exception.Message);
         }
@@ -67,7 +67,7 @@ namespace BL.Tests.Services
         {
             var service = new AuthorService(_uowMock.Object, _mapperMock.Object, _queryObjectMock.Object);
 
-            var exception = Assert.Throws<Exception>(() => service.GetAuthorsByName("Peter-", "Petrovsky", "Petrovitansky"));
+            var exception = Assert.Throws<Exception>(() => service.GetAuthorsByName("Peter-"));
 
             Assert.Equal("Names should contain just letters.", exception.Message);
         }

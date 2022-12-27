@@ -8,23 +8,24 @@ using Infrastructure.UnitOfWork;
 
 namespace BL.Services.Services
 {
-    public class AuthorService : GenericService<Author, AuthorDto, AuthorDto, AuthorDto>, IAuthorService
+    public class AuthorService : GenericService<Author, AuthorGridDto, AuthorInsertDto, AuthorInsertDto>, IAuthorService
     {
-        private IQueryObject<AuthorFilterDto, AuthorDto> _authorQueryObject;
+        private IQueryObject<AuthorFilterDto, AuthorGridDto> _authorQueryObject;
 
-        public AuthorService(IUnitOfWork unitOfWork, IMapper mapper, IQueryObject<AuthorFilterDto, AuthorDto> authorQueryObject) : base(unitOfWork, mapper, unitOfWork.AuthorRepository)
+        public AuthorService(IUnitOfWork unitOfWork, IMapper mapper, IQueryObject<AuthorFilterDto, AuthorGridDto> authorQueryObject) : base(unitOfWork, mapper, unitOfWork.AuthorRepository)
         {
             _authorQueryObject = authorQueryObject;
         }
 
-        public IEnumerable<AuthorDto> GetAuthorsByName(string firstName, string middleName, string lastName)
+        public IEnumerable<AuthorGridDto> GetAuthorsByName(AuthorFilterDto filter)
         {
-            if (!firstName.All(char.IsLetter) || !middleName.All(char.IsLetter) || !lastName.All(char.IsLetter))
-            {
-                throw new Exception("Names should contain just letters.");
-            }
+            return _authorQueryObject.ExecuteQuery(filter).Items;
+        }
 
-            return _authorQueryObject.ExecuteQuery(new AuthorFilterDto() { FirstName = firstName, MiddleName = middleName, LastName = lastName, SortCriteria = nameof(Author.FirstName), SortAscending = true }).Items;
+        public IEnumerable<AuthorGridDto> GetSortedAuthors(int page, int pageSize)
+        {
+            return _authorQueryObject.ExecuteQuery(new AuthorFilterDto() { PageSize = pageSize, RequestedPageNumber = page, SortAscending = false, SortCriteria = nameof(Author.FirstName) }).Items;
+        
         }
     }
 }

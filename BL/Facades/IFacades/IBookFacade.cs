@@ -1,4 +1,6 @@
 ﻿using BL.DTOs;
+using BL.DTOs.Author;
+using BL.DTOs.Genre;
 using DAL.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,10 +12,17 @@ namespace BL.Facades.IFacades
 {
     public interface IBookFacade
     {
-        IEnumerable<BookGridDto> GetBooksBySubstring(string substring);
+        IEnumerable<BookGridDto> GetBooksByTitle(string substring, int page, int pageSize);
 
-        IEnumerable<Book> GetAllBooksSortedByRating();
+        IEnumerable<BookGridDto> GetAllBooksSortedByRating(int page, int pageSize);
+
+        IEnumerable<BookGridDto> GetBooksByAuthorName(string name, int page, int pageSize);
 
         BookDetailDto GetBookDetailByID(int bookID);
+        IEnumerable<AuthorGridDto> GetAuthorsByName(string? searchString, int page, int pageSize);
+
+        IEnumerable<BookGridDto> GetBooksForAuthorId(int? authorId, int page, int pageSize);
+
+        IEnumerable<GenreDto> GetAllGenres();
     }
 }

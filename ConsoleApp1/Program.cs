@@ -27,9 +27,11 @@ public class Program
 
         using var uow = container.Resolve<IUnitOfWork>();
 
-        var bookFacade = container.Resolve<IBookFacade>();
+        //var b = container.Resolve<IBookService>();
 
-        //var query = container.Resolve<IQueryObject<BookFilterDto, BookGridDto>>();
+        var query = container.Resolve<IQueryObject<BookFilterDto, BookGridDto>>();
+
+       
 
         //var query2 = container.Resolve<IQueryObject<AuthorFilterDto, AuthorDto>>();
 
@@ -37,15 +39,15 @@ public class Program
 
         //Console.WriteLine(res1.Items.First().FirstName);
 
-
+        //Console.WriteLine(query.ExecuteQuery(new BookFilterDto() { });
 
 
         //var res = query.ExecuteQuery(new BookFilterDto() {Title = "the" });
 
-        foreach (var a in bookFacade.GetBooksBySubstring("ad"))
-        {
-            Console.WriteLine("Book: " + a.Title);
-        }
+        //foreach (var a in query.ExecuteQuery(new BookFilterDto() { list = new List<string>() { "spa" } }).Items)
+        //{
+        //    Console.WriteLine("Book: " + a.Title);
+        //}
         
     }
 }

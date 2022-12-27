@@ -1,4 +1,5 @@
-﻿using DAL.Entities;
+﻿using BL.DTOs.Genre;
+using DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,6 @@ namespace BL.DTOs.BookGenre
         public int Id { get; set; }
 
         public int BookId { get; set; }
-        public Genre Genre { get; set; }
+        public GenreDto Genre { get; set; }
     }
 }

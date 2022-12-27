@@ -22,7 +22,7 @@ namespace BL
         {
             builder.RegisterInstance(new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping))).As<IMapper>().SingleInstance();
 
-            builder.RegisterType<AuthorQueryObject>().As<IQueryObject<AuthorFilterDto, AuthorDto>>().InstancePerDependency();
+            builder.RegisterType<AuthorQueryObject>().As<IQueryObject<AuthorFilterDto, AuthorGridDto>>().InstancePerDependency();
             builder.RegisterType<BranchQueryObject>().As<IQueryObject<BranchFilterDto, BranchDto>>().InstancePerDependency();
             builder.RegisterType<UserQueryObject>().As<IQueryObject<UserFilterDto, UserDetailDto>>().InstancePerDependency();
             builder.RegisterType<BookQueryObject>().As<IQueryObject<BookFilterDto, BookGridDto>>().InstancePerDependency();

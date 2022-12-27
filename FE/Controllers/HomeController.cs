@@ -11,54 +11,49 @@ namespace FE.Controllers
 {
     public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
-
-
         private readonly IBookFacade _bookFacade;
 
-        public IEnumerable<BookGridDto> Books { get; set; }
-
-        public SelectList? Genres { get; set; }
-
-
-        [BindProperty(SupportsGet = true)]
-        public string? BookGenre { get; set; }
-
-        public HomeController(ILogger<HomeController> logger, IBookFacade bookFacade)
+        public HomeController(IBookFacade bookFacade)
         {
-            _logger = logger;
             _bookFacade = bookFacade;
         }
 
-        public IActionResult Index(int page = 1, string? searchString = null)
+        public IActionResult Index(int page = 1, string? searchString = null, int? authorId = null, string? genre = null, int? rating = null)
         {
-            if (!String.IsNullOrEmpty(searchString))
+            List<BookGridDto> books;
+
+            if (!string.IsNullOrWhiteSpace(genre))
             {
-               var books = _bookFacade.GetBooksBySubstring(searchString);
+                Console.WriteLine(genre);
+            }
 
-                var model = new BookListViewModel()
-                {
-                    Books = books,
-                    Pagination = new PaginationViewModel(page, books.Count(), PageSize)
-                };
+            if (rating.HasValue)
+            {
+                Console.WriteLine(rating);
+            }
 
-                return View(model);
+
+            if (authorId.HasValue) 
+            {
+                books = _bookFacade.GetBooksForAuthorId(authorId, page, PageSize).ToList();
+            } 
+            else if (!string.IsNullOrEmpty(searchString))
+            {
+                books = _bookFacade.GetBooksByTitle(searchString, page, PageSize).ToList();
+
             } else
             {
-
-           
-
-            var books = _bookFacade.GetAllBooksSortedByRating(page, PageSize);
+                books = _bookFacade.GetAllBooksSortedByRating(page, PageSize).ToList();     // nesortuje
+            }
 
             var model = new BookListViewModel()
             {
                 Books = books,
+                Genres = new SelectList(_bookFacade.GetAllGenres().Select(x => x.Name).ToList()),
                 Pagination = new PaginationViewModel(page, books.Count(), PageSize)
             };
 
             return View(model);
-
-            }
         }
 
         public IActionResult Privacy()
@@ -71,18 +66,5 @@ namespace FE.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-       
-        //public IActionResult Search(BookListViewModel model)
-        //{
-        //    if (string.IsNullOrWhiteSpace(model.SearchString))
-        //    {
-        //        return View(model);
-        //    }
-
-        //    model.Books = _bookFacade.GetBooksBySubstring(model.SearchString);
-
-        //    return View(model);
-        //}
     }
 }

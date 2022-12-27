@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BL.DTOs;
 using BL.DTOs.BookGenre;
+using BL.DTOs.Genre;
 using BL.QueryObjects.IQueryObject;
 using BL.QueryObjects.QueryObjects;
 using BL.Services.GenericService;
@@ -42,6 +43,11 @@ namespace BL.Services.Services
         {
             var books = _bookQueryObject.ExecuteQuery(filter).Items;
             return AddGenresToBooks(books);
+        }
+
+        public IEnumerable<GenreDto> GetAllGenres()
+        {
+            return _mapper.Map<IEnumerable<GenreDto>>(_unitOfWork.GenreRepository.GetAll());
         }
     }
 }

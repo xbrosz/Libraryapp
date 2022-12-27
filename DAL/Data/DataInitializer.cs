@@ -45,6 +45,7 @@ namespace DAL.Data
 
             var book1 = new Book { AuthorId = 1, Id = 1, Title = "Space", Release = DateTime.Now, RatingNumber = 3.4 };
             var book2 = new Book { AuthorId = 2, Id = 2, Title = "The chain", Release = DateTime.Now, RatingNumber = 5 };
+            var book3 = new Book { AuthorId = 2, Id = 3, Title = "Snow", Release = DateTime.Now, RatingNumber = 4 };
 
             //var reservation1 = new Reservation { BookPrintId = 1, Id = 1, UserId = 1, StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(4) };
             //var reservation2 = new Reservation { BookPrintId = 2, Id = 2, UserId = 1, StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(2) };
@@ -61,6 +62,7 @@ namespace DAL.Data
             modelBuilder.Entity<Author>().HasData(author2);
             modelBuilder.Entity<Book>().HasData(book1);
             modelBuilder.Entity<Book>().HasData(book2);
+            modelBuilder.Entity<Book>().HasData(book3);
             modelBuilder.Entity<Genre>().HasData(genre1);
             modelBuilder.Entity<Genre>().HasData(genre2);
             modelBuilder.Entity<Genre>().HasData(genre3);

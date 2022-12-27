@@ -3,6 +3,7 @@ using BL.DTOs;
 using BL.QueryObjects.IQueryObject;
 using DAL.Entities;
 using Infrastructure.Query;
+using System.Collections.Generic;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BL.QueryObjects.QueryObjects
@@ -19,11 +20,11 @@ namespace BL.QueryObjects.QueryObjects
             _query = query;
         }
 
-        public QueryResultDto<BookGridDto> ExecuteQuery(BookFilterDto filter)    
+        public QueryResultDto<BookGridDto> ExecuteQuery(BookFilterDto filter)
         {
             if (filter.AuthorID.HasValue)
             {
-                _query.Where<int>(a => a == filter.AuthorID, nameof(Book.AuthorId));
+                _query.Where<int>(a => a == filter.AuthorID, nameof(Book.AuthorId)); 
             }
             
             if (!string.IsNullOrWhiteSpace(filter.Title))
@@ -41,9 +42,9 @@ namespace BL.QueryObjects.QueryObjects
                 _query.Where<int>(a => a <= filter.HighestRating, nameof(Book.RatingNumber));
             }
 
-            if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
+            if (!string.IsNullOrWhiteSpace(filter.SortCriteria))        // len pre title
             {
-                _query.OrderBy<double>(filter.SortCriteria, filter.SortAscending);
+                _query.OrderBy<string>(filter.SortCriteria, filter.SortAscending);
             }
 
             if (filter.RequestedPageNumber.HasValue)

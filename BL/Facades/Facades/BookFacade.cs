@@ -1,4 +1,6 @@
 ﻿using BL.DTOs;
+using BL.DTOs.Author;
+using BL.DTOs.Genre;
 using BL.Facades.IFacades;
 using BL.Services.IServices;
 using DAL.Entities;
@@ -35,45 +37,65 @@ namespace BL.Facades.Facades
 
         public IEnumerable<BookGridDto> GetAllBooksSortedByRating(int page, int pageSize)
         {
-            return _bookService.GetBooksbyFilter(new BookFilterDto() { PageSize = pageSize, RequestedPageNumber = page, SortCriteria = nameof(Book.RatingNumber) });
+            return _bookService.GetBooksbyFilter(new BookFilterDto() { PageSize = pageSize, RequestedPageNumber = page }); // SortCriteria = nameof(Book.RatingNumber)
         }
 
-        // Pri vyhladavanie podla mena autora, najskor ziskat id autora z databazy a potom podla jeho id az vyhladavat knihu
-
-        public IEnumerable<BookGridDto> GetBooksBySubstring(string substring)
+        public IEnumerable<BookGridDto> GetBooksByTitle(string substring, int page, int pageSize)
         {
-            var substrings = substring.ToLower().Split(' ').ToList().Where(a => a != " ");
-
-            foreach (var a in substrings)
-            {
-                Console.WriteLine("Substring: " + a);
-            }
-
-            var books = new List<BookGridDto>();
-
-            foreach (var str in substrings)
-            {
-                books = books.Union(GetBooksForAuthorName(str)).ToList();
-                books = books.Union(_bookService.GetBooksbyFilter(new BookFilterDto() { Title = str })).ToList();
-            }
-
-            return books;
+            return _bookService.GetBooksbyFilter(new BookFilterDto() { Title = substring, PageSize = pageSize, RequestedPageNumber = page });
         }
 
-        private IEnumerable<BookGridDto> GetBooksForAuthorName(string name)
+        public IEnumerable<BookGridDto> GetBooksByAuthorName(string name, int page, int pageSize)
         {
-            var authors = _authorService.GetAuthorsByName(name);
-            var books = new List<BookGridDto>();
-            foreach(var author in authors)
-            {
-                books = books.Union(_bookService.GetBooksbyFilter(new BookFilterDto() { AuthorID = author.Id })).ToList();
-            }
-            return books;
+            return new List<BookGridDto>();
         }
 
         public BookDetailDto GetBookDetailByID(int bookID)
         {
             return _bookService.GetBookDetailByID(bookID);
+        }
+
+        public IEnumerable<AuthorGridDto> GetAuthorsByName(string? searchString, int page, int pageSize)
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+            {
+                return _authorService.GetSortedAuthors(page, pageSize);
+            }
+
+            var subsStrings = searchString.Trim().Split(' ');
+
+            var filterDto = new AuthorFilterDto()
+            {
+                PageSize = pageSize,
+                RequestedPageNumber = page
+            };
+
+            if (subsStrings.Count() > 0 && subsStrings.ElementAt(0) != " ")
+            {
+                filterDto.FirstName = subsStrings.ElementAt(0);
+            }
+
+            if (subsStrings.Count() > 1 && subsStrings.ElementAt(1) != " ")
+            {
+                filterDto.MiddleName = subsStrings.ElementAt(1);
+            }
+
+            if (subsStrings.Count() > 2 && subsStrings.ElementAt(2) != " ")
+            {
+                filterDto.LastName = subsStrings.ElementAt(2);
+            }
+
+            return _authorService.GetAuthorsByName(filterDto);
+        }
+
+        public IEnumerable<BookGridDto> GetBooksForAuthorId(int? authorId, int page, int pageSize)
+        {
+            return _bookService.GetBooksbyFilter(new BookFilterDto() { AuthorID = authorId,  PageSize = pageSize, RequestedPageNumber = page, SortAscending = false, SortCriteria = nameof(Book.Title) });
+        }
+
+        public IEnumerable<GenreDto> GetAllGenres()
+        {
+            return _bookService.GetAllGenres();
         }
     }
 }

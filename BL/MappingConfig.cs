@@ -3,10 +3,12 @@ using BL.DTOs;
 using BL.DTOs.Author;
 using BL.DTOs.BookGenre;
 using BL.DTOs.Branch;
+using BL.DTOs.Genre;
 using BL.DTOs.Reservation;
 using BL.DTOs.User;
 using DAL.Entities;
 using Infrastructure.Query;
+using Microsoft.AspNetCore.Routing.Constraints;
 
 namespace BL
 {
@@ -29,7 +31,7 @@ namespace BL
             config.CreateMap<Rating, RatingDto>()
                 .ForMember(dest => dest.BookTitle, act => act.MapFrom(src => src.Book.Title));
             config.CreateMap<RatingDto, Rating>();
-            config.CreateMap<Author, AuthorDto>().ReverseMap();
+            config.CreateMap<Author, AuthorGridDto>().ForMember(dest => dest.Name, act => act.MapFrom(src => src.FirstName + " " + src.MiddleName + " " + src.LastName));
 
             config.CreateMap<Book, BookDetailDto>().ForMember(dest => dest.AuthorName, act => act.MapFrom(src => src.Author.FirstName + " "
                                                                                                                + src.Author.MiddleName + " "
@@ -46,8 +48,9 @@ namespace BL
             config.CreateMap<BookPrint, BookPrintDto>().ReverseMap();
 
             config.CreateMap<BookGenre, BookGenreDto>().ReverseMap();
+            config.CreateMap<Genre, GenreDto>().ReverseMap();
 
-            config.CreateMap<QueryResultDto<AuthorDto>, EFQueryResult<Author>>().ReverseMap();
+            config.CreateMap<QueryResultDto<AuthorGridDto>, EFQueryResult<Author>>().ReverseMap();
             config.CreateMap<QueryResultDto<BranchDto>, EFQueryResult<Branch>>().ReverseMap();
             config.CreateMap<QueryResultDto<RatingDto>, EFQueryResult<Rating>>().ReverseMap();
             config.CreateMap<QueryResultDto<BookGridDto>, EFQueryResult<Book>>().ReverseMap();

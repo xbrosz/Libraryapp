@@ -7,11 +7,11 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["FE/FE.csproj", "FE/"]
-COPY ["BL/BL.csproj", "BL/"]
-COPY ["DAL/DAL.csproj", "DAL/"]
-COPY ["Infrastructure.EFCore/Infrastructure.EFCore.csproj", "Infrastructure.EFCore/"]
-COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
+COPY ["FE/FE.csproj", "Libraryapp/FE/"]
+COPY ["BL/BL.csproj", "Libraryapp/BL/"]
+COPY ["DAL/DAL.csproj", "Libraryapp/DAL/"]
+COPY ["Infrastructure.EFCore/Infrastructure.EFCore.csproj", "Libraryapp/Infrastructure.EFCore/"]
+COPY ["Infrastructure/Infrastructure.csproj", "Libraryapp/Infrastructure/"]
 RUN dotnet restore "Libraryapp/FE/FE.csproj"
 COPY . .
 WORKDIR "/src/Libraryapp"

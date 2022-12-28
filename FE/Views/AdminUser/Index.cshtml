@@ -1,0 +1,76 @@
+﻿@model FE.Models.Admin.AdminUserViewModel
+
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<h4>Users</h4>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <div>
+    <form asp-controller="AdminUser" asp-action="Index">
+    
+        <p>
+            Username: <input type="text" name="SearchString"  />
+            <input type="submit" value="Search" />
+        </p>
+    
+    </form>
+        </div>
+    </div>
+</div>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Role</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.FirstName @user.LastName</td>
+                    <td>@user.RoleName</td>
+                        
+                    <td>
+                    @if(int.Parse(User.Identity.Name) != user.Id)
+                    {
+                        @using (Html.BeginForm("SwitchRole", "AdminUser", new { userId = user.Id }, FormMethod.Post, true, new { @class = "form-inline" }))
+                        {
+                            <input class="btn btn-secondary my-1" type="submit" value="Switch role" />
+    
+                        }
+                    } else
+                    {
+                        <span>Cannot change your own role</span>
+                    }
+
+                    </td>
+
+                    <td>
+                    @using (Html.BeginForm("Index", "AdminReservation", new { userId = user.Id }, FormMethod.Post, true, new { @class = "form-inline" }))
+                    {
+
+                         <input class="btn btn-secondary my-1" type="submit" value="Show reservations" />
+                    }
+                    </td>
+
+                </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    @{
+        await Html.RenderPartialAsync("_PaginationPartial", Model.Pagination);
+    }
+</div

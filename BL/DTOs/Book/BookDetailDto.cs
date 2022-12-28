@@ -7,6 +7,6 @@
         public DateTime Release { get; set; }
         public string AuthorName { get; set; }
         public string BookGenres { get; set; }
-
+        public double RatingNumber { get; set; }
     }
 }

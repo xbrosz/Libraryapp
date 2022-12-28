@@ -24,5 +24,7 @@ namespace BL.Facades.IFacades
         IEnumerable<BookGridDto> GetBooksForAuthorId(int? authorId, int page, int pageSize);
 
         IEnumerable<GenreDto> GetAllGenres();
+
+        IEnumerable<BookGridDto> GetAllBooks(int page, int pageSize);
     }
 }

@@ -42,7 +42,7 @@ namespace BL.Services.Services
             Guard.Against.NullOrWhiteSpace(userLoginDto.UserName, "UserName", "Username cannot be null");
             Guard.Against.NullOrWhiteSpace(userLoginDto.Password, "Password", "Password cannot be null");
 
-            var queryResult = _queryObject.ExecuteQuery(new UserFilterDto() { Name = userLoginDto.UserName });
+            var queryResult = _queryObject.ExecuteQuery(new UserFilterDto() { UserName = userLoginDto.UserName });
 
             if (queryResult.TotalItemsCount == 0)
             {
@@ -59,11 +59,6 @@ namespace BL.Services.Services
             return userDto;
         }
 
-        public IEnumerable<UserDetailDto> GetUsersBySubstringName(string substring)
-        {
-            return _queryObject.ExecuteQuery(new UserFilterDto() { Name = substring, ExactName = false }).Items;
-        }
-
         public UserDetailDto? GetUserByUserName(string userName)
         {
             var queryResult = _queryObject.ExecuteQuery(new UserFilterDto() { UserName = userName });
@@ -73,6 +68,11 @@ namespace BL.Services.Services
                 return null;
             }
             return queryResult.Items.First();
+        }
+
+        public IEnumerable<UserDetailDto> GetUsersBySubStringUserName(string substring, int page, int pageSize)
+        {
+            return _queryObject.ExecuteQuery(new UserFilterDto() { UserName = substring, ExactUserName = false, PageSize = pageSize, RequestedPageNumber = page }).Items;
         }
 
         public void UpdateUser(UserUpdateDto userDto)
@@ -102,6 +102,11 @@ namespace BL.Services.Services
             };
 
             Update(toUpdateDto);
+        }
+
+        public IEnumerable<UserDetailDto> GetAllUsers(int page, int pageSize)
+        {
+            return _queryObject.ExecuteQuery(new UserFilterDto() { PageSize = pageSize, RequestedPageNumber = page }).Items;
         }
     }
 }

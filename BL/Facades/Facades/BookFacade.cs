@@ -97,5 +97,10 @@ namespace BL.Facades.Facades
         {
             return _bookService.GetAllGenres();
         }
+
+        public IEnumerable<BookGridDto> GetAllBooks(int page, int pageSize)
+        {
+            return _bookService.GetBooksbyFilter(new BookFilterDto() { PageSize = pageSize, RequestedPageNumber = page });
+        }
     }
 }

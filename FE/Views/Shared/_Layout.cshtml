@@ -28,30 +28,26 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                    @Html.ActionLink("Ratings", "Index", "Rating", null, new {@class = "nav-link text-dark"})
-                                </li>
+                                @Html.ActionLink("Ratings", "Index", "Rating", null, new {@class = "nav-link text-dark"})
+                            </li>
                             <li class="nav-item">
                                 @Html.ActionLink("Reservations", "Index", "Reservation", null, new {@class = "nav-link text-dark"})
                             </li>
+
+                        
+
                             @if (User.IsInRole("Admin"))
                             {
-                                <li class="nav-item">
-                                    <span class="nav-link text-dark">Users</span>
-                                </li>
-                                <li class="nav-item">
-                                    <span class="nav-link text-dark">Books</span>
-                                </li>
-                                <li class="nav-item">
-                                    <span class="nav-link text-dark">Branches</span>
-                                </li>
-                                <li class="nav-item">
-                                    <span class="nav-link text-dark">Reservations</span>
-                                </li>
-                                <li class="nav-item">
-                                    <span class="nav-link text-dark">Ratings</span>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Admin tools
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="@Url.Action("Index", "AdminUser")">Users</a>
+                                        <a class="dropdown-item" href="@Url.Action("Index", "AdminBook")">Books</a>
+                                    </div>
                                 </li>
                             }
-                            
                         }
 
 
@@ -80,3 +76,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

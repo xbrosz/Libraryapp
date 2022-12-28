@@ -27,6 +27,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./Dockerfile
+          file: ../FE/Dockerfile
           push: true
           tags: ${{ github.actor }}/clockbox:latest

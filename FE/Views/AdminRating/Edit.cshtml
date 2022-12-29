@@ -1,0 +1,28 @@
+﻿@model RatingEditViewModel
+
+<h4>Edit rating: book @Model.BookTitle</h4>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.BookTitle)
+    @Html.HiddenFor(x => x.BookId)
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(x => x.RatingNumber)
+        <select asp-for="RatingNumber" id="inputState" class="form-control">
+            @for (int i = 0; i <= 5; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+        @Html.ValidationMessageFor(x => x.RatingNumber, null, new { @class = "text-danger" })
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Comment)
+        @Html.TextBoxFor(x => x.Comment, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Comment, null, new { @class = "text-danger" })
+    </div>
+    @Html.HiddenFor(x => x.Id)
+    <button type="submit" class="btn btn-primary">Submit</button>
+}

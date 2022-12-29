@@ -177,6 +177,11 @@ public class UserController : Controller
         });
     }
 
+    //public IActionResult Delete() 
+    //{ 
+        
+    //}
+
     [HttpGet("Logout")]
     public IActionResult Logout()
     {

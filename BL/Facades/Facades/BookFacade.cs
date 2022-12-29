@@ -102,5 +102,10 @@ namespace BL.Facades.Facades
             }
             return _bookService.GetBooksbyFilter(new BookFilterDto() { Title = searchString, LowestRating = rating, Genre = genre });
         }
+
+        public void DeleteBook(int id) 
+        {
+            _bookService.Delete(id);
+        }
     }
 }

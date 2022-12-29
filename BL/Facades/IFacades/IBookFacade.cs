@@ -26,5 +26,7 @@ namespace BL.Facades.IFacades
         IEnumerable<BookGridDto> GetAllBooks();
 
         IEnumerable<BookGridDto> GetBooksBySearchFilter(string? searchString, int? rating, string? genre);
+
+        void DeleteBook(int id);
     }
 }

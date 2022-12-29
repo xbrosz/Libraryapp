@@ -55,9 +55,12 @@ namespace FE.Controllers.Admin
             return View(model);
         }
 
-        //public IActionResult ChangeAuthor(int bookId, int authorId)
-        //{
+        public IActionResult Delete(int bookId)
+        {
+            Console.WriteLine(bookId);
+            _bookFacade.DeleteBook(bookId);
             
-        //}
+            return RedirectToAction("Index", "AdminBook");
+        }
     }
 }

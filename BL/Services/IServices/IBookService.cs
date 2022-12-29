@@ -11,7 +11,7 @@ namespace BL.Services.IServices
         IEnumerable<GenreDto> GetAllGenres();
 
         IEnumerable<BookGridDto> GetAllBooks();
-
+        void Delete(int id);
         void UpdateBook(BookUpdateDto dto);
     }
 }

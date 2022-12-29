@@ -15,11 +15,13 @@ namespace BL.Facades.Facades
     {
         private readonly IRatingService _ratingService;
         private readonly IReservationService _reservationService;
+        private readonly IBookService _bookService;
 
-        public RatingFacade(IRatingService ratingService, IReservationService reservationService)
+        public RatingFacade(IRatingService ratingService, IReservationService reservationService, IBookService bookService)
         {
             _ratingService = ratingService;
             _reservationService = reservationService;
+            _bookService = bookService;
         }
 
         public IEnumerable<RatingAwaitingDto> GetAwaitingRatingsByUser(int userId)
@@ -34,6 +36,20 @@ namespace BL.Facades.Facades
                 .Select(res => new RatingAwaitingDto { BookId = res.BookId, BookTitle = res.BookTitle });
 
             return awaitingRatings;
+        }
+
+        public void InsertRating(RatingDto rating) 
+        {
+            _ratingService.Insert(rating);
+            var newRatingNumber = _ratingService.GetBookAverageRating(rating.BookId);
+            _bookService.UpdateBook(new BookUpdateDto() { RatingNumber = newRatingNumber });
+        }
+
+        public void UpdateRating(RatingDto rating)
+        {
+            _ratingService.Update(rating);                              
+            var newRatingNumber = _ratingService.GetBookAverageRating(rating.BookId);
+            _bookService.UpdateBook(new BookUpdateDto() { RatingNumber = newRatingNumber, Id = rating.Id });
         }
     }
 }

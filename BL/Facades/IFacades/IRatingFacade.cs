@@ -10,6 +10,10 @@ namespace BL.Facades.IFacades
 {
     public interface IRatingFacade
     {
-        public IEnumerable<RatingAwaitingDto> GetAwaitingRatingsByUser(int userId);
+        IEnumerable<RatingAwaitingDto> GetAwaitingRatingsByUser(int userId);
+
+        void UpdateRating(RatingDto rating);
+
+        void InsertRating(RatingDto rating);
     }
 }

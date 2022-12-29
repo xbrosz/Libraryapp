@@ -35,11 +35,6 @@ namespace BL.Facades.Facades
             return GetAvailableBookPrints(bookId, branchId, from, to).Count();
         }
 
-        public IEnumerable<BookGridDto> GetAllBooksSortedByRating()
-        {
-            return _bookService.GetBooksbyFilter(new BookFilterDto() { SortCriteria = nameof(Book.RatingNumber), SortAscending = true });
-        }
-
         public IEnumerable<BookGridDto> GetBooksByTitle(string substring)
         {
             return _bookService.GetBooksbyFilter(new BookFilterDto() { Title = substring });
@@ -47,7 +42,7 @@ namespace BL.Facades.Facades
 
         public IEnumerable<BookGridDto> GetBooksByAuthorName(string name)
         {
-            return new List<BookGridDto>();
+            return new List<BookGridDto>();             // dorobit
         }
 
         public BookDetailDto GetBookDetailByID(int bookID)
@@ -86,7 +81,7 @@ namespace BL.Facades.Facades
 
         public IEnumerable<BookGridDto> GetBooksForAuthorId(int? authorId)
         {
-            return _bookService.GetBooksbyFilter(new BookFilterDto() { AuthorID = authorId, SortAscending = false, SortCriteria = nameof(Book.Title) });
+            return _bookService.GetBooksbyFilter(new BookFilterDto() { AuthorID = authorId });
         }
 
         public IEnumerable<GenreDto> GetAllGenres()
@@ -96,14 +91,14 @@ namespace BL.Facades.Facades
 
         public IEnumerable<BookGridDto> GetAllBooks()
         {
-            return _bookService.GetBooksbyFilter(new BookFilterDto() { });
+            return _bookService.GetAllBooks();
         }
 
         public IEnumerable<BookGridDto> GetBooksBySearchFilter(string? searchString, int? rating, string? genre)
         {
             if (string.IsNullOrWhiteSpace(searchString) && !rating.HasValue && string.IsNullOrWhiteSpace(genre))
             {
-                return GetAllBooksSortedByRating();
+                return GetAllBooks();
             }
             return _bookService.GetBooksbyFilter(new BookFilterDto() { Title = searchString, LowestRating = rating, Genre = genre });
         }

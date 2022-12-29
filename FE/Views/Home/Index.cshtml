@@ -63,7 +63,16 @@
                 <tr>
                     <td>@book.Title</td>
                     <td>@book.AuthorName</td>
-                    <td>@book.RatingNumber /5</td>
+
+                @if (@book.RatingNumber.HasValue)
+                    {
+                        <td>@book.RatingNumber</td>
+                    } else
+                    {
+                        <td>Not reviewed yet</td>
+                    }
+                
+
                     <td>@book.BookGenres</td>
                     <td>@book.Release.ToString("dd-MM-yyyy")</td>
 

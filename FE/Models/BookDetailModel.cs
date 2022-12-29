@@ -11,6 +11,6 @@ namespace FE.Models
         public DateTime ReleaseDate { get; set; }
         public string AuthorName { get; set; }
         public string Genres { get; set; }
-        public double RatingNumber { get; set; }
+        public double? RatingNumber { get; set; }
     }
 }

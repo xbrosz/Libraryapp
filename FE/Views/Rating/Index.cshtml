@@ -1,7 +1,6 @@
 ﻿@model RatingIndexViewModel
 
-@if (this.User.IsInRole("User"))
-{
+
     <h4>Awaiting ratings</h4>
     <table class="table">
         <thead>
@@ -17,13 +16,12 @@
                     <td>@rating.BookTitle</td>
                     <td>
                         <a class="btn btn-secondary my-1" href="@Url.Action("Add", new { rating.BookId, rating.BookTitle })">Add rating</a>
-
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-}
+
 
 
 <h4>Written ratings</h4>

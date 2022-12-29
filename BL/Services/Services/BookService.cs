@@ -12,7 +12,7 @@ using System.Drawing.Printing;
 
 namespace BL.Services.Services
 {
-    public class BookService : GenericService<Book, BookDetailDto, BookPrintDto, BookDetailDto>, IBookService
+    public class BookService : GenericService<Book, BookDetailDto, BookUpdateDto, BookDetailDto>, IBookService
     {
         private readonly IQueryObject<BookFilterDto, BookGridDto> _bookQueryObject;
         private readonly IQueryObject<BookGenreFilterDto, BookGenreDto> _bookGenreQueryObject;
@@ -62,6 +62,38 @@ namespace BL.Services.Services
         public IEnumerable<GenreDto> GetAllGenres()
         {
             return _mapper.Map<IEnumerable<GenreDto>>(_unitOfWork.GenreRepository.GetAll());
+        }
+
+        public IEnumerable<BookGridDto> GetAllBooks() 
+        {
+            return AddGenresToBooks(_mapper.Map<IEnumerable<BookGridDto>>(_unitOfWork.BookRepository.GetAll()));
+        }
+
+        public void UpdateBook(BookUpdateDto dto) 
+        {
+            var book = _unitOfWork.BookRepository.GetByID(dto.Id);
+
+            if (!dto.Release.HasValue)
+            {
+                dto.Release = book.Release;
+            }
+
+            if (!dto.AuthorId.HasValue)
+            {
+                dto.AuthorId = book.AuthorId;
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.Title))
+            {
+                dto.Title = book.Title;
+            }
+
+            if (!dto.RatingNumber.HasValue)
+            {
+                dto.RatingNumber = book.RatingNumber;
+            }
+
+            Update(dto);
         }
     }
 }

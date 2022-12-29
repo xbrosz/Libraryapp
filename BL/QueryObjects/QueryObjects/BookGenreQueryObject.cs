@@ -33,7 +33,7 @@ namespace BL.QueryObjects.QueryObjects
 
             if (filter.GenreId.HasValue)
             {
-                _query.Where<int>(a => a == filter.GenreId, nameof(BookGenre.Genre.Id));
+                _query.Where<int>(a => a == filter.GenreId, nameof(BookGenre.GenreId));
             }
 
             return _mapper.Map<QueryResultDto<BookGenreDto>>(_query.Execute());

@@ -23,17 +23,12 @@ namespace FE.Controllers
         public IActionResult Index()
         {
             int userId = getUserId();
-            RatingIndexViewModel model = new();
 
-            if (isAdmin())
+            var model = new RatingIndexViewModel() 
             {
-                model.ratings = _ratingService.GetAll();
-            }
-            else 
-            {
-                model.ratings = _ratingService.GetRatingsByUser(userId);
-                model.awaitingRatings = _ratingFacade.GetAwaitingRatingsByUser(userId);
-            }
+                ratings = _ratingService.GetRatingsByUser(userId),
+                awaitingRatings = _ratingFacade.GetAwaitingRatingsByUser(userId)
+            };
 
             return View(model);
         }
@@ -55,7 +50,7 @@ namespace FE.Controllers
             }
 
             var dto = model.ToDto();
-            _ratingService.Insert(dto);
+            _ratingFacade.InsertRating(dto);
 
             return RedirectToAction(nameof(Index));
         }
@@ -107,7 +102,7 @@ namespace FE.Controllers
                 UserId = userId
             };
 
-            _ratingService.Update(dto);
+            _ratingFacade.UpdateRating(dto);
 
             return RedirectToAction(nameof(Index));
         }

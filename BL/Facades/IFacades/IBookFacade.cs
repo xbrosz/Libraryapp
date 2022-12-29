@@ -14,8 +14,6 @@ namespace BL.Facades.IFacades
     {
         IEnumerable<BookGridDto> GetBooksByTitle(string substring);
 
-        IEnumerable<BookGridDto> GetAllBooksSortedByRating();
-
         IEnumerable<BookGridDto> GetBooksByAuthorName(string name);
 
         BookDetailDto GetBookDetailByID(int bookID);

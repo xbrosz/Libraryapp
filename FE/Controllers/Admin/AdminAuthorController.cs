@@ -1,6 +1,9 @@
-﻿namespace FE.Controllers.Admin
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace FE.Controllers.Admin
 {
-    public class AdminAuthorController
+    public class AdminAuthorController : Controller
     {
+
     }
 }

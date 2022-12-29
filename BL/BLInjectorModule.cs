@@ -4,6 +4,7 @@ using BL.DTOs;
 using BL.DTOs.Author;
 using BL.DTOs.BookGenre;
 using BL.DTOs.Branch;
+using BL.DTOs.Genre;
 using BL.DTOs.Reservation;
 using BL.DTOs.User;
 using BL.Facades.Facades;
@@ -30,6 +31,7 @@ namespace BL
             builder.RegisterType<RatingQueryObject>().As<IQueryObject<RatingFilterDto, RatingDto>>().InstancePerDependency();
             builder.RegisterType<ReservationQueryObject>().As<IQueryObject<ReservationFilterDto, ReservationsDto>>().InstancePerDependency();
             builder.RegisterType<BookGenreQueryObject>().As<IQueryObject<BookGenreFilterDto, BookGenreDto>>().InstancePerDependency();
+            builder.RegisterType<GenreQueryObejct>().As<IQueryObject<GenreDto, GenreDto>>().InstancePerDependency();
 
             builder.RegisterType<AuthorService>().As<IAuthorService>().InstancePerDependency();
             builder.RegisterType<BranchService>().As<IBranchService>().InstancePerDependency();

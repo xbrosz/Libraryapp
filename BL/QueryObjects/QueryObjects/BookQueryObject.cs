@@ -34,17 +34,12 @@ namespace BL.QueryObjects.QueryObjects
 
             if (filter.LowestRating.HasValue)
             {
-                _query.Where<int>(a => a >= filter.LowestRating, nameof(Book.RatingNumber));
+                _query.Where<double>(a => a >= (double) filter.LowestRating, nameof(Book.RatingNumber));
             }
 
-            if (filter.HighestRating.HasValue)
+            if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
             {
-                _query.Where<int>(a => a <= filter.HighestRating, nameof(Book.RatingNumber));
-            }
-
-            if (!string.IsNullOrWhiteSpace(filter.SortCriteria))        // len pre title
-            {
-                _query.OrderBy<string>(filter.SortCriteria, filter.SortAscending);
+                _query.OrderBy<double>(filter.SortCriteria, filter.SortAscending);
             }
 
             if (filter.RequestedPageNumber.HasValue)

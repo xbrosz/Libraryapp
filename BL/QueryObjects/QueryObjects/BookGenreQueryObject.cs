@@ -36,11 +36,6 @@ namespace BL.QueryObjects.QueryObjects
                 _query.Where<int>(a => a == filter.GenreId, nameof(BookGenre.Genre.Id));
             }
 
-            if (!string.IsNullOrWhiteSpace(filter.GenreName))
-            {
-                _query.Where<string>(a => a.ToLower().Contains(filter.GenreName.ToLower()), nameof(BookGenre.Genre.Name));
-            }
-
             return _mapper.Map<QueryResultDto<BookGenreDto>>(_query.Execute());
         }
     }

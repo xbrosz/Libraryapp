@@ -9,7 +9,7 @@ using static System.Reflection.Metadata.BlobBuilder;
 
 namespace FE.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
         private readonly IBookFacade _bookFacade;
 
@@ -18,39 +18,23 @@ namespace FE.Controllers
             _bookFacade = bookFacade;
         }
 
-        public IActionResult Index(int page = 1, string? searchString = null, int? authorId = null, string? genre = null, int? rating = null)
+        public IActionResult Index(string? searchString = null, int? authorId = null, string? genre = null, int? rating = null)
         {
             List<BookGridDto> books;
 
-            if (!string.IsNullOrWhiteSpace(genre))
+            if (authorId.HasValue)
             {
-                Console.WriteLine(genre);
+                books = _bookFacade.GetBooksForAuthorId(authorId).ToList();
             }
-
-            if (rating.HasValue)
+            else
             {
-                Console.WriteLine(rating);
-            }
-
-
-            if (authorId.HasValue) 
-            {
-                books = _bookFacade.GetBooksForAuthorId(authorId, page, PageSize).ToList();
-            } 
-            else if (!string.IsNullOrEmpty(searchString))
-            {
-                books = _bookFacade.GetBooksByTitle(searchString, page, PageSize).ToList();
-
-            } else
-            {
-                books = _bookFacade.GetAllBooksSortedByRating(page, PageSize).ToList();     // nesortuje
+                books = _bookFacade.GetBooksBySearchFilter(searchString, rating, genre).ToList();
             }
 
             var model = new BookListViewModel()
             {
                 Books = books,
-                Genres = new SelectList(_bookFacade.GetAllGenres().Select(x => x.Name).ToList()),
-                Pagination = new PaginationViewModel(page, books.Count(), PageSize)
+                Genres = new SelectList(_bookFacade.GetAllGenres().Select(x => x.Name).ToList())
             };
 
             return View(model);

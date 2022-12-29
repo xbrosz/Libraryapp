@@ -9,7 +9,5 @@ namespace FE.Models
     {
         public IEnumerable<BookGridDto> Books { get; set; }
         public SelectList? Genres { get; set; }
-
-        public PaginationViewModel Pagination { get; set; }
     }
 }

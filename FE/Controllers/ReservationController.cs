@@ -25,14 +25,14 @@ namespace FE.Controllers
             int userId = getUserId();
             IEnumerable<ReservationsDto> reservations = new List<ReservationsDto>();
 
-            if (isAdmin())
-            {
-                 reservations = _reservationService.GetAll();
-            }
-            else
-            {
+            //if (isAdmin())
+            //{
+            //     reservations = _reservationService.GetAll();
+            //}
+            //else
+            //{
                 reservations = _reservationService.GetReservationsByUserId(userId);
-            }
+            //}
 
 
              var model = new ReservationIndexViewModel()
@@ -42,6 +42,7 @@ namespace FE.Controllers
 
             return View(model);
         }
+
         public IActionResult Edit(int id)
         {
             var dto = _reservationService.Find(id);

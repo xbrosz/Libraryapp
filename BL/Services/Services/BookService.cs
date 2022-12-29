@@ -8,6 +8,7 @@ using BL.Services.GenericService;
 using BL.Services.IServices;
 using DAL.Entities;
 using Infrastructure.UnitOfWork;
+using System.Drawing.Printing;
 
 namespace BL.Services.Services
 {
@@ -15,14 +16,16 @@ namespace BL.Services.Services
     {
         private readonly IQueryObject<BookFilterDto, BookGridDto> _bookQueryObject;
         private readonly IQueryObject<BookGenreFilterDto, BookGenreDto> _bookGenreQueryObject;
+        private readonly IQueryObject<GenreDto, GenreDto> _genreQueryObject;
 
-        public BookService(IUnitOfWork unitOfWork, IMapper mapper, IQueryObject<BookFilterDto, BookGridDto> bookQueryObject, IQueryObject<BookGenreFilterDto, BookGenreDto> bookGenreQueryObject) : base(unitOfWork, mapper, unitOfWork.BookRepository)
+        public BookService(IUnitOfWork unitOfWork, IMapper mapper, IQueryObject<BookFilterDto, BookGridDto> bookQueryObject, IQueryObject<BookGenreFilterDto, BookGenreDto> bookGenreQueryObject, IQueryObject<GenreDto, GenreDto> genreQueryObject) : base(unitOfWork, mapper, unitOfWork.BookRepository)
         {
             _bookQueryObject = bookQueryObject;
             _bookGenreQueryObject = bookGenreQueryObject;
+            _genreQueryObject = genreQueryObject;
         }
 
-        public IEnumerable<BookGridDto> AddGenresToBooks(IEnumerable<BookGridDto> books)
+        private IEnumerable<BookGridDto> AddGenresToBooks(IEnumerable<BookGridDto> books)
         {
             foreach (var book in books)
             {
@@ -41,7 +44,18 @@ namespace BL.Services.Services
 
         public IEnumerable<BookGridDto> GetBooksbyFilter(BookFilterDto filter)
         {
-            var books = _bookQueryObject.ExecuteQuery(filter).Items;
+            List<BookGridDto> books;
+
+            if (!string.IsNullOrWhiteSpace(filter.Genre))
+            {
+                var genreId = _genreQueryObject.ExecuteQuery(new GenreDto() { Name = filter.Genre }).Items.First().Id;
+                var booksWithSpecifiedGenre = _bookGenreQueryObject.ExecuteQuery(new BookGenreFilterDto() { GenreId = genreId }).Items.Select(x => x.BookId).ToList() ;
+                books = _bookQueryObject.ExecuteQuery(filter).Items.Where(x => booksWithSpecifiedGenre.Contains(x.Id)).ToList();
+            } else
+            {
+                books = _bookQueryObject.ExecuteQuery(filter).Items.ToList();
+            }
+
             return AddGenresToBooks(books);
         }
 

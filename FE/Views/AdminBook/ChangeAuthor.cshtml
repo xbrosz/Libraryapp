@@ -1,8 +1,4 @@
-﻿@model AuthorSearchViewModel
-
-@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model FE.Models.Admin.AdminChangeBookAuthorViewModel
 
 <h4>Authors</h4>
 
@@ -18,9 +14,6 @@
         </p>
     
     </form>
-        </div>
-        <div>
-             <a class="nav-link text-blue" href="@Url.Action("Index", "Home")">Back to home page</a>
         </div>
     </div>
 </div>
@@ -42,13 +35,12 @@
                     <td>@author.BirthDate.ToString("dd-MM-yyyy")</td>
 
                 <td>
-                    @using (Html.BeginForm("Index", "Home", new { authorId = author.Id }, FormMethod.Post, true, new { @class = "form-inline" }))
+                    @using (Html.BeginForm("ChangeAuthor", "AdminBook", new { authorId = author.Id, bookId = Model.BookId }, FormMethod.Post, true, new { @class = "form-inline" }))
                     {
-                        <input class="btn btn-secondary my-1" type="submit" value="Show books" />
+                        <input class="btn btn-secondary my-1" type="submit" value="Change author" />
                     }
 
                 </tr>
         }
     </tbody>
 </table>
-

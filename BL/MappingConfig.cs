@@ -36,13 +36,11 @@ namespace BL
             config.CreateMap<Book, BookDetailDto>().ForMember(dest => dest.AuthorName, act => act.MapFrom(src => src.Author.FirstName + " "
                                                                                                                + src.Author.MiddleName + " "
                                                                                                                + src.Author.LastName));
-                                                 //.ForMember(dest => dest.BookGenres, act => act.MapFrom(src => string.Join("/", src.Genres.Select(g => g.Name))));
 
             config.CreateMap<Book, BookGridDto>().ForMember(dest => dest.AuthorName, act => act.MapFrom(src => src.Author.FirstName + " "
                                                                                                              + src.Author.MiddleName + " "
                                                                                                              + src.Author.LastName))
                                                 .ForMember(dest => dest.RatingNumber, act => act.MapFrom(src => Math.Truncate(src.RatingNumber * 10) / 10));
-            //.ForMember(dest => dest.BookGenres, act => act.MapFrom(src => string.Join("/", src.Genres.Select(g => g.Name))))
 
 
             config.CreateMap<BookPrint, BookPrintDto>().ReverseMap();
@@ -59,6 +57,7 @@ namespace BL
             config.CreateMap<QueryResultDto<ReservationsDto>, EFQueryResult<Reservation>>().ReverseMap();
             config.CreateMap<QueryResultDto<UserDetailDto>, EFQueryResult<User>>().ReverseMap();
             config.CreateMap<QueryResultDto<BookGenreDto>, EFQueryResult<BookGenre>>().ReverseMap();
+            config.CreateMap<QueryResultDto<GenreDto>, EFQueryResult<Genre>>().ReverseMap();
 
             config.CreateMap<CreateReservationDto, Reservation>().ReverseMap();
         }

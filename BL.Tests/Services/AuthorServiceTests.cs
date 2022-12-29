@@ -10,31 +10,29 @@ namespace BL.Tests.Services
     public class AuthorServiceTests
     {
         Mock<IUnitOfWork> _uowMock;
-        Mock<IQueryObject<AuthorFilterDto, AuthorDto>> _queryObjectMock;
+        Mock<IQueryObject<AuthorFilterDto, AuthorGridDto>> _queryObjectMock;
         private Mock<IMapper> _mapperMock;
 
         public AuthorServiceTests()
         {
             _uowMock = new Mock<IUnitOfWork>();
-            _queryObjectMock = new Mock<IQueryObject<AuthorFilterDto, AuthorDto>>();
+            _queryObjectMock = new Mock<IQueryObject<AuthorFilterDto, AuthorGridDto>>();
             _mapperMock = new Mock<IMapper>();
         }
 
         [Fact]
         public void GetAuthorsByName_NameWithLetters()
         {
-            var authorDto = new AuthorDto()
+            var authorDto = new AuthorGridDto()
             {
                 Id = 1,
-                FirstName = "Peter",
-                MiddleName = "Petrovsky",
-                LastName = "Petrovitansky",
+                Name = "Peter Petrovsky Petrovitansky",
                 BirthDate = DateTime.Now
             };
 
-            var queryResult = new QueryResultDto<AuthorDto>
+            var queryResult = new QueryResultDto<AuthorGridDto>
             {
-                Items = new List<AuthorDto>() { authorDto },
+                Items = new List<AuthorGridDto>() { authorDto },
                 TotalItemsCount = 1
             };
 
@@ -44,9 +42,9 @@ namespace BL.Tests.Services
 
             var service = new AuthorService(_uowMock.Object, _mapperMock.Object, _queryObjectMock.Object);
 
-            var expectedOutput = new List<AuthorDto>() { authorDto };
+            var expectedOutput = new List<AuthorGridDto>() { authorDto };
 
-            var realOutput = service.GetAuthorsByName("Peter");
+            var realOutput = service.GetAuthorsByName(new AuthorFilterDto() { FirstName=  "Peter" });
 
             _queryObjectMock.Verify(x => x.ExecuteQuery(It.IsAny<AuthorFilterDto>()), Times.Once);
             Assert.Equal(expectedOutput, realOutput);
@@ -57,7 +55,7 @@ namespace BL.Tests.Services
         {
             var service = new AuthorService(_uowMock.Object, _mapperMock.Object, _queryObjectMock.Object);
 
-            var exception = Assert.Throws<Exception>(() => service.GetAuthorsByName("P6t6r"));
+            var exception = Assert.Throws<Exception>(() => service.GetAuthorsByName(new AuthorFilterDto() { FirstName = "P6t6r" }));
 
             Assert.Equal("Names should contain just letters.", exception.Message);
         }
@@ -67,7 +65,7 @@ namespace BL.Tests.Services
         {
             var service = new AuthorService(_uowMock.Object, _mapperMock.Object, _queryObjectMock.Object);
 
-            var exception = Assert.Throws<Exception>(() => service.GetAuthorsByName("Peter-"));
+            var exception = Assert.Throws<Exception>(() => service.GetAuthorsByName(new AuthorFilterDto() { FirstName = "Peter-" }));
 
             Assert.Equal("Names should contain just letters.", exception.Message);
         }

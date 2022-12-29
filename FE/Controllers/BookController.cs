@@ -24,7 +24,8 @@ namespace FE.Controllers
                 AuthorName = dto.AuthorName,
                 BookTitle = dto.Title,
                 ReleaseDate = dto.Release,
-                Genres = dto.BookGenres
+                Genres = dto.BookGenres,
+                RatingNumber = dto.RatingNumber
             };
 
             return View(model);

@@ -8,6 +8,7 @@ namespace BL.DTOs.Genre
 {
     public class GenreDto
     {
-        public string Name { get; set; }
+        public int Id { get; set; }
+        public string? Name { get; set; }
     }
 }

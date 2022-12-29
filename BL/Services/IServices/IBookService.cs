@@ -8,7 +8,6 @@ namespace BL.Services.IServices
     {
         public BookDetailDto GetBookDetailByID(int bookID);
         IEnumerable<BookGridDto> GetBooksbyFilter(BookFilterDto filter);
-        IEnumerable<BookGridDto> AddGenresToBooks(IEnumerable<BookGridDto> books);
         IEnumerable<GenreDto> GetAllGenres();
     }
 }

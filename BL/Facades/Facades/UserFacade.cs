@@ -39,6 +39,11 @@ namespace BL.Facades.Facades
             return _userService.GetUserByUserName(userName);
         }
 
+        public IEnumerable<UserDetailDto> GetUsersBySubStringUserName(string subString)
+        {
+            return _userService.GetUsersBySubStringUserName(subString);
+        }
+
         public UserDetailDto? GetUserById(int id)
         {
             return _userService.Find(id);
@@ -63,6 +68,22 @@ namespace BL.Facades.Facades
             });
 
             return true;
+        }
+
+        public IEnumerable<UserDetailDto> GetAllUsers()
+        {
+            return _userService.GetAllUsers();
+        }
+
+        public void SwitchRoleForUserId(int userId) 
+        {
+            var userRole = _userService.Find(userId).RoleName;
+
+            _userService.UpdateUser(new UserUpdateDto()
+            {
+                Id = userId,
+                RoleId = userRole == "Admin" ? 2 : 1
+            });
         }
     }
 }

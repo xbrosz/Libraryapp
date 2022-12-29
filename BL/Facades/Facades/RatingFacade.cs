@@ -27,10 +27,11 @@ namespace BL.Facades.Facades
             var ratings = _ratingService.GetRatingsByUser(userId);
             var reservations = _reservationService.GetReservationsByUserId(userId);
 
-            var awaitingRatings = reservations.DistinctBy(res => res.BookId)
-                .Where(res => res.EndDate < DateTime.Today
+            var awaitingRatings = reservations
+                .Where(res => res.EndDate.Date < DateTime.Today.Date
                     && !ratings.Any(rat => rat.BookId == res.BookId)
                 )
+                .DistinctBy(res => res.BookId)
                 .Select(res => new RatingAwaitingDto { BookId = res.BookId, BookTitle = res.BookTitle });
 
             return awaitingRatings;

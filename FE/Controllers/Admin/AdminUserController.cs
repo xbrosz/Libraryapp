@@ -10,7 +10,7 @@ using System.Drawing.Printing;
 
 namespace FE.Controllers.Admin
 {
-    public class AdminUserController : BaseController
+    public class AdminUserController : Controller
     {
         private readonly IUserFacade _userFacade;
 
@@ -20,23 +20,22 @@ namespace FE.Controllers.Admin
         }
 
         // validate admin
-        public IActionResult Index(int page = 1, string? searchString = null)
+        public IActionResult Index(string? searchString = null)
         {
             List<UserDetailDto> users;
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                users = _userFacade.GetUsersBySubStringUserName(searchString, page, PageSize).ToList();
+                users = _userFacade.GetUsersBySubStringUserName(searchString).ToList();
             }
             else
             {
-                users = _userFacade.GetAllUsers(page, PageSize).ToList();
+                users = _userFacade.GetAllUsers().ToList();
             }
 
             var model = new AdminUserViewModel()
             {
-                Users = users,
-                Pagination = new PaginationViewModel(page, users.Count(), PageSize)
+                Users = users
             };
 
             return View(model);

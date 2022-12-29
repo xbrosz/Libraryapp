@@ -6,7 +6,5 @@ namespace FE.Models.Admin
     public class AdminBookViewModel
     {
         public IEnumerable<BookGridDto> Books { get; set; }
-
-        public PaginationViewModel Pagination { get; set; }
     }
 }

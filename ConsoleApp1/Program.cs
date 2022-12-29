@@ -15,6 +15,7 @@ public class Program
     private static async Task Main(string[] args)
     {
 
+
         var containerBuilder = new ContainerBuilder();
         containerBuilder.RegisterModule<InfrastructureInjectorModule>();
         containerBuilder.RegisterModule<BLInjectorModule>();
@@ -31,7 +32,7 @@ public class Program
 
         var query = container.Resolve<IQueryObject<BookFilterDto, BookGridDto>>();
 
-       
+
 
         //var query2 = container.Resolve<IQueryObject<AuthorFilterDto, AuthorDto>>();
 
@@ -48,6 +49,6 @@ public class Program
         //{
         //    Console.WriteLine("Book: " + a.Title);
         //}
-        
+
     }
 }

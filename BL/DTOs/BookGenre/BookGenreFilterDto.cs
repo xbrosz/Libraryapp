@@ -10,7 +10,6 @@ namespace BL.DTOs.BookGenre
     public class BookGenreFilterDto
     {
         public int? BookId { get; set; }
-        public string? GenreName { get; set; }
         public int? GenreId { get; set; }
     }
 }

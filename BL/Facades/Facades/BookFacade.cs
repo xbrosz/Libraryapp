@@ -35,17 +35,17 @@ namespace BL.Facades.Facades
             return GetAvailableBookPrints(bookId, branchId, from, to).Count();
         }
 
-        public IEnumerable<BookGridDto> GetAllBooksSortedByRating(int page, int pageSize)
+        public IEnumerable<BookGridDto> GetAllBooksSortedByRating()
         {
-            return _bookService.GetBooksbyFilter(new BookFilterDto() { PageSize = pageSize, RequestedPageNumber = page }); // SortCriteria = nameof(Book.RatingNumber)
+            return _bookService.GetBooksbyFilter(new BookFilterDto() { SortCriteria = nameof(Book.RatingNumber), SortAscending = true });
         }
 
-        public IEnumerable<BookGridDto> GetBooksByTitle(string substring, int page, int pageSize)
+        public IEnumerable<BookGridDto> GetBooksByTitle(string substring)
         {
-            return _bookService.GetBooksbyFilter(new BookFilterDto() { Title = substring, PageSize = pageSize, RequestedPageNumber = page });
+            return _bookService.GetBooksbyFilter(new BookFilterDto() { Title = substring });
         }
 
-        public IEnumerable<BookGridDto> GetBooksByAuthorName(string name, int page, int pageSize)
+        public IEnumerable<BookGridDto> GetBooksByAuthorName(string name)
         {
             return new List<BookGridDto>();
         }
@@ -55,20 +55,16 @@ namespace BL.Facades.Facades
             return _bookService.GetBookDetailByID(bookID);
         }
 
-        public IEnumerable<AuthorGridDto> GetAuthorsByName(string? searchString, int page, int pageSize)
+        public IEnumerable<AuthorGridDto> GetAuthorsByName(string? searchString)
         {
             if (string.IsNullOrWhiteSpace(searchString))
             {
-                return _authorService.GetSortedAuthors(page, pageSize);
+                return _authorService.GetSortedAuthors();
             }
 
             var subsStrings = searchString.Trim().Split(' ');
 
-            var filterDto = new AuthorFilterDto()
-            {
-                PageSize = pageSize,
-                RequestedPageNumber = page
-            };
+            var filterDto = new AuthorFilterDto();
 
             if (subsStrings.Count() > 0 && subsStrings.ElementAt(0) != " ")
             {
@@ -88,9 +84,9 @@ namespace BL.Facades.Facades
             return _authorService.GetAuthorsByName(filterDto);
         }
 
-        public IEnumerable<BookGridDto> GetBooksForAuthorId(int? authorId, int page, int pageSize)
+        public IEnumerable<BookGridDto> GetBooksForAuthorId(int? authorId)
         {
-            return _bookService.GetBooksbyFilter(new BookFilterDto() { AuthorID = authorId,  PageSize = pageSize, RequestedPageNumber = page, SortAscending = false, SortCriteria = nameof(Book.Title) });
+            return _bookService.GetBooksbyFilter(new BookFilterDto() { AuthorID = authorId, SortAscending = false, SortCriteria = nameof(Book.Title) });
         }
 
         public IEnumerable<GenreDto> GetAllGenres()
@@ -98,9 +94,18 @@ namespace BL.Facades.Facades
             return _bookService.GetAllGenres();
         }
 
-        public IEnumerable<BookGridDto> GetAllBooks(int page, int pageSize)
+        public IEnumerable<BookGridDto> GetAllBooks()
         {
-            return _bookService.GetBooksbyFilter(new BookFilterDto() { PageSize = pageSize, RequestedPageNumber = page });
+            return _bookService.GetBooksbyFilter(new BookFilterDto() { });
+        }
+
+        public IEnumerable<BookGridDto> GetBooksBySearchFilter(string? searchString, int? rating, string? genre)
+        {
+            if (string.IsNullOrWhiteSpace(searchString) && !rating.HasValue && string.IsNullOrWhiteSpace(genre))
+            {
+                return GetAllBooksSortedByRating();
+            }
+            return _bookService.GetBooksbyFilter(new BookFilterDto() { Title = searchString, LowestRating = rating, Genre = genre });
         }
     }
 }

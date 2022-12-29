@@ -22,9 +22,9 @@ namespace BL.Services.Services
             return _authorQueryObject.ExecuteQuery(filter).Items;
         }
 
-        public IEnumerable<AuthorGridDto> GetSortedAuthors(int page, int pageSize)
+        public IEnumerable<AuthorGridDto> GetSortedAuthors()
         {
-            return _authorQueryObject.ExecuteQuery(new AuthorFilterDto() { PageSize = pageSize, RequestedPageNumber = page, SortAscending = false, SortCriteria = nameof(Author.FirstName) }).Items;
+            return _authorQueryObject.ExecuteQuery(new AuthorFilterDto() { SortAscending = false, SortCriteria = nameof(Author.FirstName) }).Items;
         
         }
     }

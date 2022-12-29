@@ -70,9 +70,9 @@ namespace BL.Services.Services
             return queryResult.Items.First();
         }
 
-        public IEnumerable<UserDetailDto> GetUsersBySubStringUserName(string substring, int page, int pageSize)
+        public IEnumerable<UserDetailDto> GetUsersBySubStringUserName(string substring)
         {
-            return _queryObject.ExecuteQuery(new UserFilterDto() { UserName = substring, ExactUserName = false, PageSize = pageSize, RequestedPageNumber = page }).Items;
+            return _queryObject.ExecuteQuery(new UserFilterDto() { UserName = substring, ExactUserName = false }).Items;
         }
 
         public void UpdateUser(UserUpdateDto userDto)
@@ -104,9 +104,9 @@ namespace BL.Services.Services
             Update(toUpdateDto);
         }
 
-        public IEnumerable<UserDetailDto> GetAllUsers(int page, int pageSize)
+        public IEnumerable<UserDetailDto> GetAllUsers()
         {
-            return _queryObject.ExecuteQuery(new UserFilterDto() { PageSize = pageSize, RequestedPageNumber = page }).Items;
+            return _mapper.Map<IEnumerable<UserDetailDto>>(_unitOfWork.UserRepository.GetAll());
         }
     }
 }

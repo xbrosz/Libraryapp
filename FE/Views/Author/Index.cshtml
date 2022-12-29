@@ -20,7 +20,7 @@
     </form>
         </div>
         <div>
-             <a class="nav-link text-blue" href="@Url.Action("Index", "Home")">Search by author</a>
+             <a class="nav-link text-blue" href="@Url.Action("Index", "Home")">Back to home page</a>
         </div>
     </div>
 </div>
@@ -52,8 +52,3 @@
     </tbody>
 </table>
 
-<div>
-    @{
-        await Html.RenderPartialAsync("_PaginationPartial", Model.Pagination);
-    }
-</div

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FE.Controllers.Admin
 {
-    public class AdminReservationController : BaseController
+    public class AdminReservationController : Controller
     {
         private readonly IReservationService _reservationService;
         private readonly IReservationFacade _reservationFacade;
@@ -21,7 +21,7 @@ namespace FE.Controllers.Admin
             _userFacade = userFacade;
         }
 
-        public IActionResult Index(int userId, int page = 1)
+        public IActionResult Index(int userId)
         {
             
             var reservations = _reservationService.GetReservationsByUserId(userId);
@@ -30,7 +30,6 @@ namespace FE.Controllers.Admin
             {
                 reservations = reservations,
                 UserName = _userFacade.GetUserById(userId).UserName,
-                Pagination = new PaginationViewModel(page, reservations.Count(), PageSize),
                 UserId = userId
             };
 

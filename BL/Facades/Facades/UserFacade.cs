@@ -39,9 +39,9 @@ namespace BL.Facades.Facades
             return _userService.GetUserByUserName(userName);
         }
 
-        public IEnumerable<UserDetailDto> GetUsersBySubStringUserName(string subString, int page, int pageSize)
+        public IEnumerable<UserDetailDto> GetUsersBySubStringUserName(string subString)
         {
-            return _userService.GetUsersBySubStringUserName(subString, page, pageSize);
+            return _userService.GetUsersBySubStringUserName(subString);
         }
 
         public UserDetailDto? GetUserById(int id)
@@ -70,9 +70,9 @@ namespace BL.Facades.Facades
             return true;
         }
 
-        public IEnumerable<UserDetailDto> GetAllUsers(int page, int pageSize)
+        public IEnumerable<UserDetailDto> GetAllUsers()
         {
-            return _userService.GetAllUsers(page, pageSize);
+            return _userService.GetAllUsers();
         }
 
         public void SwitchRoleForUserId(int userId) 

@@ -8,7 +8,7 @@ using BL.DTOs;
 
 namespace FE.Controllers.Admin
 {
-    public class AdminBookController : BaseController
+    public class AdminBookController : Controller
     {
         private IBookFacade _bookFacade;
 
@@ -17,23 +17,22 @@ namespace FE.Controllers.Admin
             _bookFacade = bookFacade;
         }
 
-        public IActionResult Index(int page = 1, string? searchString = null)
+        public IActionResult Index(string? searchString = null)
         {
             List<BookGridDto> books;
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                books = _bookFacade.GetBooksByTitle(searchString, page, PageSize).ToList();
+                books = _bookFacade.GetBooksByTitle(searchString).ToList();
             }
             else
             {
-                books = _bookFacade.GetAllBooks(page, PageSize).ToList();
+                books = _bookFacade.GetAllBooks().ToList();
             }
 
             var model = new AdminBookViewModel()
             {
-                Books = books,
-                Pagination = new PaginationViewModel(page, books.Count(), PageSize)
+                Books = books
             };
 
             return View(model);
@@ -56,9 +55,9 @@ namespace FE.Controllers.Admin
             return View(model);
         }
 
-        public IActionResult ChangeAuthor(int bookId, int authorId)
-        {
+        //public IActionResult ChangeAuthor(int bookId, int authorId)
+        //{
             
-        }
+        //}
     }
 }

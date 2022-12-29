@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FE.Controllers
 {
-    public class AuthorController : BaseController
+    public class AuthorController : Controller
     {
         private readonly IBookFacade _bookFacade;
 
@@ -15,14 +15,13 @@ namespace FE.Controllers
             _bookFacade = bookFacade;
         }
 
-        public IActionResult Index(int page = 1, string? searchString = null)
+        public IActionResult Index(string? searchString = null)
         {
-            var authors = _bookFacade.GetAuthorsByName(searchString, page, PageSize).ToList();
+            var authors = _bookFacade.GetAuthorsByName(searchString).ToList();
 
             var model = new AuthorSearchViewModel()
             {
-                Authors = authors,
-                Pagination = new PaginationViewModel(page, authors.Count(), PageSize)
+                Authors = authors
             };
 
             return View(model);

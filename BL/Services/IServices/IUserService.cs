@@ -17,8 +17,8 @@ namespace BL.Services.IServices
 
         bool CheckPassword(string password, int userId);
 
-        IEnumerable<UserDetailDto> GetUsersBySubStringUserName(string substring, int page, int pageSize);
+        IEnumerable<UserDetailDto> GetUsersBySubStringUserName(string substring);
 
-        IEnumerable<UserDetailDto> GetAllUsers(int page, int pageSize);
+        IEnumerable<UserDetailDto> GetAllUsers();
     }
 }

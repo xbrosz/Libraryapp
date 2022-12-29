@@ -20,5 +20,7 @@ namespace BL.Services.IServices
         IEnumerable<UserDetailDto> GetUsersBySubStringUserName(string substring);
 
         IEnumerable<UserDetailDto> GetAllUsers();
+
+        void Delete(int id);
     }
 }

@@ -107,5 +107,10 @@ namespace BL.Facades.Facades
         {
             _bookService.Delete(id);
         }
+
+        public void UpdateBook(BookUpdateDto dto)
+        {
+            _bookService.UpdateBook(dto);
+        }
     }
 }

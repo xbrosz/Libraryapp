@@ -62,5 +62,43 @@ namespace FE.Controllers.Admin
             
             return RedirectToAction("Index", "AdminBook");
         }
+
+        [HttpGet("Edit")]
+        public IActionResult Edit(int bookId)
+        {
+            var book = _bookFacade.GetBookDetailByID(bookId);
+
+            Console.WriteLine(bookId);
+
+            return View(new BookEditVIewModel()
+            {
+                Id = bookId,
+                Title = book.Title,
+                AuthorName = book.AuthorName,
+                Release = book.Release,
+                BookGenres = book.BookGenres
+            });
+        }
+
+        [HttpPost("Edit")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(BookEditVIewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            Console.WriteLine(model.Id);
+
+            _bookFacade.UpdateBook(new BookUpdateDto()
+            {
+                Title = model.Title,
+                Release = model.Release,
+                Id= model.Id
+            });
+
+            return RedirectToAction("Detail", "AdminBook", new {bookId = model.Id});
+        }
     }
 }

@@ -99,9 +99,18 @@ namespace BL.Facades.Facades
             }
         }
 
-        public IEnumerable<ReservationsDto> GetReservationsByBookId(int bookId)
+        public void DeleteReservationsForBookId(int bookId)
         {
-            return _reservationService.GetReservationsByBookId(bookId);
+            var bookReservations = _reservationService.GetReservationsByBookId(bookId);
+            foreach (var reservation in bookReservations)
+            {
+                _reservationService.Delete(reservation.Id);
+            }
+        }
+
+        public IEnumerable<ReservationsDto> GetActiveReservationsByBookId(int bookId)
+        {
+            return _reservationService.GetReservationsByBookId(bookId).Where(x => x.EndDate >= DateTime.Now);
         }
     }
 }

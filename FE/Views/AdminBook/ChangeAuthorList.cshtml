@@ -1,24 +1,6 @@
-﻿@model FE.Models.Admin.AdminChangeBookAuthorViewModel
+﻿@model FE.Models.Admin.ChangeBookAuthorViewModel
 
 <h4>Authors</h4>
-
-
-<div class="row">
-    <div class="col-md-4">
-        <div>
-    <form asp-controller="Author" asp-action="Index">
-    
-        <p>
-            <input type="text" name="SearchString"  />
-            <input type="submit" value="Search" />
-        </p>
-    
-    </form>
-        </div>
-    </div>
-</div>
-
-
 
 <table class="table">
     <thead>
@@ -37,7 +19,7 @@
                 <td>
                     @using (Html.BeginForm("ChangeAuthor", "AdminBook", new { authorId = author.Id, bookId = Model.BookId }, FormMethod.Post, true, new { @class = "form-inline" }))
                     {
-                        <input class="btn btn-secondary my-1" type="submit" value="Change author" />
+                        <input class="btn btn-secondary my-1" type="submit" value="Choose" />
                     }
 
                 </tr>

@@ -13,17 +13,17 @@
                 <tr>
                     <td>Author:</td>
                     <td>@Model.AuthorName</td>
-                    <td><a class="btn btn-secondary my-1" href="@Url.Action("ChangeAuthor", "AdminBook", new { bookId = Model.Id })">Edit</a></td>
+                    <td><a class="btn btn-secondary my-1" href="@Url.Action("ChangeAuthorList", "AdminBook", new { bookId = Model.Id })">Edit</a></td>
                 </tr>
                 <tr>
                     <td>Release date:</td>
-                    <td>@Model.ReleaseDate</td>
+                    <td>@Model.ReleaseDate.ToString("dd-mm-yyyy")</td>
                     <td><a class="btn btn-secondary my-1" href="@Url.Action("EditRelease", "AdminBook", new { bookId = Model.Id })">Edit</a></td>
                 </tr>
                 <tr>
                     <td>Genres:</td>
                     <td>@Model.Genres</td>
-                    <td><a class="btn btn-secondary my-1" href="@Url.Action("ChangeGenres", "AdminBook", new { bookId = Model.Id })">Edit</a></td>
+                    <td><a class="btn btn-secondary my-1" href="@Url.Action("ChangeGenresList", "AdminBook", new { bookId = Model.Id })">Edit</a></td>
                 </tr>
                 <tr>
                     <td>Rating:</td>
@@ -46,7 +46,7 @@
                             <a class="btn btn-secondary my-1" href="@Url.Action("Delete", "AdminBook", new { bookId = Model.Id })">Delete</a>
                         } else
                         {
-                            <a class="btn btn-secondary my-1 submitButton">Delete</a>
+                            <a class="btn btn-secondary my-1" onclick="showAlert()">Delete</a>
                         }
 
                     </td>
@@ -58,11 +58,9 @@
 
 @section scripts{
 <script>
-    $(document).ready(function () {
-        $("#submitButton").on("click", function () {
-            alert('Your Message');
-        });
-
-    });
+    function showAlert() {
+    var myText = "Book cannot be deleted due still active reservations!";
+    alert (myText);
+  }
     </script>
 }

@@ -1,5 +1,4 @@
 ﻿@model FE.Models.BookEditVIewModel
-<link href="~/jqueryui/jquery-ui.css" rel="stylesheet" />
 
 @{
     ViewData["Title"] = Model.Title;
@@ -14,27 +13,15 @@
             @Html.HiddenFor(x => x.Id)
             @Html.AntiForgeryToken()
             <hr />
-    
+
             <div class="form-group">
                 @Html.LabelFor(x => x.Title)
                 @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
             </div>
-           <div class="form-group">
-                @Html.LabelFor(x => x.Release)
-                <input asp-for="Release" type="text" class="form-control" placeholder="Release" />
-
-            </div>
+            
 
             <button type="submit" class="btn btn-primary">Save</button>
         }
 
     </div>
 </div>
-@section scripts{
-        <script src="~/jqueryui/jquery-ui.js"></script>
-<script>
-            $(function () {
-        $("#Release").datepicker({ dateFormat: 'dd-mm-yy' });
-            });
-</script>
-}

@@ -1,5 +1,6 @@
 ﻿using BL.DTOs;
 using BL.DTOs.Author;
+using BL.DTOs.BookGenre;
 using BL.DTOs.Genre;
 using BL.Facades.IFacades;
 using BL.Services.IServices;
@@ -10,17 +11,21 @@ namespace BL.Facades.Facades
 {
     public class BookFacade : IBookFacade
     {
-        private IBookPrintService _bookPrintService { get; set; }
-        private IReservationService _reservationService { get; set; }
-        private IBookService _bookService { get; set; }
-        private IAuthorService _authorService { get; set; }
+        private readonly IBookPrintService _bookPrintService;
+        private readonly IReservationService _reservationService;
+        private readonly IBookService _bookService;
+        private readonly IAuthorService _authorService;
+        private readonly IBookGenreService _bookGenreService;
+        private readonly IGenreService _genreService;
 
-        public BookFacade(IBookPrintService bookPrintService, IReservationService reservationService, IBookService bookService, IAuthorService authorService)
+        public BookFacade(IBookPrintService bookPrintService, IGenreService genreService, IReservationService reservationService, IBookService bookService, IAuthorService authorService, IBookGenreService bookGenreService)
         {
             _bookPrintService = bookPrintService;
             _reservationService = reservationService;
             _bookService = bookService;
             _authorService = authorService;
+            _bookGenreService = bookGenreService;
+            _genreService = genreService;
         }
 
         public IEnumerable<BookPrintDto> GetAvailableBookPrints(int bookId, int branchId, DateTime from, DateTime to)
@@ -38,11 +43,6 @@ namespace BL.Facades.Facades
         public IEnumerable<BookGridDto> GetBooksByTitle(string substring)
         {
             return _bookService.GetBooksbyFilter(new BookFilterDto() { Title = substring });
-        }
-
-        public IEnumerable<BookGridDto> GetBooksByAuthorName(string name)
-        {
-            return new List<BookGridDto>();             // dorobit
         }
 
         public BookDetailDto GetBookDetailByID(int bookID)
@@ -106,11 +106,38 @@ namespace BL.Facades.Facades
         public void DeleteBook(int id) 
         {
             _bookService.Delete(id);
+
+            foreach(var bookPrint in _bookPrintService.GetBookPrintsByBookID(id))
+            {
+                _bookPrintService.Delete(bookPrint.Id);
+            }
         }
 
         public void UpdateBook(BookUpdateDto dto)
         {
             _bookService.UpdateBook(dto);
+        }
+
+        public IEnumerable<AuthorGridDto> GetAllAuthors()
+        {
+            return _authorService.GetAll();
+        }
+
+        public void DeleteBookGenreForBookId(int bookId)
+        {
+            _bookGenreService.DeleteBookGenreForBookId(bookId);
+        }
+
+        public void InsertBookGenre(string genreName, int bookid)
+        {
+            var genreId = _genreService.GetGenreIdForName(genreName);
+
+            if (!genreId.HasValue)
+            {
+                throw new Exception("Genre with name " + genreName + " does not exist!");
+            }
+
+            _bookGenreService.Insert(new BookGenreDto() { BookId = bookid, GenreId = (int)genreId});
         }
     }
 }

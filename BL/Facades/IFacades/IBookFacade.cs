@@ -14,8 +14,6 @@ namespace BL.Facades.IFacades
     {
         IEnumerable<BookGridDto> GetBooksByTitle(string substring);
 
-        IEnumerable<BookGridDto> GetBooksByAuthorName(string name);
-
         BookDetailDto GetBookDetailByID(int bookID);
         IEnumerable<AuthorGridDto> GetAuthorsByName(string? searchString);
 
@@ -30,5 +28,9 @@ namespace BL.Facades.IFacades
         void DeleteBook(int id);
 
         void UpdateBook(BookUpdateDto dto);
+
+        IEnumerable<AuthorGridDto> GetAllAuthors();
+        void DeleteBookGenreForBookId(int bookId);
+        void InsertBookGenre(string genre, int bookid);
     }
 }

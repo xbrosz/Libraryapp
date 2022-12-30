@@ -12,5 +12,6 @@ namespace FE.Models
         public string AuthorName { get; set; }
         public string Genres { get; set; }
         public double? RatingNumber { get; set; }
+        public bool CanBeDeleted { get; set; }
     }
 }

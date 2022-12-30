@@ -10,11 +10,13 @@ namespace FE.Controllers.Admin
 {
     public class AdminBookController : Controller
     {
-        private IBookFacade _bookFacade;
+        private readonly IBookFacade _bookFacade;
+        private readonly IReservationFacade _reservationFacade;
 
-        public AdminBookController(IBookFacade bookFacade)
+        public AdminBookController(IBookFacade bookFacade, IReservationFacade reservationFacade)
         {
             _bookFacade = bookFacade;
+            _reservationFacade = reservationFacade;
         }
 
         public IActionResult Index(string? searchString = null)
@@ -49,7 +51,8 @@ namespace FE.Controllers.Admin
                 ReleaseDate = book.Release,
                 Genres = book.BookGenres,
                 RatingNumber = book.RatingNumber,
-                Id = book.Id
+                Id = book.Id,
+                CanBeDeleted = !_reservationFacade.GetReservationsByBookId(bookId).Any()
             };
 
             return View(model);
@@ -57,8 +60,8 @@ namespace FE.Controllers.Admin
 
         public IActionResult Delete(int bookId)
         {
-            Console.WriteLine(bookId);
             _bookFacade.DeleteBook(bookId);
+
             
             return RedirectToAction("Index", "AdminBook");
         }

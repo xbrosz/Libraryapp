@@ -1,6 +1,6 @@
 ﻿@model BookDetailModel
 
-<h4>Book detail</h4>
+<h4>Admin Book detail</h4>
 <div class="row">
     <div class="col-md-4">
         <table class="table">
@@ -8,28 +8,26 @@
                 <tr>
                     <td>Book title:</td>
                     <td>@Model.BookTitle</td>
+                    <td><a class="btn btn-secondary my-1" href="@Url.Action("EditTitle", "AdminBook", new { bookId = Model.Id })">Edit</a></td>
                 </tr>
                 <tr>
                     <td>Author:</td>
                     <td>@Model.AuthorName</td>
+                    <td><a class="btn btn-secondary my-1" href="@Url.Action("ChangeAuthor", "AdminBook", new { bookId = Model.Id })">Edit</a></td>
                 </tr>
                 <tr>
                     <td>Release date:</td>
                     <td>@Model.ReleaseDate</td>
+                    <td><a class="btn btn-secondary my-1" href="@Url.Action("EditRelease", "AdminBook", new { bookId = Model.Id })">Edit</a></td>
                 </tr>
                 <tr>
                     <td>Genres:</td>
                     <td>@Model.Genres</td>
+                    <td><a class="btn btn-secondary my-1" href="@Url.Action("ChangeGenres", "AdminBook", new { bookId = Model.Id })">Edit</a></td>
                 </tr>
                 <tr>
                     <td>Rating:</td>
                     <td>@Model.RatingNumber</td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <a class="btn btn-secondary my-1" href="@Url.Action("Edit", "AdminBook", new { bookId = Model.Id })">Edit</a>
-                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -43,10 +41,28 @@
                 </tr>
                 <tr>
                     <td>
-                        <a class="btn btn-secondary my-1" href="@Url.Action("Delete", "AdminBook", new { bookId = Model.Id })">Delete</a>
+                        @if (Model.CanBeDeleted)
+                        {
+                            <a class="btn btn-secondary my-1" href="@Url.Action("Delete", "AdminBook", new { bookId = Model.Id })">Delete</a>
+                        } else
+                        {
+                            <a class="btn btn-secondary my-1 submitButton">Delete</a>
+                        }
+
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
+
+@section scripts{
+<script>
+    $(document).ready(function () {
+        $("#submitButton").on("click", function () {
+            alert('Your Message');
+        });
+
+    });
+    </script>
+}

@@ -40,6 +40,8 @@ namespace BL
             builder.RegisterType<BookService>().As<IBookService>().InstancePerDependency();
             builder.RegisterType<BookPrintService>().As<IBookPrintService>().InstancePerDependency();
             builder.RegisterType<RatingService>().As<IRatingService>().InstancePerDependency();
+            builder.RegisterType<BookGenreService>().As<IBookGenreService>().InstancePerDependency();
+            builder.RegisterType<GenreService>().As<IGenreService>().InstancePerDependency();
 
             builder.RegisterType<BookFacade>().As<IBookFacade>().InstancePerDependency();
             builder.RegisterType<UserFacade>().As<IUserFacade>().InstancePerDependency();

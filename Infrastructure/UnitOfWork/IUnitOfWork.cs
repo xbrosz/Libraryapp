@@ -22,6 +22,7 @@ namespace Infrastructure.UnitOfWork
         IRepository<Role> RoleRepository { get; }
 
         IRepository<User> UserRepository { get; }
+        IRepository<BookGenre> BookGenreRepository { get; }
 
         public void Commit();
 

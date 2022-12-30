@@ -1,0 +1,24 @@
+﻿@model FE.Models.Admin.ChangeBookGenresViewModel
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Genre</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <form method="post">
+          
+            
+                @foreach (var genre in Model.Genres)
+                {
+            <tr>
+                <td><input name="CheckedGenres" type="checkbox" value="@genre.Name" /> @genre.Name</td>
+            </tr>
+                }
+            
+        <tr><td><button type="submit" class="btn btn-primary">Save</button></td></tr>
+        </form>
+    </tbody>
+</table>

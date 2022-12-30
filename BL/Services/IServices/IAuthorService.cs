@@ -15,5 +15,6 @@ namespace BL.Services.IServices
         IEnumerable<AuthorGridDto> GetAuthorsByName(AuthorFilterDto filter);
 
         IEnumerable<AuthorGridDto> GetSortedAuthors();
+        IEnumerable<AuthorGridDto> GetAll();
     }
 }

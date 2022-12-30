@@ -13,10 +13,12 @@ namespace FE.Controllers.Admin
     public class AdminUserController : Controller
     {
         private readonly IUserFacade _userFacade;
+        private readonly IReservationFacade _reservationFacade;
 
-        public AdminUserController(IUserFacade userFacade)
+        public AdminUserController(IUserFacade userFacade, IReservationFacade reservationFacade)
         {
             _userFacade = userFacade;
+            _reservationFacade = reservationFacade;
         }
 
         // validate admin
@@ -54,6 +56,7 @@ namespace FE.Controllers.Admin
         public IActionResult DeleteUser(int userId)
         {
             _userFacade.DeleteUser(userId);
+            _reservationFacade.DeleteReservationsForUserId(userId);
 
             if (userId == int.Parse(User.Identity.Name))
             {

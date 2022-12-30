@@ -2,7 +2,7 @@
 
 namespace FE.Models.Admin
 {
-    public class AdminChangeBookAuthorViewModel
+    public class ChangeBookAuthorViewModel
     {
         public IEnumerable<AuthorGridDto> Authors { get; set; }
         public int BookId { get; set; }

@@ -26,7 +26,7 @@
                 @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(x => x.LastName, null, new { @class = "text-danger" })
             </div>
-
+            <hr />
             <div class="form-group">
                 @Html.LabelFor(x => x.BirthDate)
                 <input asp-for="BirthDate" type="text" class="form-control" placeholder="BirthDate" />

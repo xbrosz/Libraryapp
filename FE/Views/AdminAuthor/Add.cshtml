@@ -18,21 +18,21 @@
             <div class="form-group">
                 @Html.LabelFor(x => x.MiddleName)
                 @Html.TextBoxFor(x => x.MiddleName, new { @class = "form-control" })
-                
+                @Html.ValidationMessageFor(x => x.FirstName, null, new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 @Html.LabelFor(x => x.LastName)
                 @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(x => x.LastName, null, new { @class = "text-danger" })
             </div>
-
+            <hr />
             <div class="form-group">
                 @Html.LabelFor(x => x.BirthDate)
                 <input asp-for="BirthDate" type="text" class="form-control" placeholder="BirthDate" />
-
+                @Html.ValidationMessageFor(x => x.BirthDate, null, new { @class = "text-danger" })
             </div>
 
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary">Save</button>
         }
     </div>
 </div>
@@ -40,7 +40,7 @@
     <script src="~/jqueryui/jquery-ui.js"></script>
     <script>
         $(function () {
-            $("#Release").datepicker({ dateFormat: 'dd-mm-yy' });
+            $("#BirthDate").datepicker({ dateFormat: 'dd-mm-yy' });
         });
     </script>
 }

@@ -64,7 +64,16 @@
                     }
                     </td>
 
-                </tr>
+                <td>
+                    @using (Html.BeginForm("DeleteUser", "AdminUser", new { userId = user.Id }, FormMethod.Post, true, new { @class = "form-inline" }))
+                    {
+
+                        <input class="btn btn-secondary my-1" type="submit" value="Delete user" />
+                    }
+                </td>
+
+            </tr>
+                
         }
     </tbody>
 </table>

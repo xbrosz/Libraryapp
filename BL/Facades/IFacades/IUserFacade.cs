@@ -27,5 +27,7 @@ namespace BL.Facades.IFacades
         IEnumerable<UserDetailDto> GetAllUsers();
 
         void SwitchRoleForUserId(int userId);
+
+        void DeleteUser(int id);
     }
 }

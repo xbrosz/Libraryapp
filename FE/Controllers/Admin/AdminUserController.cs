@@ -50,5 +50,17 @@ namespace FE.Controllers.Admin
 
             return RedirectToAction("Index", "AdminUser");
         }
+
+        public IActionResult DeleteUser(int userId)
+        {
+            _userFacade.DeleteUser(userId);
+
+            if (userId == int.Parse(User.Identity.Name))
+            {
+                return RedirectToAction("Logout", "User");
+            }
+
+            return RedirectToAction("Index", "AdminUser");
+        }
     }
 }

@@ -85,5 +85,10 @@ namespace BL.Facades.Facades
                 RoleId = userRole == "Admin" ? 2 : 1
             });
         }
+
+        public void DeleteUser(int id)
+        {
+            _userService.Delete(id);
+        }
     }
 }

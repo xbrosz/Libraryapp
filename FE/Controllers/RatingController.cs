@@ -64,7 +64,7 @@ namespace FE.Controllers
                 return NotFound();
             }
 
-            if (!isAdmin() && dto.UserId != getUserId())
+            if (dto.UserId != getUserId())
             {
                 return Unauthorized();
             }
@@ -105,10 +105,6 @@ namespace FE.Controllers
             _ratingFacade.UpdateRating(dto);
 
             return RedirectToAction(nameof(Index));
-        }
-        private bool isAdmin()
-        {
-            return HttpContext.User.IsInRole("Admin");
         }
 
         private int getUserId()

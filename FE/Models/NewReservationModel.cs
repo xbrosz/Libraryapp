@@ -5,6 +5,9 @@ namespace FE.Models
 {
     public class NewReservationModel
     {
-        public 
+        public int BookID { get; set; }
+        public IEnumerable<string> Branches { get; set; }
+        public string BookTitle { get; set; }
+
     }
 }

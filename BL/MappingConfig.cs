@@ -47,6 +47,8 @@ namespace BL
             config.CreateMap<Book, BookUpdateDto>().ReverseMap();
             config.CreateMap<BookGenre, BookGenreDto>().ReverseMap();
             config.CreateMap<Genre, GenreDto>().ReverseMap();
+            config.CreateMap<Author, AuthorDetailDto>().ReverseMap();
+            config.CreateMap<Author, AuthorUpdateDto>().ReverseMap();
 
             config.CreateMap<QueryResultDto<AuthorGridDto>, EFQueryResult<Author>>().ReverseMap();
             config.CreateMap<QueryResultDto<BranchDto>, EFQueryResult<Branch>>().ReverseMap();

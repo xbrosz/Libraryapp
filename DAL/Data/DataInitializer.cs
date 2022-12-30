@@ -73,7 +73,7 @@ namespace DAL.Data
             var bookgenre11 = new BookGenre { Id = 11, BookId = 10, GenreId =3  };
             var bookgenre12 = new BookGenre { Id = 12, BookId = 11, GenreId = 3 };
             var bookgenre13 = new BookGenre { Id = 13, BookId = 12, GenreId = 4 };
-            var bookgenre14 = new BookGenre { Id = 14, BookId = 6, GenreId = 2 };
+            var bookgenre14 = new BookGenre { Id = 14, BookId = 6, GenreId = 1 };
             var bookgenre15 = new BookGenre { Id = 15, BookId = 7, GenreId = 1 };
             var bookgenre16 = new BookGenre { Id = 16, BookId = 8, GenreId = 4 };
 

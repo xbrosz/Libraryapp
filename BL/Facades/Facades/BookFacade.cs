@@ -139,5 +139,46 @@ namespace BL.Facades.Facades
 
             _bookGenreService.Insert(new BookGenreDto() { BookId = bookid, GenreId = (int)genreId});
         }
+
+        public void DeleteGenre(int genreId)
+        {
+            _genreService.Delete(genreId);
+            _bookGenreService.DeleteBookGenreForGenreId(genreId);
+        }
+
+        public GenreDto? GetGenreForId(int genreId)
+        {
+            return _genreService.Find(genreId);
+        }
+
+        public void UpdateGenre(GenreDto genre)
+        {
+            _genreService.Update(genre);
+        }
+
+        public void InsertGenre(GenreDto genre)
+        {
+            _genreService.Insert(genre);
+        }
+
+        public AuthorDetailDto? GetAuthorDetailById(int authorId)
+        {
+            return _authorService.GetAuthorDetailById(authorId);
+        }
+
+        public void UpdateAuthor(AuthorUpdateDto author)
+        {
+            _authorService.Update(author);
+        }
+
+        public void InsertAuthor(AuthorInsertDto author)
+        {
+            _authorService.Insert(author);
+        }
+
+        public void DeleteAuthor(int authorId)
+        {
+            _authorService.Delete(authorId);
+        }
     }
 }

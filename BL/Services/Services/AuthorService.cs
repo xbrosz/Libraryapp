@@ -8,7 +8,7 @@ using Infrastructure.UnitOfWork;
 
 namespace BL.Services.Services
 {
-    public class AuthorService : GenericService<Author, AuthorGridDto, AuthorInsertDto, AuthorInsertDto>, IAuthorService
+    public class AuthorService : GenericService<Author, AuthorGridDto, AuthorUpdateDto, AuthorInsertDto>, IAuthorService
     {
         private IQueryObject<AuthorFilterDto, AuthorGridDto> _authorQueryObject;
 
@@ -28,6 +28,9 @@ namespace BL.Services.Services
         
         }
 
-
+        public AuthorDetailDto? GetAuthorDetailById(int id)
+        {
+            return _mapper.Map<AuthorDetailDto>(_unitOfWork.AuthorRepository.GetByID(id));
+        }
     }
 }

@@ -17,9 +17,22 @@ namespace FE.Controllers.Admin
 
         public IActionResult Index()
         {
+            List<Tuple<AuthorGridDto, bool>> authors = new();
+
+            foreach(var author in _bookFacade.GetAllAuthors())
+            {
+                if (_bookFacade.GetBooksForAuthorId(author.Id).Any())
+                {
+                    authors.Add(Tuple.Create(author, false));
+                } else
+                {
+                    authors.Add(Tuple.Create(author, true));
+                }
+            }
+
             return View(new AdminAuthorIndexViewModel()
             {
-                Authors = _bookFacade.GetAllAuthors().ToList()
+                Authors = authors
             });
         }
 
@@ -50,7 +63,7 @@ namespace FE.Controllers.Admin
                 Id = model.Id,
                 FirstName = model.FirstName,
                 LastName= model.LastName,
-                MiddleName= model.MiddleName,
+                MiddleName= model.MiddleName != null ? model.MiddleName : "",
                 BirthDate= model.BirthDate
             });
 
@@ -74,7 +87,7 @@ namespace FE.Controllers.Admin
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                MiddleName = model.MiddleName,
+                MiddleName = model.MiddleName != null ? model.MiddleName : "",
                 BirthDate = model.BirthDate
             });
 
@@ -83,6 +96,11 @@ namespace FE.Controllers.Admin
 
         public IActionResult Delete(int authorId)
         {
+            if (_bookFacade.GetBooksForAuthorId(authorId).Any())
+            {
+                throw new Exception("Author cannot be deleted, because books of this author exist in database!");
+            }
+
             _bookFacade.DeleteAuthor(authorId);
 
             return RedirectToAction("Index", "AdminAuthor");

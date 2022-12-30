@@ -2,8 +2,6 @@
 
 <h4>Admin Authors</h4>
 
-
-
 <table class="table">
     <thead>
         <tr>
@@ -16,16 +14,30 @@
         @foreach (var author in Model.Authors)
         {
             <tr>
-                <td>@author.Name</td>
-                <td>@author.BirthDate.ToString("dd-MM-yyyy")</td>
+                <td>@author.Item1.Name</td>
+                <td>@author.Item1.BirthDate.ToString("dd-MM-yyyy")</td>
 
                 <td>
-                    <a class="btn btn-secondary my-1" href="@Url.Action("Edit", "AdminAuthor", new { authorId = author.Id })">Edit</a>
+                    <a class="btn btn-secondary my-1" href="@Url.Action("Edit", "AdminAuthor", new { authorId = author.Item1.Id })">Edit</a>
 
-                    <a class="btn btn-secondary my-1" href="@Url.Action("Delete", "AdminAuthor", new { authorId = author.Id })">Delete</a>
+                    @if (author.Item2)
+                    {
+                        <a class="btn btn-secondary my-1" href="@Url.Action("Delete", "AdminAuthor", new { authorId = author.Item1.Id })">Delete</a>
+                    } else
+                    {
+                        <a class="btn btn-secondary my-1" onclick="showAlert()">Delete</a>
+                    }
+
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
+@section scripts{
+    <script>
+        function showAlert() {
+        var myText = "This author cannot be deleted because books of this author exist in database!";
+        alert (myText);
+      }
+        </script>
+}

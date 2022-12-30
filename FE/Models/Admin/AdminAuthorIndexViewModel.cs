@@ -4,6 +4,6 @@ namespace FE.Models.Admin
 {
     public class AdminAuthorIndexViewModel
     {
-        public List<AuthorGridDto> Authors { get; set; }
+        public List<Tuple<AuthorGridDto, bool>> Authors { get; set; }
     }
 }

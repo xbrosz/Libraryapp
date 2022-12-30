@@ -1,6 +1,7 @@
 ﻿using BL.DTOs;
 using BL.Facades.IFacades;
 using BL.Services.IServices;
+using BL.Services.Services;
 using DAL.Entities;
 using FE.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -103,6 +104,27 @@ namespace FE.Controllers
             };
 
             _ratingFacade.UpdateRating(dto);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            var dto = _ratingService.Find(id);
+
+            if (dto == null)
+            {
+                return NotFound();
+            }
+
+            if (dto.UserId != getUserId())
+            {
+                return Unauthorized();
+            }
+
+            _ratingFacade.DeleteRating(dto);
 
             return RedirectToAction(nameof(Index));
         }

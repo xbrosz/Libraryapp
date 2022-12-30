@@ -15,5 +15,6 @@ namespace BL.Facades.IFacades
         void UpdateRating(RatingDto rating);
 
         void InsertRating(RatingDto rating);
+        void DeleteRating(RatingDto rating);
     }
 }

@@ -1,11 +1,13 @@
 ﻿using BL.DTOs;
 using BL.Facades.IFacades;
 using BL.Services.IServices;
+using BL.Services.Services;
 using DAL.Entities;
 using FE.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using System.Net;
 
 namespace FE.Controllers.Admin
 {
@@ -21,11 +23,14 @@ namespace FE.Controllers.Admin
             _ratingFacade = ratingFacade;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string bookTitle, int bookId)
         {
+            var ratings = _ratingService.GetRatingsByBook(bookId);
+
             var model = new RatingIndexViewModel()
             {
-                ratings = _ratingService.GetAll()
+                bookTitle = bookTitle,
+                ratings = ratings
             };
 
             return View(model);
@@ -79,6 +84,22 @@ namespace FE.Controllers.Admin
             };
 
             _ratingFacade.UpdateRating(dto);
+
+            return RedirectToAction(nameof(Index), new { bookId = model.BookId, bookTitle = model.BookTitle });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            var dto = _ratingService.Find(id);
+
+            if (dto == null)
+            {
+                return NotFound();
+            }
+
+            _ratingFacade.DeleteRating(dto);
 
             return RedirectToAction(nameof(Index));
         }

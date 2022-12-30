@@ -7,7 +7,7 @@ using Infrastructure.Query;
 
 namespace BL.QueryObjects.QueryObjects
 {
-    public class AuthorQueryObject : IQueryObject<AuthorFilterDto, AuthorDto>
+    public class AuthorQueryObject : IQueryObject<AuthorFilterDto, AuthorGridDto>
     {
         private IMapper _mapper;
         private IAbstractQuery<Author> _query;
@@ -17,7 +17,7 @@ namespace BL.QueryObjects.QueryObjects
             _query = query;
         }
 
-        public QueryResultDto<AuthorDto> ExecuteQuery(AuthorFilterDto filter)
+        public QueryResultDto<AuthorGridDto> ExecuteQuery(AuthorFilterDto filter)
         {
             if (!string.IsNullOrWhiteSpace(filter.FirstName))
             {
@@ -43,8 +43,8 @@ namespace BL.QueryObjects.QueryObjects
             {
                 _query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
             }
-
-            return _mapper.Map<QueryResultDto<AuthorDto>>(_query.Execute());
+                
+            return _mapper.Map<QueryResultDto<AuthorGridDto>>(_query.Execute());
         }
     }
 }

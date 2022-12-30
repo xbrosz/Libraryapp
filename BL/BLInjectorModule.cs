@@ -2,7 +2,9 @@
 using AutoMapper;
 using BL.DTOs;
 using BL.DTOs.Author;
+using BL.DTOs.BookGenre;
 using BL.DTOs.Branch;
+using BL.DTOs.Genre;
 using BL.DTOs.Reservation;
 using BL.DTOs.User;
 using BL.Facades.Facades;
@@ -21,13 +23,15 @@ namespace BL
         {
             builder.RegisterInstance(new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping))).As<IMapper>().SingleInstance();
 
-            builder.RegisterType<AuthorQueryObject>().As<IQueryObject<AuthorFilterDto, AuthorDto>>().InstancePerDependency();
+            builder.RegisterType<AuthorQueryObject>().As<IQueryObject<AuthorFilterDto, AuthorGridDto>>().InstancePerDependency();
             builder.RegisterType<BranchQueryObject>().As<IQueryObject<BranchFilterDto, BranchDto>>().InstancePerDependency();
             builder.RegisterType<UserQueryObject>().As<IQueryObject<UserFilterDto, UserDetailDto>>().InstancePerDependency();
             builder.RegisterType<BookQueryObject>().As<IQueryObject<BookFilterDto, BookGridDto>>().InstancePerDependency();
             builder.RegisterType<BookPrintQueryObject>().As<IQueryObject<BookPrintFilterDto, BookPrintDto>>().InstancePerDependency();
             builder.RegisterType<RatingQueryObject>().As<IQueryObject<RatingFilterDto, RatingDto>>().InstancePerDependency();
             builder.RegisterType<ReservationQueryObject>().As<IQueryObject<ReservationFilterDto, ReservationsDto>>().InstancePerDependency();
+            builder.RegisterType<BookGenreQueryObject>().As<IQueryObject<BookGenreFilterDto, BookGenreDto>>().InstancePerDependency();
+            builder.RegisterType<GenreQueryObejct>().As<IQueryObject<GenreDto, GenreDto>>().InstancePerDependency();
 
             builder.RegisterType<AuthorService>().As<IAuthorService>().InstancePerDependency();
             builder.RegisterType<BranchService>().As<IBranchService>().InstancePerDependency();
@@ -36,6 +40,8 @@ namespace BL
             builder.RegisterType<BookService>().As<IBookService>().InstancePerDependency();
             builder.RegisterType<BookPrintService>().As<IBookPrintService>().InstancePerDependency();
             builder.RegisterType<RatingService>().As<IRatingService>().InstancePerDependency();
+            builder.RegisterType<BookGenreService>().As<IBookGenreService>().InstancePerDependency();
+            builder.RegisterType<GenreService>().As<IGenreService>().InstancePerDependency();
 
             builder.RegisterType<BookFacade>().As<IBookFacade>().InstancePerDependency();
             builder.RegisterType<UserFacade>().As<IUserFacade>().InstancePerDependency();

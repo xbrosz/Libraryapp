@@ -7,9 +7,9 @@
 
 <div class="row">
     <div class="col-md-4">
-               
+
         <table class="table">
-        <tbody>
+            <tbody>
                 <tr>
                     <td>First name:</td>
                     <td>@Model.FirstName</td>
@@ -30,9 +30,10 @@
                     <td>Phone number:</td>
                     <td>@Model.PhoneNumber</td>
                 </tr>
-        </tbody>
+            </tbody>
         </table>
-            <a class="nav-link text-blue" href="@Url.Action("Edit", "User")">Edit account</a>
-            <a class="nav-link text-blue" href="@Url.Action("ChangePassword", "User")">Change pasword</a>
+        <a class="nav-link text-blue" href="@Url.Action("Edit", "User")">Edit account</a>
+        <a class="nav-link text-blue" href="@Url.Action("ChangePassword", "User")">Change pasword</a>
+        <a class="nav-link text-blue" href="@Url.Action("Delete", "User")">Delete account</a>
     </div>
 </div>

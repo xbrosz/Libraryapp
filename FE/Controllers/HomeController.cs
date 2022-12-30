@@ -1,21 +1,43 @@
-﻿using FE.Models;
+﻿using BL.DTOs;
+using BL.Facades.IFacades;
+using DAL.Entities;
+using FE.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace FE.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IBookFacade _bookFacade;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IBookFacade bookFacade)
         {
-            _logger = logger;
+            _bookFacade = bookFacade;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string? searchString = null, int? authorId = null, string? genre = null, int? rating = null)
         {
-            return View();
+            List<BookGridDto> books;
+
+            if (authorId.HasValue)
+            {
+                books = _bookFacade.GetBooksForAuthorId(authorId).ToList();
+            }
+            else
+            {
+                books = _bookFacade.GetBooksBySearchFilter(searchString, rating, genre).ToList();
+            }
+
+            var model = new BookListViewModel()
+            {
+                Books = books,
+                Genres = new SelectList(_bookFacade.GetAllGenres().Select(x => x.Name).ToList())
+            };
+
+            return View(model);
         }
 
         public IActionResult Privacy()

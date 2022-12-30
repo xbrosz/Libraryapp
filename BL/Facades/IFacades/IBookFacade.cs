@@ -1,5 +1,4 @@
-﻿using BL.DTOs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +8,44 @@ namespace BL.Facades.IFacades
 {
     public interface IBookFacade
     {
-        public IEnumerable<BookPrintDto> GetAvailableBookPrints(int bookId, int branchId, DateTime from, DateTime to);
-        public int GetNumOfAvailablePrints(int bookId, int branchId, DateTime from, DateTime to);
-        public BookDetailDto GetBookDetailByID(int bookID);
+        IEnumerable<BookGridDto> GetBooksByTitle(string substring);
+
+        BookDetailDto GetBookDetailByID(int bookID);
+
+        IEnumerable<AuthorGridDto> GetAuthorsByName(string? searchString);
+
+        IEnumerable<BookGridDto> GetBooksForAuthorId(int? authorId);
+
+        IEnumerable<GenreDto> GetAllGenres();
+
+        IEnumerable<BookGridDto> GetAllBooks();
+
+        IEnumerable<BookGridDto> GetBooksBySearchFilter(string? searchString, int? rating, string? genre);
+
+        void DeleteBook(int id);
+
+        void UpdateBook(BookUpdateDto dto);
+
+        IEnumerable<AuthorGridDto> GetAllAuthors();
+
+        void DeleteBookGenreForBookId(int bookId);
+
+        void InsertBookGenre(string genre, int bookid);
+
+        void DeleteGenre(int genreId);
+
+        GenreDto? GetGenreForId(int genreId);
+
+        void UpdateGenre(GenreDto genre);
+
+        void InsertGenre(GenreDto genre);
+
+        AuthorDetailDto? GetAuthorDetailById(int authorId);
+
+        void UpdateAuthor(AuthorUpdateDto author);
+
+        void InsertAuthor(AuthorInsertDto author);
+
+        void DeleteAuthor(int authorId);
     }
 }

@@ -6,7 +6,6 @@ namespace BL.Services.IServices
 {
     public interface IUserService : IGenericService<User, UserDetailDto, UserUpdateDto, UserCreateDto>
     {
-        IEnumerable<UserDetailDto> GetUsersBySubstringName(string substring);
 
         void Register(UserCreateDto registerDto);
 
@@ -17,5 +16,11 @@ namespace BL.Services.IServices
         void UpdateUser(UserUpdateDto userDto);
 
         bool CheckPassword(string password, int userId);
+
+        IEnumerable<UserDetailDto> GetUsersBySubStringUserName(string substring);
+
+        IEnumerable<UserDetailDto> GetAllUsers();
+
+        void Delete(int id);
     }
 }

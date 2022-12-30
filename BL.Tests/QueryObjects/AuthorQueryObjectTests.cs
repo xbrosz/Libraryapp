@@ -31,18 +31,16 @@ namespace BL.Tests.QueryObjects
                 BirthDate = DateTime.Now
             };
 
-            var authorDto = new AuthorDto()
+            var authorDto = new AuthorGridDto()
             {
                 Id = 1,
-                FirstName = "Peter",
-                MiddleName = "Petrovsky",
-                LastName = "Petrovitansky",
+                Name = "Peter Petrovsky Petrovitansky",
                 BirthDate = DateTime.Now
             };
 
-            var queryResultDto = new QueryResultDto<AuthorDto>()
+            var queryResultDto = new QueryResultDto<AuthorGridDto>()
             {
-                Items = new List<AuthorDto>() { authorDto },
+                Items = new List<AuthorGridDto>() { authorDto },
                 TotalItemsCount = 1
             };
 
@@ -69,7 +67,7 @@ namespace BL.Tests.QueryObjects
                 .Returns(efQueryResult);
 
             _mapperMock
-                .Setup(x => x.Map<QueryResultDto<AuthorDto>>(It.IsAny<EFQueryResult<Author>>()))
+                .Setup(x => x.Map<QueryResultDto<AuthorGridDto>>(It.IsAny<EFQueryResult<Author>>()))
                 .Returns(queryResultDto);
 
             var queryObject = new AuthorQueryObject(_mapperMock.Object, _queryMock.Object);

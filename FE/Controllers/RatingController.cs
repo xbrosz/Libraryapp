@@ -1,11 +1,15 @@
 ﻿using BL.DTOs;
 using BL.Facades.IFacades;
 using BL.Services.IServices;
+using BL.Services.Services;
+using DAL.Entities;
 using FE.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FE.Controllers
 {
+    [Authorize(Roles = "User, Admin")]
     public class RatingController : Controller
     {
         private readonly IRatingService _ratingService;
@@ -19,24 +23,20 @@ namespace FE.Controllers
 
         public IActionResult Index()
         {
-            // load user from auth
-            int userId = 1;
+            int userId = getUserId();
 
-            var model = new RatingIndexViewModel()
+            var model = new RatingIndexViewModel() 
             {
                 ratings = _ratingService.GetRatingsByUser(userId),
                 awaitingRatings = _ratingFacade.GetAwaitingRatingsByUser(userId)
-                
             };
-
 
             return View(model);
         }
 
         public IActionResult Add(int bookId, string bookTitle)
         {
-            // change to user from auth
-            var userId = 1;
+            var userId = getUserId();
 
             return View(new RatingInsertViewModel() { BookId = bookId, UserId = userId, BookTitle = bookTitle });
         }
@@ -51,7 +51,7 @@ namespace FE.Controllers
             }
 
             var dto = model.ToDto();
-            _ratingService.Insert(dto);
+            _ratingFacade.InsertRating(dto);
 
             return RedirectToAction(nameof(Index));
         }
@@ -65,13 +65,19 @@ namespace FE.Controllers
                 return NotFound();
             }
 
+            if (dto.UserId != getUserId())
+            {
+                return Unauthorized();
+            }
+
             var model = new RatingEditViewModel
             {
                 Id = dto.Id,
                 BookTitle = dto.BookTitle,
                 RatingNumber = dto.RatingNumber,
                 Comment = dto.Comment,
-                BookId = dto.BookId            };
+                BookId = dto.BookId            
+            };
 
             return View(model);
         }
@@ -80,8 +86,7 @@ namespace FE.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(RatingEditViewModel model)
         {
-            //load user from auth
-            var userId = 1;
+            var userId = getUserId();
 
             if (!ModelState.IsValid)
             {
@@ -98,9 +103,35 @@ namespace FE.Controllers
                 UserId = userId
             };
 
-            _ratingService.Update(dto);
+            _ratingFacade.UpdateRating(dto);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            var dto = _ratingService.Find(id);
+
+            if (dto == null)
+            {
+                return NotFound();
+            }
+
+            if (dto.UserId != getUserId())
+            {
+                return Unauthorized();
+            }
+
+            _ratingFacade.DeleteRating(dto);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        private int getUserId()
+        {
+            return int.Parse(User.Identity.Name);
         }
     }
 }

@@ -33,7 +33,6 @@ namespace BL.Services.Services
         }
         public IEnumerable<BookPrintDto> GetBookPrintsByBookID(int bookId)
         {
-
             return _bookPrintQueryObject.ExecuteQuery(new BookPrintFilterDto
             {
                 BookId = bookId,

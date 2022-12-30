@@ -17,7 +17,7 @@ namespace MVCPresentationLayer.Controllers;
 [Route("[controller]")]
 public class UserController : Controller
 {
-    readonly IUserFacade _userFacade;
+    private readonly IUserFacade _userFacade;
 
     public UserController(IUserFacade userFacade)
     {
@@ -175,6 +175,18 @@ public class UserController : Controller
             Address= userDetailDto.Address,
             PhoneNumber= userDetailDto.PhoneNumber,
         });
+    }
+
+    public IActionResult Delete() 
+    {
+        if (!User.Identity.IsAuthenticated)
+        {
+            return RedirectToAction("Login", "User");
+        }
+
+        _userFacade.DeleteUser(int.Parse(User.Identity.Name));
+        Logout();
+        return RedirectToAction("Login", "User");
     }
 
     [HttpGet("Logout")]

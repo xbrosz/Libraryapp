@@ -7,20 +7,18 @@ namespace BL.Facades.Facades
 {
     public class ReservationFacade : IReservationFacade
     {
-        private IReservationService reservationService;
-        private IBookPrintService bookPrintService;
-        private IBranchService branchService;
+        private IReservationService _reservationService;
+        private IBookPrintService _bookPrintService;
 
         public ReservationFacade(IReservationService reservationService, IBookPrintService bpService, IBranchService branchService)
         {
-            this.reservationService = reservationService;
-            bookPrintService = bpService;
-            this.branchService = branchService;
+            _reservationService = reservationService;
+            _bookPrintService = bpService;
         }
 
         public void ReserveBook(ReservationCreateFormDto reservationDto)
         {
-            var reservedBPs = reservationService.GetReservationsInDateRangeByBookAndBranch
+            var reservedBPs = _reservationService.GetReservationsInDateRangeByBookAndBranch
                 (
                 reservationDto.BookId,
                 reservationDto.BranchId,
@@ -28,13 +26,13 @@ namespace BL.Facades.Facades
                 reservationDto.EndDate
                 );
 
-            var bookPrints = bookPrintService.GetBookPrintsByBranchIDAndBookID(reservationDto.BranchId, reservationDto.BookId);
+            var bookPrints = _bookPrintService.GetBookPrintsByBranchIDAndBookID(reservationDto.BranchId, reservationDto.BookId);
 
             var availableBPs = bookPrints.Where(bp => !reservedBPs.Any(r => r.BookPrintId == bp.Id));
 
             if (availableBPs.Count() == 0)
             {
-                throw new Exception("No book print is available in given date range.");
+                throw new InvalidOperationException("No book print is available in given date range.");
             }
 
             var availableBP = availableBPs.First();
@@ -47,14 +45,22 @@ namespace BL.Facades.Facades
                 EndDate = reservationDto.EndDate
             };
 
-            reservationService.Insert(createDto);
+            _reservationService.Insert(createDto);
         }
 
         public void UpdateReservationDate(ReservationUpdateFormDto reservationDto)
         {
-            var bookId = bookPrintService.Find(reservationDto.BookPrintId).BookId;
+            var reservation = _reservationService.Find(reservationDto.Id);
 
-            var reservedBPs = reservationService.GetReservationsInDateRangeByBookAndBranch
+            if (reservation.EndDate.Date < DateTime.Today)
+            {
+                throw new InvalidOperationException("Ended reservation cannot be edited.");
+            }
+
+
+            var bookId = _bookPrintService.Find(reservationDto.BookPrintId).BookId;
+
+            var reservedBPs = _reservationService.GetReservationsInDateRangeByBookAndBranch
                 (
                 bookId,
                 reservationDto.BranchId,
@@ -62,13 +68,13 @@ namespace BL.Facades.Facades
                 reservationDto.EndDate
                 ).Where(r => r.Id != reservationDto.Id);
 
-            var bookPrints = bookPrintService.GetBookPrintsByBranchIDAndBookID(reservationDto.BranchId, bookId);
+            var bookPrints = _bookPrintService.GetBookPrintsByBranchIDAndBookID(reservationDto.BranchId, bookId);
 
             var availableBPs = bookPrints.Where(bp => !reservedBPs.Any(r => r.BookPrintId == bp.Id));
 
             if (availableBPs.Count() == 0)
             {
-                throw new Exception("No book print is available in given date range.");
+                throw new InvalidOperationException("No book print is available in given date range.");
             }
 
             var availableBP = availableBPs.First();
@@ -82,7 +88,30 @@ namespace BL.Facades.Facades
                 EndDate = reservationDto.EndDate
             };
 
-            reservationService.Update(updateDto);
+            _reservationService.Update(updateDto);
+        }
+
+        public void DeleteReservationsForUserId(int userId)
+        {
+            var userReservations = _reservationService.GetReservationsByUserId(userId);
+            foreach(var reservation in userReservations)
+            {
+                _reservationService.Delete(reservation.Id);
+            }
+        }
+
+        public void DeleteReservationsForBookId(int bookId)
+        {
+            var bookReservations = _reservationService.GetReservationsByBookId(bookId);
+            foreach (var reservation in bookReservations)
+            {
+                _reservationService.Delete(reservation.Id);
+            }
+        }
+
+        public IEnumerable<ReservationsDto> GetActiveReservationsByBookId(int bookId)
+        {
+            return _reservationService.GetReservationsByBookId(bookId).Where(x => x.EndDate >= DateTime.Now);
         }
         public IEnumerable<BranchDto> GetAllBranches()
         {

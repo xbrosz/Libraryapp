@@ -1,0 +1,50 @@
+﻿@model AuthorSearchViewModel
+
+<h4>Authors</h4>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <div>
+    <form asp-controller="Author" asp-action="Index">
+    
+        <p>
+            <input type="text" name="SearchString"  />
+            <input type="submit" value="Search" />
+        </p>
+    
+    </form>
+        </div>
+        <div>
+             <a class="nav-link text-blue" href="@Url.Action("Index", "Home")">Back to home page</a>
+        </div>
+    </div>
+</div>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Birth date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var author in Model.Authors)
+        {
+                <tr>
+                    <td>@author.Name</td>
+                    <td>@author.BirthDate.ToString("dd-MM-yyyy")</td>
+
+                <td>
+                    @using (Html.BeginForm("Index", "Home", new { authorId = author.Id }, FormMethod.Post, true, new { @class = "form-inline" }))
+                    {
+                        <input class="btn btn-secondary my-1" type="submit" value="Show books" />
+                    }
+                </td>
+                </tr>
+        }
+    </tbody>
+</table>
+

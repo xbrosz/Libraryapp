@@ -7,12 +7,13 @@ namespace DAL.Entities
         [MaxLength(150)]
         public string Title { get; set; }
         public DateTime Release { get; set; }
-        public virtual int AuthorId { get; set; }
+        public int AuthorId { get; set; }
+
+        public double? RatingNumber { get; set; }
         public virtual Author Author { get; set; }
 
-        public virtual List<BookPrint> BookPrints { get; set; }
-        public virtual List<Rating> Ratings { get; set; }
-        public virtual List<Genre> Genres { get; set; }
-
+        //public virtual List<BookPrint> BookPrints { get; set; }
+        //public virtual List<Rating> Ratings { get; set; }
+        //public virtual List<Genre> Genres { get; set; }
     }
 }

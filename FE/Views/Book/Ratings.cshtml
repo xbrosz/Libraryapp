@@ -1,0 +1,21 @@
+﻿@model BookRatingsViewModel
+
+
+<h4>Ratings for @Model.title</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Rating number</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rating in Model.ratings)
+        {
+            <tr>
+                <td>@rating.RatingNumber</td>
+                <td>@rating.Comment</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -17,6 +17,7 @@ namespace Infrastructure.EFCore
         private IRepository<Reservation> _reservationRepository;
         private IRepository<Role> _roleRepository;
         private IRepository<User> _userRepository;
+        IRepository<BookGenre> _bookGenreRepository;
 
         public UnitOfWork(LibraryappDbContext dbContext)
         {
@@ -32,6 +33,18 @@ namespace Infrastructure.EFCore
                     _authorRepository = new Repository<Author>(_context);
                 }
                 return _authorRepository;
+            }
+        }
+
+        public IRepository<BookGenre> BookGenreRepository
+        {
+            get
+            {
+                if (_bookGenreRepository == null)
+                {
+                    _bookGenreRepository = new Repository<BookGenre>(_context);
+                }
+                return _bookGenreRepository;
             }
         }
 

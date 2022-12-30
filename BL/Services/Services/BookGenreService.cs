@@ -31,5 +31,13 @@ namespace BL.Services.Services
                 Delete(bookGenre.Id);
             }
         }
+
+        public void DeleteBookGenreForGenreId(int genreId)
+        {
+            foreach (var bookGenre in _bookGenreQueryObject.ExecuteQuery(new BookGenreFilterDto() { GenreId = genreId }).Items)
+            {
+                Delete(bookGenre.Id);
+            }
+        }
     }
 }

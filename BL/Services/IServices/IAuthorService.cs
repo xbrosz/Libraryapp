@@ -8,7 +8,7 @@ namespace BL.Services.IServices
 
         void Delete(int id);
 
-        void Update(AuthorInsertDto dtoToUpdate);
+        void Update(AuthorUpdateDto dtoToUpdate);
 
         void Insert(AuthorInsertDto dtoToInsert);
 
@@ -16,5 +16,7 @@ namespace BL.Services.IServices
 
         IEnumerable<AuthorGridDto> GetSortedAuthors();
         IEnumerable<AuthorGridDto> GetAll();
+
+        AuthorDetailDto? GetAuthorDetailById(int id);
     }
 }

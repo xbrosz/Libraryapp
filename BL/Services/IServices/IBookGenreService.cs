@@ -13,5 +13,7 @@ namespace BL.Services.IServices
         void DeleteBookGenreForBookId(int bookId);
 
         void Insert(BookGenreDto dtoToInsert);
+
+        void DeleteBookGenreForGenreId(int genreId);
     }
 }

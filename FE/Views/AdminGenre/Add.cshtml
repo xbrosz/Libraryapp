@@ -1,0 +1,21 @@
+﻿@model FE.Models.Admin.AdminGenreAddViewModel
+
+<h1>Add new genre</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+                <hr />
+            @Html.ValidationSummary(null, new { @class = "text-danger" })
+                <div class="form-group">
+                @Html.LabelFor(x => x.Name)
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Name, null, new { @class = "text-danger" })
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add</button>
+        }
+    </div>
+</div>

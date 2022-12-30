@@ -23,6 +23,5 @@
         @Html.TextBoxFor(x => x.Comment, new { @class = "form-control" })
         @Html.ValidationMessageFor(x => x.Comment, null, new { @class = "text-danger" })
     </div>
-    @Html.HiddenFor(x => x.Id)
     <button type="submit" class="btn btn-primary">Submit</button>
 }

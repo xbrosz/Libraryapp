@@ -1,11 +1,14 @@
 using AutoMapper;
 using BL.DTOs;
 using BL.DTOs.Author;
+using BL.DTOs.BookGenre;
 using BL.DTOs.Branch;
+using BL.DTOs.Genre;
 using BL.DTOs.Reservation;
 using BL.DTOs.User;
 using DAL.Entities;
 using Infrastructure.Query;
+using Microsoft.AspNetCore.Routing.Constraints;
 
 namespace BL
 {
@@ -28,22 +31,27 @@ namespace BL
             config.CreateMap<Rating, RatingDto>()
                 .ForMember(dest => dest.BookTitle, act => act.MapFrom(src => src.Book.Title));
             config.CreateMap<RatingDto, Rating>();
-            config.CreateMap<Author, AuthorDto>().ReverseMap();
+            config.CreateMap<Author, AuthorGridDto>().ForMember(dest => dest.Name, act => act.MapFrom(src => src.FirstName + " " + src.MiddleName + " " + src.LastName));
 
             config.CreateMap<Book, BookDetailDto>().ForMember(dest => dest.AuthorName, act => act.MapFrom(src => src.Author.FirstName + " "
                                                                                                                + src.Author.MiddleName + " "
-                                                                                                               + src.Author.LastName))
-                                                   .ForMember(dest => dest.BookGenres, act => act.MapFrom(src => string.Join("/", src.Genres.Select(g => g.Name))));
+                                                                                                               + src.Author.LastName));
+
             config.CreateMap<Book, BookGridDto>().ForMember(dest => dest.AuthorName, act => act.MapFrom(src => src.Author.FirstName + " "
                                                                                                              + src.Author.MiddleName + " "
-                                                                                                             + src.Author.LastName))
-                                                 .ForMember(dest => dest.BookGenres, act => act.MapFrom(src => string.Join("/", src.Genres.Select(g => g.Name))))
-                                                 .ForMember(dest => dest.Rating, act => act.MapFrom(src => src.Ratings.Select(r => r.RatingNumber).Average()));
-            
-            config.CreateMap<BookPrint, BookPrintDto>().ReverseMap();
-            
+                                                                                                             + src.Author.LastName));
+                                                //.ForMember(dest => dest.RatingNumber, act => act.MapFrom(src => Math.Truncate(src.RatingNumber * 10) / 10));
 
-            config.CreateMap<QueryResultDto<AuthorDto>, EFQueryResult<Author>>().ReverseMap();
+
+            config.CreateMap<BookPrint, BookPrintDto>().ReverseMap();
+            config.CreateMap<Book, BookUpdateDto>().ReverseMap();
+            config.CreateMap<BookGenre, BookGenreDto>().ReverseMap();
+            config.CreateMap<Genre, GenreDto>().ReverseMap();
+            config.CreateMap<Author, AuthorDetailDto>().ReverseMap();
+            config.CreateMap<Author, AuthorUpdateDto>().ReverseMap();
+            config.CreateMap<Author, AuthorInsertDto>().ReverseMap();
+
+            config.CreateMap<QueryResultDto<AuthorGridDto>, EFQueryResult<Author>>().ReverseMap();
             config.CreateMap<QueryResultDto<BranchDto>, EFQueryResult<Branch>>().ReverseMap();
             config.CreateMap<QueryResultDto<RatingDto>, EFQueryResult<Rating>>().ReverseMap();
             config.CreateMap<QueryResultDto<BookGridDto>, EFQueryResult<Book>>().ReverseMap();
@@ -51,6 +59,8 @@ namespace BL
             config.CreateMap<QueryResultDto<RatingDto>, EFQueryResult<Rating>>().ReverseMap();
             config.CreateMap<QueryResultDto<ReservationsDto>, EFQueryResult<Reservation>>().ReverseMap();
             config.CreateMap<QueryResultDto<UserDetailDto>, EFQueryResult<User>>().ReverseMap();
+            config.CreateMap<QueryResultDto<BookGenreDto>, EFQueryResult<BookGenre>>().ReverseMap();
+            config.CreateMap<QueryResultDto<GenreDto>, EFQueryResult<Genre>>().ReverseMap();
 
             config.CreateMap<CreateReservationDto, Reservation>().ReverseMap();
         }

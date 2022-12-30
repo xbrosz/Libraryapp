@@ -60,8 +60,8 @@ namespace BL.Tests.QueryObjects
 
             var filterDto = new UserFilterDto()
             {
-                Name = "karol",
-                ExactName = true,
+                UserName = "karol",
+                ExactUserName = true,
                 PageSize = 5,
                 RequestedPageNumber = 1
             };

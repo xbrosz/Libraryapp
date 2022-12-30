@@ -25,15 +25,7 @@ namespace FE.Controllers
             int userId = getUserId();
             IEnumerable<ReservationsDto> reservations = new List<ReservationsDto>();
 
-            if (isAdmin())
-            {
-                 reservations = _reservationService.GetAll();
-            }
-            else
-            {
-                reservations = _reservationService.GetReservationsByUserId(userId);
-            }
-
+            reservations = _reservationService.GetReservationsByUserId(userId);
 
              var model = new ReservationIndexViewModel()
             {
@@ -42,6 +34,7 @@ namespace FE.Controllers
 
             return View(model);
         }
+
         public IActionResult Edit(int id)
         {
             var dto = _reservationService.Find(id);
@@ -106,6 +99,7 @@ namespace FE.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {

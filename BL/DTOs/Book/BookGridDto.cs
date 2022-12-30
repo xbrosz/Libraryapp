@@ -6,7 +6,7 @@
         public string Title { get; set; }
         public DateTime Release { get; set; }
         public string AuthorName { get; set; }
-        public double Rating { get; set; }
+        public double? RatingNumber { get; set; }
         public string BookGenres { get; set; }
     }
 }

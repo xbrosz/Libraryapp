@@ -1,0 +1,28 @@
+﻿@model FE.Models.Admin.AdminGenreIndexViewModel
+
+
+<h4>Genres</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <a class="btn btn-secondary my-1" href="@Url.Action("Add", "AdminGenre")">Add new</a>
+        @foreach (var genre in Model.Genres)
+        {
+            <tr>
+                <td>@genre.Name</td>
+
+                <td>
+                    <a class="btn btn-secondary my-1" href="@Url.Action("Edit", "AdminGenre", new { genreId = genre.Id })">Edit</a>
+
+                    <a class="btn btn-secondary my-1" href="@Url.Action("Delete", "AdminGenre", new { genreId = genre.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

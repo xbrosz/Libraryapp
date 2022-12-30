@@ -15,13 +15,33 @@
                 </tr>
                 <tr>
                     <td>Release date:</td>
-                    <td>@Model.ReleaseDate</td>
+                    <td>@Model.ReleaseDate.ToString("dd-mm-yyyy")</td>
                 </tr>
                 <tr>
                     <td>Genres:</td>
                     <td>@Model.Genres</td>
                 </tr>
-                
+                <tr>
+                    <td>Rating:</td>
+                    @if (@Model.RatingNumber.HasValue)
+                    {
+                        <td>@Model.RatingNumber</td>
+                    } else
+                    {
+                        <td>Not reviewed yet</td>
+                    }
+
+                </tr>
+                <tr>
+                    <td>
+                        <a class="btn btn-secondary my-1" href="@Url.Action("Ratings", "Book", new { Model.Id })">View ratings</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a class="btn btn-secondary my-1" href="@Url.Action("Detail", "AdminBook", new { Model.Id })">Reserve book</a>
+                    </td>
+                </tr>
         </tbody>
         </table>
     </div>

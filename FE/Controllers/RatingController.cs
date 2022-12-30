@@ -1,6 +1,7 @@
 ﻿using BL.DTOs;
 using BL.Facades.IFacades;
 using BL.Services.IServices;
+using BL.Services.Services;
 using DAL.Entities;
 using FE.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -23,17 +24,12 @@ namespace FE.Controllers
         public IActionResult Index()
         {
             int userId = getUserId();
-            RatingIndexViewModel model = new();
 
-            if (isAdmin())
+            var model = new RatingIndexViewModel() 
             {
-                model.ratings = _ratingService.GetAll();
-            }
-            else 
-            {
-                model.ratings = _ratingService.GetRatingsByUser(userId);
-                model.awaitingRatings = _ratingFacade.GetAwaitingRatingsByUser(userId);
-            }
+                ratings = _ratingService.GetRatingsByUser(userId),
+                awaitingRatings = _ratingFacade.GetAwaitingRatingsByUser(userId)
+            };
 
             return View(model);
         }
@@ -55,7 +51,7 @@ namespace FE.Controllers
             }
 
             var dto = model.ToDto();
-            _ratingService.Insert(dto);
+            _ratingFacade.InsertRating(dto);
 
             return RedirectToAction(nameof(Index));
         }
@@ -69,7 +65,7 @@ namespace FE.Controllers
                 return NotFound();
             }
 
-            if (!isAdmin() && dto.UserId != getUserId())
+            if (dto.UserId != getUserId())
             {
                 return Unauthorized();
             }
@@ -107,13 +103,30 @@ namespace FE.Controllers
                 UserId = userId
             };
 
-            _ratingService.Update(dto);
+            _ratingFacade.UpdateRating(dto);
 
             return RedirectToAction(nameof(Index));
         }
-        private bool isAdmin()
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
         {
-            return HttpContext.User.IsInRole("Admin");
+            var dto = _ratingService.Find(id);
+
+            if (dto == null)
+            {
+                return NotFound();
+            }
+
+            if (dto.UserId != getUserId())
+            {
+                return Unauthorized();
+            }
+
+            _ratingFacade.DeleteRating(dto);
+
+            return RedirectToAction(nameof(Index));
         }
 
         private int getUserId()

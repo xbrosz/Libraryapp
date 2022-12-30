@@ -177,6 +177,18 @@ public class UserController : Controller
         });
     }
 
+    public IActionResult Delete() 
+    {
+        if (!User.Identity.IsAuthenticated)
+        {
+            return RedirectToAction("Login", "User");
+        }
+
+        _userFacade.DeleteUser(int.Parse(User.Identity.Name));
+        Logout();
+        return RedirectToAction("Login", "User");
+    }
+
     [HttpGet("Logout")]
     public IActionResult Logout()
     {

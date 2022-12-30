@@ -22,15 +22,10 @@ namespace BL.QueryObjects.QueryObjects
 
         public QueryResultDto<UserDetailDto> ExecuteQuery(UserFilterDto filter)
         {
-            if (!string.IsNullOrWhiteSpace(filter.Name))
-            {
-                _myQuery = filter.ExactName ? _myQuery.Where<string>(a => a == filter.Name, "UserName")
-                : _myQuery.Where<string>(a => a.Contains(filter.Name.ToLower()), "UserName");
-            }
-
             if (!string.IsNullOrWhiteSpace(filter.UserName))
             {
-                _myQuery.Where<string>(a => a == filter.UserName, nameof(User.UserName));
+                _myQuery = filter.ExactUserName ? _myQuery.Where<string>(a => a == filter.UserName, nameof(User.UserName))
+                : _myQuery.Where<string>(a => a.ToLower().Contains(filter.UserName.ToLower()), nameof(User.UserName));
             }
 
             if (filter.RequestedPageNumber.HasValue)

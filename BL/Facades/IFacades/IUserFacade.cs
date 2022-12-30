@@ -21,5 +21,13 @@ namespace BL.Facades.IFacades
         void UpdateUserData(UserUpdateDto userDto);
 
         public bool UpdateUserPassword(UserChangePasswordDto userDto);
+
+        IEnumerable<UserDetailDto> GetUsersBySubStringUserName(string subString);
+
+        IEnumerable<UserDetailDto> GetAllUsers();
+
+        void SwitchRoleForUserId(int userId);
+
+        void DeleteUser(int id);
     }
 }

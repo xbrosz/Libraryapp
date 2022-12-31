@@ -2,9 +2,8 @@
 
 namespace FE.Models
 {
-    public class BookRatingsViewModel
+    public class RatingListIndexViewModel
     {
-        public string Title { get; set; }
         public IEnumerable<RatingDto> Ratings { get; set; }
     }
 }

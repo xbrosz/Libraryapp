@@ -44,8 +44,7 @@ namespace BL.Tests.Services
                     LastName = "Tolkien",
                     BirthDate = new DateTime(1900, 6, 6)
                 },
-                Genres = new List<Genre> { new Genre { Id = 1, Name = "Anime" }, new Genre { Id = 2, Name = "Horror" } },
-                Ratings = new List<Rating> { },
+                
                 Release = new DateTime(2000, 6, 6),
                 Title = "C++ for begginers"
             };

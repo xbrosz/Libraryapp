@@ -1,4 +1,5 @@
-﻿using BL.DTOs.Reservation;
+﻿using BL.DTOs.Branch;
+using BL.DTOs.Reservation;
 using BL.Facades.IFacades;
 using BL.Services.IServices;
 
@@ -6,13 +7,17 @@ namespace BL.Facades.Facades
 {
     public class ReservationFacade : IReservationFacade
     {
-        private readonly IReservationService _reservationService;
-        private readonly IBookPrintService _bookPrintService;
 
-        public ReservationFacade(IReservationService reservationService, IBookPrintService bpService)
+        private IReservationService _reservationService;
+        private IBookPrintService _bookPrintService;
+        private IBranchService _branchService;
+
+
+        public ReservationFacade(IReservationService reservationService, IBookPrintService bpService, IBranchService branchService)
         {
             _reservationService = reservationService;
             _bookPrintService = bpService;
+            _branchService = branchService;
         }
 
         public void ReserveBook(ReservationCreateFormDto reservationDto)
@@ -111,6 +116,10 @@ namespace BL.Facades.Facades
         public IEnumerable<ReservationsDto> GetActiveReservationsByBookId(int bookId)
         {
             return _reservationService.GetReservationsByBookId(bookId).Where(x => x.EndDate >= DateTime.Now);
+        }
+        public IEnumerable<BranchDto> GetAllBranches()
+        {
+            return _branchService.GetAllBranches();
         }
     }
 }

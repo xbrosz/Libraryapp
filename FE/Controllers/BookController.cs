@@ -42,8 +42,8 @@ namespace FE.Controllers
 
             var model = new BookRatingsViewModel()
             {
-                title = bookTitle,
-                ratings = ratings
+                Title = bookTitle,
+                Ratings = ratings
             };
 
             return View(model);

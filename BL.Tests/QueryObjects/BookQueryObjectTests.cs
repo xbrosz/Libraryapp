@@ -23,56 +23,56 @@ namespace BL.Tests.QueryObjects
             _queryMock = new Mock<IAbstractQuery<Book>>();
         }
 
-        [Fact]
-        public void FilterBook()
-        {
+        //[Fact]
+        //public void FilterBook()
+        //{
 
-            var book = new Book
-            {
-                Author = new Author
-                {
-                    BirthDate = DateTime.Now,
-                    FirstName = "A",
-                    LastName = "B",
-                    Id = 1
-                },
-                Genres = new List<Genre>(),
-                Id = 1,
-                Ratings = new List<Rating>(),
-                Release = new DateTime(1900,1,1),
-                Title = "Book"
-            };
+        //    var book = new Book
+        //    {
+        //        Author = new Author
+        //        {
+        //            BirthDate = DateTime.Now,
+        //            FirstName = "A",
+        //            LastName = "B",
+        //            Id = 1
+        //        },
+        //        Genres = new List<Genre>(),
+        //        Id = 1,
+        //        Ratings = new List<Rating>(),
+        //        Release = new DateTime(1900,1,1),
+        //        Title = "Book"
+        //    };
             
-            var queryResultDto = new QueryResultDto<BookGridDto>
-            {
-                Items = new List<BookGridDto>(),
-                TotalItemsCount = 0
-            };
-            var efQueryResult = new EFQueryResult<Book>() { Items = new List<Book>(), TotalItemsCount = 0 };
+        //    var queryResultDto = new QueryResultDto<BookGridDto>
+        //    {
+        //        Items = new List<BookGridDto>(),
+        //        TotalItemsCount = 0
+        //    };
+        //    var efQueryResult = new EFQueryResult<Book>() { Items = new List<Book>(), TotalItemsCount = 0 };
 
-            _queryMock
-                .Setup(x => x.Where(It.IsAny<Expression<Func<string, bool>>>(), It.IsAny<string>()))
-                .Returns(_queryMock.Object);
+        //    _queryMock
+        //        .Setup(x => x.Where(It.IsAny<Expression<Func<string, bool>>>(), It.IsAny<string>()))
+        //        .Returns(_queryMock.Object);
 
-            _queryMock
-                .Setup(x => x.Page(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(_queryMock.Object);
+        //    _queryMock
+        //        .Setup(x => x.Page(It.IsAny<int>(), It.IsAny<int>()))
+        //        .Returns(_queryMock.Object);
 
-            _queryMock
-                .Setup(x => x.Execute())
-                .Returns(efQueryResult);
+        //    _queryMock
+        //        .Setup(x => x.Execute())
+        //        .Returns(efQueryResult);
 
-            _mapperMock
-                .Setup(x => x.Map<QueryResultDto<BookGridDto>>(It.IsAny<EFQueryResult<Book>>()))
-                .Returns(queryResultDto);
+        //    _mapperMock
+        //        .Setup(x => x.Map<QueryResultDto<BookGridDto>>(It.IsAny<EFQueryResult<Book>>()))
+        //        .Returns(queryResultDto);
 
-            var queryObject = new BookQueryObject(_mapperMock.Object, _queryMock.Object);
-            var filter = new BookFilterDto
-            {
-                AuthorID = 2
-            };
-            var result = queryObject.ExecuteQuery(filter);
-            Assert.Empty(result.Items);
-        }
+        //    var queryObject = new BookQueryObject(_mapperMock.Object, _queryMock.Object);
+        //    var filter = new BookFilterDto
+        //    {
+        //        AuthorID = 2
+        //    };
+        //    var result = queryObject.ExecuteQuery(filter);
+        //    Assert.Empty(result.Items);
+        //}
     }
 }

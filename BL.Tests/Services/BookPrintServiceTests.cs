@@ -39,8 +39,6 @@ namespace BL.Tests.QueryObjects
                         LastName = "Tolkien",
                         BirthDate = new DateTime(1900, 6, 6)
                     },
-                    Genres = new List<Genre> { new Genre { Id = 1, Name = "Anime" } },
-                    Ratings = new List<Rating> { },
                     Release = DateTime.Now,
                     Title = "C++ for begginers"
 
@@ -106,8 +104,6 @@ namespace BL.Tests.QueryObjects
                         LastName = "Tolkien",
                         BirthDate = new DateTime(1900, 6, 6)
                     },
-                    Genres = new List<Genre> { new Genre { Id = 1, Name = "Anime" } },
-                    Ratings = new List<Rating> { },
                     Release = DateTime.Now,
                     Title = "C++ for begginers"
 
@@ -173,8 +169,6 @@ namespace BL.Tests.QueryObjects
                         LastName = "Tolkien",
                         BirthDate = new DateTime(1900, 6, 6)
                     },
-                    Genres = new List<Genre> { new Genre { Id = 1, Name = "Anime" } },
-                    Ratings = new List<Rating> { },
                     Release = DateTime.Now,
                     Title = "C++ for begginers"
 

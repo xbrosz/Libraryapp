@@ -1,0 +1,45 @@
+﻿@model FE.Models.Admin.AdminBranchIndexViewModel
+
+<h4>Admin Branches</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        <a class="btn btn-secondary my-1" href="@Url.Action("Add", "AdminBranch")">Add</a>
+        @foreach (var branch in Model.Branches)
+        {
+            <tr>
+                <td>@branch.Item1.Name</td>
+                <td>@branch.Item1.Address</td>
+
+                <td>
+                    <a class="btn btn-secondary my-1" href="@Url.Action("Edit", "AdminBranch", new { branchId = branch.Item1.Id })">Edit</a>
+
+                    @if (branch.Item2)
+                    {
+                        <a class="btn btn-secondary my-1" href="@Url.Action("Delete", "AdminBranch", new { branchId = branch.Item1.Id })">Delete</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-secondary my-1" onclick="showAlert()">Delete</a>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        function showAlert() {
+            var myText = "This branch cannot be deleted because books of this branch still exist in database!";
+            alert(myText);
+        }
+    </script>
+}

@@ -6,18 +6,23 @@ using FE.Models;
 using Microsoft.AspNetCore.Mvc;
 using BL.DTOs;
 using BL.Services.Services;
+using Microsoft.AspNetCore.Authorization;
+using BL.Services.IServices;
 
 namespace FE.Controllers.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class AdminBookController : Controller
     {
         private readonly IBookFacade _bookFacade;
         private readonly IReservationFacade _reservationFacade;
+        private readonly IRatingService _ratingService;
 
-        public AdminBookController(IBookFacade bookFacade, IReservationFacade reservationFacade)
+        public AdminBookController(IBookFacade bookFacade, IReservationFacade reservationFacade, IRatingService ratingService)
         {
             _bookFacade = bookFacade;
             _reservationFacade = reservationFacade;
+            _ratingService = ratingService;
         }
 
         public IActionResult Index(string? searchString = null)
@@ -66,12 +71,16 @@ namespace FE.Controllers.Admin
                 throw new Exception("Book cannot be deleted due still active reservations");
             }
 
+            foreach(var rating in _ratingService.GetRatingsByBook(bookId))
+            {
+                _ratingService.Delete(rating.Id);
+            }
+
             _bookFacade.DeleteBook(bookId);
             _reservationFacade.DeleteReservationsForBookId(bookId);
             
             return RedirectToAction("Index", "AdminBook");
         }
-
 
         public IActionResult EditTitle(int bookId)
         {
@@ -101,19 +110,15 @@ namespace FE.Controllers.Admin
         {
             _bookFacade.DeleteBookGenreForBookId(model.BookId);
 
-            foreach(var genre in model.CheckedGenres)
+            if (model.CheckedGenres != null)
             {
-                _bookFacade.InsertBookGenre(genre, model.BookId);
+                foreach (var genre in model.CheckedGenres)
+                {
+                    _bookFacade.InsertBookGenre(genre, model.BookId);
+                }
             }
 
             return RedirectToAction("Detail", "AdminBook", new { bookId = model.BookId });
-        }
-
-        public IActionResult ChangeGenres(int bookId, int authorId)
-        {
-            _bookFacade.UpdateBook(new BookUpdateDto() { Id = bookId, AuthorId = authorId });
-
-            return RedirectToAction("Detail", "AdminBook", new { bookId = bookId });
         }
 
         public IActionResult ChangeAuthorList(int bookId)
@@ -127,6 +132,7 @@ namespace FE.Controllers.Admin
             return View(model);
         }
 
+        [ValidateAntiForgeryToken]
         public IActionResult ChangeAuthor(int bookId, int authorId)
         {
             _bookFacade.UpdateBook(new BookUpdateDto() { Id = bookId, AuthorId = authorId});

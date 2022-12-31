@@ -6,10 +6,10 @@ namespace BL.Services.IServices
 {
     public interface IRatingService : IGenericService<Rating, RatingDto, RatingDto, RatingDto>
     {
-        public double GetBookAverageRating(int bookId);
+        double? GetBookAverageRating(int bookId);
 
-        public IEnumerable<RatingDto> GetRatingsByBook(int bookId);
+        IEnumerable<RatingDto> GetRatingsByBook(int bookId);
 
-        public IEnumerable<RatingDto> GetRatingsByUser(int userId);
+        IEnumerable<RatingDto> GetRatingsByUser(int userId);
     }
 }

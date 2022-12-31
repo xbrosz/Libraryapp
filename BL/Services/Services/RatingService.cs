@@ -19,12 +19,19 @@ namespace BL.Services.Services
             _ratingQueryObject = ratingQueryObject;
         }
 
-        public double GetBookAverageRating(int bookId)
+        public double? GetBookAverageRating(int bookId)
         {
-            return _ratingQueryObject.ExecuteQuery(new RatingFilterDto
+            var ratings = _ratingQueryObject.ExecuteQuery(new RatingFilterDto
             {
                 BookId = bookId,
-            }).Items.Select(r => r.RatingNumber).Average();
+            });
+
+            if (ratings.TotalItemsCount > 0)
+            {
+                return ratings.Items.Select(r => r.RatingNumber).Average();
+            }
+
+            return null;
         }
 
         public IEnumerable<RatingDto> GetRatingsByBook(int bookId)

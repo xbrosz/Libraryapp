@@ -132,6 +132,7 @@ public class UserController : Controller
     }
 
     [HttpPost("ChangePassword")]
+    [ValidateAntiForgeryToken]
     public IActionResult ChangePassword(UserChangePasswordViewModel model)
     {
         if (!ModelState.IsValid)

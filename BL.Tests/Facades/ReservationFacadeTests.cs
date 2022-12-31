@@ -10,10 +10,12 @@ namespace BL.Tests.Facades
     {
         Mock<IReservationService> _reservationServiceMock;
         Mock<IBookPrintService> _bpServiceMock;
+        Mock<IBranchService> _branchServiceMock;
         public ReservationFacadeTests()
         {
             _reservationServiceMock = new Mock<IReservationService>();
             _bpServiceMock = new Mock<IBookPrintService>();
+            _branchServiceMock = new Mock<IBranchService>();
         }
 
         [Fact]
@@ -37,7 +39,7 @@ namespace BL.Tests.Facades
                 .Setup(x => x.GetBookPrintsByBranchIDAndBookID(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(bookPrints);
 
-            var reservationFacade = new ReservationFacade(_reservationServiceMock.Object, _bpServiceMock.Object);
+            var reservationFacade = new ReservationFacade(_reservationServiceMock.Object, _bpServiceMock.Object, _branchServiceMock.Object);
 
             var reservationForm = new ReservationCreateFormDto()
             {
@@ -83,7 +85,7 @@ namespace BL.Tests.Facades
                 .Setup(x => x.GetBookPrintsByBranchIDAndBookID(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(bookPrints);
 
-            var reservationFacade = new ReservationFacade(_reservationServiceMock.Object, _bpServiceMock.Object);
+            var reservationFacade = new ReservationFacade(_reservationServiceMock.Object, _bpServiceMock.Object, _branchServiceMock.Object);
 
             var reservationForm = new ReservationCreateFormDto()
             {
@@ -134,7 +136,7 @@ namespace BL.Tests.Facades
                 .Setup(x => x.Find(It.IsAny<int>()))
                 .Returns(bookPrint1);
 
-            var reservationFacade = new ReservationFacade(_reservationServiceMock.Object, _bpServiceMock.Object);
+            var reservationFacade = new ReservationFacade(_reservationServiceMock.Object, _bpServiceMock.Object, _branchServiceMock.Object);
 
             var updateForm = new ReservationUpdateFormDto()
             {
@@ -184,7 +186,7 @@ namespace BL.Tests.Facades
                 .Setup(x => x.Find(It.IsAny<int>()))
                 .Returns(bookPrint1);
 
-            var reservationFacade = new ReservationFacade(_reservationServiceMock.Object, _bpServiceMock.Object);
+            var reservationFacade = new ReservationFacade(_reservationServiceMock.Object, _bpServiceMock.Object, _branchServiceMock.Object);
 
             var updateForm = new ReservationUpdateFormDto()
             {

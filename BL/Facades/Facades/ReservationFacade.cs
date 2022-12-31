@@ -9,11 +9,13 @@ namespace BL.Facades.Facades
     {
         private IReservationService _reservationService;
         private IBookPrintService _bookPrintService;
+        private IBranchService _branchService;
 
         public ReservationFacade(IReservationService reservationService, IBookPrintService bpService, IBranchService branchService)
         {
             _reservationService = reservationService;
             _bookPrintService = bpService;
+            _branchService = branchService;
         }
 
         public void ReserveBook(ReservationCreateFormDto reservationDto)
@@ -115,7 +117,7 @@ namespace BL.Facades.Facades
         }
         public IEnumerable<BranchDto> GetAllBranches()
         {
-            return branchService.GetAllBranches();
+            return _branchService.GetAllBranches();
         }
     }
 }

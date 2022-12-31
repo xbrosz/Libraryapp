@@ -36,9 +36,9 @@ namespace BL.Tests.QueryObjects
                     LastName = "B",
                     Id = 1
                 },
-                Genres = new List<Genre>(),
+                
                 Id = 1,
-                Ratings = new List<Rating>(),
+                
                 Release = new DateTime(1900,1,1),
                 Title = "Book"
             };

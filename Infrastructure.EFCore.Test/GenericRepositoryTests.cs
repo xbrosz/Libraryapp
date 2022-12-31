@@ -28,59 +28,6 @@ namespace Infrastructure.EFCore.Test
             dbContext.Book.Add(new Book
             {
                 Id = 1,
-                BookPrints = new List<BookPrint>
-                {
-                    new BookPrint
-                    {
-                        Id = 1,
-                        BookId = 1,
-                        BranchId = 1
-                    },
-                    new BookPrint
-                    {
-                        Id = 2,
-                        BookId = 1,
-                        BranchId = 1
-                    },
-                    new BookPrint
-                    {
-                        Id = 3,
-                        BookId = 1,
-                        BranchId = 1
-                    },
-
-                },
-                Ratings = new List<Rating>
-                {
-                   new Rating
-                   {
-                       Id = 1,
-                       BookId = 1,
-                       Comment = "Absolutely awesome",
-                       RatingNumber = 5
-                   },
-                   new Rating
-                   {
-                       Id = 2,
-                       BookId = 1,
-                       Comment = "Absolutely awesome",
-                       RatingNumber = 5
-                   },
-                   new Rating
-                   {
-                       Id = 3,
-                       BookId = 1,
-                       Comment = "Absolutely awesome",
-                       RatingNumber = 5
-                   },
-                   new Rating
-                   {
-                       Id = 4,
-                       BookId = 1,
-                       Comment = "Absolutely awesome",
-                       RatingNumber = 5
-                   },
-                },
                 Release = new DateTime(1956, 7, 29),
                 Title = "The Lord of the Rings: The Fellowship of the Ring",
                 AuthorId = 1
@@ -95,25 +42,6 @@ namespace Infrastructure.EFCore.Test
                     MiddleName = "Ronald Reuel",
                     LastName = "Tolkien",
                     BirthDate = new DateTime(1982, 1, 3)
-                },
-                BookPrints = new List<BookPrint>
-                {
-                    new BookPrint
-                    {
-                        Id = 4,
-                        BookId = 1,
-                        BranchId = 1
-                    },
-                },
-                Ratings = new List<Rating>
-                {
-                   new Rating
-                   {
-                       Id = 5,
-                       BookId = 2,
-                       Comment = "Absolutely awesome",
-                       RatingNumber = 5
-                   },
                 },
                 Release = new DateTime(1956, 11, 11),
                 Title = "The Lord of the Rings: The Two Towers",
@@ -158,10 +86,9 @@ namespace Infrastructure.EFCore.Test
                 efRepository.Insert(new Book
                 {
                     AuthorId = 1,
-                    Ratings = new List<Rating>(),
+                    
                     Title = "The Lord of the Rings: Return of the King",
                     Release = new DateTime(1955, 10, 20),
-                    BookPrints = new List<BookPrint>()
                 });
                 dbContext.SaveChanges();
                 Assert.True(dbContext.Book.Count() == 3);

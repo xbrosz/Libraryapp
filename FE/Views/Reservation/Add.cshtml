@@ -1,0 +1,32 @@
+﻿@model NewReservationModel
+<h4>New reservaion</h4>
+<div class="row">
+    <div class="col-md-4">
+        <table class="table">
+        <tbody>
+                <tr>
+                    <td>Book title:</td>
+                    <td>@Model.BookTitle</td>
+                </tr>
+                <tr>
+                    <td>Branch: </td>
+                    <td><select asp-for="Branches" id="inputState" class="form-control">
+                        <option selected>Choose branch</option>
+                            @for (int i = 0; i <= @Model.Branches.Count(); i++)
+                                {
+                                    <option value="@Model.Branches.ElementAt(i)">@Model.Branches.ElementAt(i)</option>
+                                }
+                        </select></td>
+                </tr>
+                <tr>
+                    <td>From: </td>
+                </tr>
+                <tr>
+                    <td>To: </td>
+                </tr>
+                
+        </tbody>
+        </table>
+    </div>
+</div>
+

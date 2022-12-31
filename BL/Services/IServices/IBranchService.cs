@@ -17,6 +17,7 @@ namespace BL.Services.IServices
 
         public IEnumerable<BranchDto> GetBranchesByAddress(string address);
 
-        IEnumerable<BranchDto> GetAll();
+        public IEnumerable<BranchDto> GetAllBranches();
+
     }
 }

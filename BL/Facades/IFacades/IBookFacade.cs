@@ -1,12 +1,6 @@
 ﻿using BL.DTOs;
 using BL.DTOs.Author;
 using BL.DTOs.Genre;
-using DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL.Facades.IFacades
 {

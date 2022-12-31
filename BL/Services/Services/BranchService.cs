@@ -26,5 +26,9 @@ namespace BL.Services.Services
         {
             return _branchQueryObject.ExecuteQuery(new BranchFilterDto() { Address = address, SortCriteria = nameof(Branch.Address), SortAscending = true }).Items;
         }
+        public IEnumerable<BranchDto> GetAllBranches()
+        {
+            return GetAll();
+        }
     }
 }

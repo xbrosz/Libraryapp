@@ -13,6 +13,7 @@ namespace FE.Controllers
             _reservationFacade = reservationFacade;
         }
 
+        [ValidateAntiForgeryToken]
         public IActionResult AddReservation(int userID, int bookID, int branchID, DateTime startDate, DateTime endDate)
         {
             _reservationFacade.ReserveBook(new ReservationCreateFormDto

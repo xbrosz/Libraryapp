@@ -6,8 +6,8 @@ namespace BL.Facades.Facades
 {
     public class ReservationFacade : IReservationFacade
     {
-        private IReservationService _reservationService;
-        private IBookPrintService _bookPrintService;
+        private readonly IReservationService _reservationService;
+        private readonly IBookPrintService _bookPrintService;
 
         public ReservationFacade(IReservationService reservationService, IBookPrintService bpService)
         {

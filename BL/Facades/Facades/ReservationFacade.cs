@@ -119,5 +119,14 @@ namespace BL.Facades.Facades
         {
             return _branchService.GetAllBranches();
         }
+        public int GetBranchIDByName(string name)
+        {
+            return _branchService.GetBranchesByName(name).First().Id;
+        }
+
+        public IEnumerable<ReservationsDto> GetReservationsByUserId(int userId)
+        {
+            return _reservationService.GetReservationsByUserId(userId);
+        }
     }
 }

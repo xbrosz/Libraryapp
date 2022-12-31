@@ -38,7 +38,7 @@ namespace BL.Services.Services
         public BookDetailDto GetBookDetailByID(int bookID)
         {
             var book = Find(bookID);
-            book.BookGenres = string.Join("/", _bookGenreQueryObject.ExecuteQuery(new BookGenreFilterDto() { BookId = bookID }).Items.Select(x => x.Genre.Name));
+            //book.BookGenres = string.Join("/", _bookGenreQueryObject.ExecuteQuery(new BookGenreFilterDto() { BookId = bookID }).Items.Select(x => x.Genre.Name));
             return book;
         }
 

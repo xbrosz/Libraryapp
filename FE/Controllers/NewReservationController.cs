@@ -1,5 +1,6 @@
 ﻿using BL.DTOs.Reservation;
 using BL.Facades.Facades;
+using BL.Facades.IFacades;
 using FE.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,29 +8,49 @@ namespace FE.Controllers
 {
     public class NewReservationController : Controller
     {
-        private readonly BookFacade _bookFacade;
-        private readonly ReservationFacade _reservationFacade;
+        private readonly IBookFacade _bookFacade;
+        private readonly IReservationFacade _reservationFacade;
 
-        public NewReservationController(BookFacade bookFacade, ReservationFacade reservationFacade)
+        public NewReservationController(IBookFacade bookFacade, IReservationFacade reservationFacade)
         {
             _bookFacade = bookFacade;
             _reservationFacade = reservationFacade;
         }
 
-        public IActionResult Index(int bookID)
+        public IActionResult Index(int Id)
         {
-            var dto = _bookFacade.GetBookDetailByID(bookID);
+            int userId = getUserId();
+            var dto = _bookFacade.GetBookDetailByID(Id);
             var model = new NewReservationModel
             {
-                BookID = bookID,
+                Id = Id,
                 BookTitle = dto.Title,
-                Branches = _reservationFacade.GetAllBranches().Select(r => r.Name).ToList()
+                Branches = _reservationFacade.GetAllBranches().Select(r => r.Name).ToList(),
+                UserId = userId,
             };
             return View(model);
         }
-        public IActionResult AddReservation()
+        public IActionResult Add(int Id, string branchName, DateTime start, DateTime end)
         {
-            return View();
+            var dto = new ReservationCreateFormDto
+            {
+                BookId = Id,
+                StartDate = start,
+                EndDate = end,
+                UserId = getUserId(),
+                BranchId = _reservationFacade.GetBranchIDByName(branchName)
+            };
+            _reservationFacade.ReserveBook(dto);
+            var model = new ReservationIndexViewModel
+            {
+                reservations = _reservationFacade.GetReservationsByUserId(getUserId())
+            };
+            return View(model);
+        }
+
+        private int getUserId()
+        {
+            return int.Parse(User.Identity.Name);
         }
     }
 }

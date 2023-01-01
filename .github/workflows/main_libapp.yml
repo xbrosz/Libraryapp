@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'libapp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B4CE7C582DC543339FDCEE96DB18F955 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C71E54F5B9F445B181168051893E17FB }}
           package: .

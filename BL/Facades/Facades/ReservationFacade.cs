@@ -130,5 +130,10 @@ namespace BL.Facades.Facades
         {
             return _reservationService.GetReservationsByUserId(userId);
         }
+
+        public BranchDto GetBranchById(int branchId)
+        {
+            return _branchService.Find(branchId);
+        }
     }
 }

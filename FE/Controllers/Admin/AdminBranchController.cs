@@ -23,7 +23,7 @@ namespace FE.Controllers.Admin
         {
             List<Tuple<BranchDto, bool>> branches = new();
 
-            foreach (var branch in _branchService.GetAll())
+            foreach (var branch in _branchService.GetAllBranches())
             {
                 if (_bookPrintService.GetBookPrintsByBranchID(branch.Id).Any())
                 {

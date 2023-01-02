@@ -13,5 +13,6 @@ namespace BL.Services.IServices
         IEnumerable<BookGridDto> GetAllBooks();
         void Delete(int id);
         void UpdateBook(BookUpdateDto dto);
+        
     }
 }

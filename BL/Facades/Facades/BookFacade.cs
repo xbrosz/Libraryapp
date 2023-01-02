@@ -180,5 +180,15 @@ namespace BL.Facades.Facades
         {
             _authorService.Delete(authorId);
         }
+
+        public IEnumerable<BookPrintDto> GetAllBookPrints()
+        {
+            return _bookPrintService.GetAll();
+        }
+
+        public void DeleteBookPrint(int bookPrintId)
+        {
+            _bookPrintService.Delete(bookPrintId);
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿@model NewReservationModel
 <h4>New reservaion</h4>
+@using (Html.BeginForm("Add", "NewReservation")) {
+@Html.HiddenFor(x => x.Id)
 <div class="row">
     <div class="col-md-4">
         <table class="table">
@@ -20,11 +22,11 @@
                 </tr>
                 <tr>
                     <td>From: </td>
-                    <td><input asp-for="FromDate" type="text" disabled class="form-control" placeholder="Start date" /></td>
+                    <td><input asp-for="FromDate" type="text" class="form-control" placeholder="Start date" /></td>
                 </tr>
                 <tr>
                     <td>To: </td>
-                    <td><input asp-for="ToDate" type="text" disabled class="form-control" placeholder="End date" /></td>
+                    <td><input asp-for="ToDate" type="text" class="form-control" placeholder="End date" /></td>
                 </tr>
         </tbody>
         </table>
@@ -33,18 +35,19 @@
         <script>
             $(function () {
                 $("#FromDate").datepicker({ 
-                    dateFormat: 'dd-mm-yy',
-                    minDate: "+1",
+                    dateFormat: 'dd-mm-yy'
                     
                 });
             });
         </script>
         <script>
             $(function () {
-                $("#ToDate").datepicker({ dateFormat: 'dd-mm-yy' });
+                $("#ToDate").datepicker({ dateFormat: 'dd-mm-yy',
+                    minDate: "+1", });
             });
         </script>
     }
     </div>
 </div>
-<a class="btn btn-secondary my-1" href="@Url.Action("Add", "NewReservation", new {Model.Id, Model.SelectedBranch, Model.FromDate, Model.ToDate})">Reserve book</a>
+ <button type="submit" class="btn btn-primary">Submit</button>
+ }

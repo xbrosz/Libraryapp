@@ -30,22 +30,24 @@ namespace FE.Controllers
             };
             return View(model);
         }
-        public IActionResult Add(int Id, string branchName, DateTime start, DateTime end)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Add(NewReservationModel newModel)
         {
             var dto = new ReservationCreateFormDto
             {
-                BookId = Id,
-                StartDate = start,
-                EndDate = end,
+                BookId = newModel.Id,
+                StartDate = newModel.FromDate,
+                EndDate = newModel.ToDate,
                 UserId = getUserId(),
-                BranchId = _reservationFacade.GetBranchIDByName(branchName)
+                BranchId = _reservationFacade.GetBranchIDByName(newModel.SelectedBranch)
             };
             _reservationFacade.ReserveBook(dto);
             var model = new ReservationIndexViewModel
             {
                 reservations = _reservationFacade.GetReservationsByUserId(getUserId())
             };
-            return View(model);
+            return RedirectToAction("Index", "Reservation");
         }
 
         private int getUserId()

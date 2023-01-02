@@ -19,5 +19,6 @@ namespace BL.Facades.IFacades
         void DeleteReservationsForBookId(int bookId);
         int GetBranchIDByName(string name);
         IEnumerable<BranchDto> GetAllBranches();
+        BranchDto GetBranchById(int branchId);
     }
 }

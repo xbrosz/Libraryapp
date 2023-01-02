@@ -20,5 +20,6 @@ namespace BL.Facades.IFacades
         int GetBranchIDByName(string name);
         IEnumerable<BranchDto> GetAllBranches();
         BranchDto GetBranchById(int branchId);
+        IEnumerable<ReservationsDto> GetAllActiveAndFutureReservations();
     }
 }

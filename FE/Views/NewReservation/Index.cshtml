@@ -2,6 +2,8 @@
 <h4>New reservaion</h4>
 @using (Html.BeginForm("Add", "NewReservation")) {
 @Html.HiddenFor(x => x.Id)
+@Html.HiddenFor(x => x.BookTitle)
+
 <div class="row">
     <div class="col-md-4">
         <table class="table">
@@ -20,13 +22,16 @@
                                 }
                         </select></td>
                 </tr>
+                 @Html.ValidationMessageFor(x => x.SelectedBranch, null, new { @class = "text-danger" })
                 <tr>
                     <td>From: </td>
                     <td><input asp-for="FromDate" type="text" class="form-control" placeholder="Start date" /></td>
+                     @Html.ValidationMessageFor(x => x.FromDate, null, new { @class = "text-danger" })
                 </tr>
                 <tr>
                     <td>To: </td>
                     <td><input asp-for="ToDate" type="text" class="form-control" placeholder="End date" /></td>
+                     @Html.ValidationMessageFor(x => x.ToDate, null, new { @class = "text-danger" })
                 </tr>
         </tbody>
         </table>
@@ -35,8 +40,8 @@
         <script>
             $(function () {
                 $("#FromDate").datepicker({ 
-                    dateFormat: 'dd-mm-yy'
-                    
+                    dateFormat: 'dd-mm-yy',
+                    minDate: new Date()
                 });
             });
         </script>

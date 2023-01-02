@@ -7,8 +7,6 @@ namespace DAL.Data
 {
     public class LibraryappDbContext : IdentityDbContext
     {
-        private const string ConnectionString = $"Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database=Libraryapp;Trusted_Connection=True;";
-
         public DbSet<Author> Author { get; set; }
         public DbSet<Book> Book { get; set; }
         public DbSet<BookPrint> BookPrint { get; set; }
@@ -26,17 +24,6 @@ namespace DAL.Data
         }
 
         public LibraryappDbContext(DbContextOptions<LibraryappDbContext> options) : base(options) { }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder
-                .UseSqlServer(ConnectionString)
-                .UseLazyLoadingProxies();
-            }
-
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

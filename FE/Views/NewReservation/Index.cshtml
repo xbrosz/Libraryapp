@@ -1,9 +1,9 @@
 ﻿@model NewReservationModel
-<h4>New reservaion</h4>
+<h4>New reservation</h4>
 @using (Html.BeginForm("Add", "NewReservation")) {
 @Html.HiddenFor(x => x.Id)
 @Html.HiddenFor(x => x.BookTitle)
-
+<link href="~/jqueryui/jquery-ui.css" rel="stylesheet" />
 <div class="row">
     <div class="col-md-4">
         <table class="table">
@@ -42,13 +42,15 @@
                 $("#FromDate").datepicker({ 
                     dateFormat: 'dd-mm-yy',
                     minDate: new Date()
-                });
+                }).datepicker("setDate", new Date());
             });
         </script>
         <script>
             $(function () {
-                $("#ToDate").datepicker({ dateFormat: 'dd-mm-yy',
-                    minDate: "+1", });
+                $("#ToDate").datepicker({
+                    dateFormat: 'dd-mm-yy',
+                    minDate: "+1"
+            }).datepicker("setDate", new Date());
             });
         </script>
     }

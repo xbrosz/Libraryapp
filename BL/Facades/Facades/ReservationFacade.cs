@@ -125,7 +125,7 @@ namespace BL.Facades.Facades
         {   try
             {
                 return _branchService.GetBranchesByName(name).First().Id;
-            } catch (IndexOutOfRangeException ex)
+            } catch (Exception ex)
             {
                 throw new IndexOutOfRangeException();
             }

@@ -7,5 +7,8 @@
         public DateTime? Release { get; set; }
         public int? AuthorId { get; set; }
         public double? RatingNumber { get; set; }
+
+        public bool NoRating { get; set; } = false;
+        public double SortRatingNumber { get; set; } = 0;
     }
 }

@@ -4,10 +4,12 @@ using BL.Facades.Facades;
 using BL.Facades.IFacades;
 using BL.Services.IServices;
 using FE.Models.Admin;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FE.Controllers.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class AdminBranchController : Controller
     {
         private readonly IBranchService _branchService;
@@ -54,6 +56,7 @@ namespace FE.Controllers.Admin
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(AdminBranchEditViewModel model)
         {
             if (!ModelState.IsValid)
@@ -77,6 +80,7 @@ namespace FE.Controllers.Admin
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Add(AdminBranchAddViewModel model)
         {
             if (!ModelState.IsValid)

@@ -88,9 +88,14 @@ namespace BL.Services.Services
                 dto.Title = book.Title;
             }
 
-            if (!dto.RatingNumber.HasValue)
+            if (!dto.RatingNumber.HasValue && !dto.NoRating)
             {
                 dto.RatingNumber = book.RatingNumber;
+            }
+
+            if (dto.RatingNumber.HasValue)
+            {
+                dto.SortRatingNumber = dto.RatingNumber.Value;
             }
 
             Update(dto);

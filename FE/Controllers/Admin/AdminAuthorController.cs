@@ -2,10 +2,12 @@
 using BL.DTOs.Genre;
 using BL.Facades.IFacades;
 using FE.Models.Admin;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FE.Controllers.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class AdminAuthorController : Controller
     {
         private IBookFacade _bookFacade;
@@ -51,6 +53,7 @@ namespace FE.Controllers.Admin
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(AdminAuthorEditViewModel model)
         {
             if (!ModelState.IsValid)
@@ -76,6 +79,7 @@ namespace FE.Controllers.Admin
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Add(AdminAuthorAddViewModel model)
         {
             if (!ModelState.IsValid)

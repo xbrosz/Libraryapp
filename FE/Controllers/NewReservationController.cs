@@ -17,7 +17,9 @@ namespace FE.Controllers
             _reservationFacade = reservationFacade;
         }
 
+
         public IActionResult Index(int Id)
+
         {
             int userId = getUserId();
             var dto = _bookFacade.GetBookDetailByID(Id);

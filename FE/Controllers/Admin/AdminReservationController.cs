@@ -4,10 +4,13 @@ using BL.Services.IServices;
 using DAL.Entities;
 using FE.Models;
 using FE.Models.Admin;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace FE.Controllers.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class AdminReservationController : Controller
     {
         private readonly IReservationService _reservationService;
@@ -96,11 +99,6 @@ namespace FE.Controllers.Admin
             {
                 return NotFound();
             }
-
-            //if (!isAdmin() || dto.UserId != getUserId())
-            //{
-            //    return Unauthorized();
-            //}
 
             _reservationService.Delete(dto.Id);
 

@@ -36,58 +36,6 @@ namespace FE.Controllers.Admin
             return View(model);
         }
 
-        public IActionResult Edit(int id)
-        {
-            var dto = _ratingService.Find(id);
-
-            if (dto == null)
-            {
-                return NotFound();
-            }
-
-            var model = new RatingEditViewModel
-            {
-                Id = dto.Id,
-                BookTitle = dto.BookTitle,
-                RatingNumber = dto.RatingNumber,
-                Comment = dto.Comment,
-                BookId = dto.BookId
-            };
-
-            return View(model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(RatingEditViewModel model)
-        {
-            var rating = _ratingService.Find(model.Id);
-
-            if(rating == null)
-            {
-                return NotFound();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var dto = new RatingDto
-            {
-                Id = model.Id,
-                BookTitle = model.BookTitle,
-                Comment = model.Comment,
-                RatingNumber = model.RatingNumber,
-                BookId = model.BookId,
-                UserId = rating.UserId
-            };
-
-            _ratingFacade.UpdateRating(dto);
-
-            return RedirectToAction(nameof(Index), new { bookId = model.BookId, bookTitle = model.BookTitle });
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)

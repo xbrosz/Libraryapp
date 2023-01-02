@@ -8,6 +8,8 @@ using BL.DTOs;
 using BL.Services.Services;
 using Microsoft.AspNetCore.Authorization;
 using BL.Services.IServices;
+using BL.DTOs.Genre;
+using BL.DTOs.Book;
 
 namespace FE.Controllers.Admin
 {
@@ -17,12 +19,14 @@ namespace FE.Controllers.Admin
         private readonly IBookFacade _bookFacade;
         private readonly IReservationFacade _reservationFacade;
         private readonly IRatingService _ratingService;
+        private readonly IBookService _bookService;
 
-        public AdminBookController(IBookFacade bookFacade, IReservationFacade reservationFacade, IRatingService ratingService)
+        public AdminBookController(IBookFacade bookFacade, IReservationFacade reservationFacade, IRatingService ratingService, IBookService bookService)
         {
             _bookFacade = bookFacade;
             _reservationFacade = reservationFacade;
             _ratingService = ratingService;
+            _bookService = bookService;
         }
 
         public IActionResult Index(string? searchString = null)
@@ -102,6 +106,42 @@ namespace FE.Controllers.Admin
             };
 
             return View(model);
+        }
+
+        public IActionResult Add()
+        {
+            return View(new AdminAddBookViewModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddAuthor(AdminAddBookViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            return View(new AdminAddAuthorToBookViewModel()
+            {
+                Title = model.Title,
+                Release = model.Release,
+                Authors = _bookFacade.GetAllAuthors().ToList()
+            });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Add(string title, DateTime release, int authorId)
+        {
+            _bookService.Insert(new BookInsertDto()
+            {
+                Title = title,
+                AuthorId = authorId,
+                Release = release
+            });
+
+            return RedirectToAction("Index", "AdminBook");
         }
 
         [HttpPost]

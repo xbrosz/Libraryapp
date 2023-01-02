@@ -66,7 +66,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
-using (var scope = app.Services.CreateScope())                                                  // Just for Testing !!!!
+using (var scope = app.Services.CreateScope())                                               
 {
     scope.ServiceProvider.GetRequiredService<LibraryappDbContext>().Database.EnsureDeleted();
     scope.ServiceProvider.GetRequiredService<LibraryappDbContext>().Database.EnsureCreated();

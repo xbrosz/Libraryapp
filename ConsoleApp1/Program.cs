@@ -2,6 +2,7 @@
 using BL;
 using BL.DTOs;
 using BL.DTOs.Author;
+using BL.DTOs.Reservation;
 using BL.Facades.IFacades;
 using BL.QueryObjects.IQueryObject;
 using BL.Services.IServices;
@@ -9,6 +10,7 @@ using DAL.Data;
 using DAL.Entities;
 using Infrastructure.EFCore;
 using Infrastructure.UnitOfWork;
+using Xunit;
 
 public class Program
 {
@@ -30,8 +32,20 @@ public class Program
 
         //var b = container.Resolve<IBookService>();
 
-        var query = container.Resolve<IQueryObject<BookFilterDto, BookGridDto>>();
+        //var query = container.Resolve<IQueryObject<BookFilterDto, BookGridDto>>();
+        var res = container.Resolve<IReservationFacade>();
 
+        var updateForm = new ReservationUpdateFormDto()
+        {
+            Id = 1,
+            UserId = 1,
+            BookPrintId = 1,
+            BranchId = 1,
+            EndDate = DateTime.Now,
+            StartDate = DateTime.Now
+        };
+
+        res.UpdateReservationDate(updateForm);
 
 
         //var query2 = container.Resolve<IQueryObject<AuthorFilterDto, AuthorDto>>();

@@ -56,11 +56,14 @@ namespace BL.Facades.Facades
         {
             var reservation = _reservationService.Find(reservationDto.Id);
 
+            Console.WriteLine("ANO");
+
             if (reservation.EndDate.Date < DateTime.Today)
             {
                 throw new InvalidOperationException("Ended reservation cannot be edited.");
             }
 
+            Console.WriteLine("NIE");
 
             var bookId = _bookPrintService.Find(reservationDto.BookPrintId).BookId;
 

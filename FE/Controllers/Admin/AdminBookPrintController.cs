@@ -42,5 +42,22 @@ namespace FE.Controllers.Admin
             _bookFacade.DeleteBookPrint(Id);
             return RedirectToAction("Index", "AdminBookPrint");
         }
+        public IActionResult Add()
+        {
+            var model = new AdminBookPrintAddViewModel
+            {
+                Books = _bookFacade.GetAllBooks().Select(x => x.Title).ToList(),
+                Branches = _reservationFacade.GetAllBranches().Select(x => x.Name).ToList()
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult Add(AdminBookPrintAddViewModel model)
+        {
+            int bookId = _bookFacade.GetBooksByTitle(model.SelectedBook).First().Id;
+            int branchId = _reservationFacade.GetBranchIDByName(model.SelectedBranch);
+            _bookFacade.InsertBookPrint(bookId, branchId);
+            return RedirectToAction("Index", "AdminBookPrint");
+        }
     }
 }

@@ -47,5 +47,6 @@ namespace BL.Facades.IFacades
         void DeleteAuthor(int authorId);
         IEnumerable<BookPrintDto> GetAllBookPrints();
         void DeleteBookPrint(int bookPrintId);
+        void InsertBookPrint(int bookId, int branchId);
     }
 }

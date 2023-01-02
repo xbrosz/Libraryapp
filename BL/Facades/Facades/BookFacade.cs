@@ -190,5 +190,14 @@ namespace BL.Facades.Facades
         {
             _bookPrintService.Delete(bookPrintId);
         }
+
+        public void InsertBookPrint(int bookId, int branchId)
+        {
+            _bookPrintService.Insert(new BookPrintDto
+            {
+                BookId = bookId,
+                BranchId = branchId
+            });
+        }
     }
 }

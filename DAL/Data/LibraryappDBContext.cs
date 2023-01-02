@@ -7,7 +7,7 @@ namespace DAL.Data
 {
     public class LibraryappDbContext : IdentityDbContext
     {
-        private const string ConnectionString = $"Database=mysql;Server=libapp-server.mysql.database.azure.com;User Id=sjogmnncnb;Password=S41503YHH1J58713$;";
+        private const string ConnectionString = $"Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database=Libraryapp;Trusted_Connection=True;";
 
         public DbSet<Author> Author { get; set; }
         public DbSet<Book> Book { get; set; }

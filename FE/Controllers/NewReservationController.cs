@@ -32,10 +32,19 @@ namespace FE.Controllers
             };
             return View(model);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Add(NewReservationModel newModel)
         {
+            if (newModel.ToDate <= newModel.FromDate)
+            {
+                ModelState.AddModelError(nameof(NewReservationModel.ToDate), "Invalid date range");
+                //return RedirectToAction("Index", new { Id = newModel.Id });
+                newModel.Branches = _reservationFacade.GetAllBranches().Select(r => r.Name).ToList();
+                return View("Index", newModel);
+            }
+            try {
             var dto = new ReservationCreateFormDto
             {
                 BookId = newModel.Id,
@@ -44,7 +53,24 @@ namespace FE.Controllers
                 UserId = getUserId(),
                 BranchId = _reservationFacade.GetBranchIDByName(newModel.SelectedBranch)
             };
-            _reservationFacade.ReserveBook(dto);
+            
+                _reservationFacade.ReserveBook(dto);
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                ModelState.AddModelError(nameof(NewReservationModel.ToDate), "Please select a valid branch");
+
+                newModel.Branches = _reservationFacade.GetAllBranches().Select(r => r.Name).ToList();
+                return View("Index", newModel);
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(nameof(NewReservationModel.ToDate), "No prints available for selected date range");
+                //return RedirectToAction("Index", new { Id = newModel.Id});
+                newModel.Branches =_reservationFacade.GetAllBranches().Select(r => r.Name).ToList();
+                return View("Index", newModel);
+            } 
+            
             var model = new ReservationIndexViewModel
             {
                 reservations = _reservationFacade.GetReservationsByUserId(getUserId())

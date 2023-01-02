@@ -20,6 +20,7 @@ namespace FE.Controllers.Admin
         public IActionResult Index()
         {
             var dtos = _bookFacade.GetAllBookPrints();
+            var reservedPrints = _reservationFacade.GetAllActiveAndFutureReservations().Select(x => x.BookPrintId);
             List<BookPrintGridDto> prints = new List<BookPrintGridDto>();
             foreach (var d in dtos)
             {
@@ -27,7 +28,8 @@ namespace FE.Controllers.Admin
                 {
                     Id = d.Id,
                     BookTitle = _bookFacade.GetBookDetailByID(d.BookId).Title,
-                    BranchName = _reservationFacade.GetBranchById(d.BranchId).Name
+                    BranchName = _reservationFacade.GetBranchById(d.BranchId).Name,
+                    CanBeDeleted = !reservedPrints.Contains(d.Id)
                 });
             }
             var model = new AdminBookPrintIndexViewModel
@@ -36,6 +38,7 @@ namespace FE.Controllers.Admin
             };
             return View(model);
         }
+       
         [HttpPost]
         public IActionResult Delete(int Id)
         {

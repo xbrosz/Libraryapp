@@ -122,8 +122,14 @@ namespace BL.Facades.Facades
             return _branchService.GetAllBranches();
         }
         public int GetBranchIDByName(string name)
-        {
-            return _branchService.GetBranchesByName(name).First().Id;
+        {   try
+            {
+                return _branchService.GetBranchesByName(name).First().Id;
+            } catch (IndexOutOfRangeException ex)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            
         }
 
         public IEnumerable<ReservationsDto> GetReservationsByUserId(int userId)
@@ -134,6 +140,11 @@ namespace BL.Facades.Facades
         public BranchDto GetBranchById(int branchId)
         {
             return _branchService.Find(branchId);
+        }
+
+        public IEnumerable<ReservationsDto> GetAllActiveAndFutureReservations()
+        {
+            return _reservationService.GetAll().Where(x => x.EndDate >= DateTime.Now || x.StartDate >= DateTime.Now);
         }
     }
 }

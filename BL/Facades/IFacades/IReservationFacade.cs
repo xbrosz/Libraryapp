@@ -13,9 +13,12 @@ namespace BL.Facades.IFacades
         public void ReserveBook(ReservationCreateFormDto reservationDto);
         public void UpdateReservationDate(ReservationUpdateFormDto reservationDto);
         IEnumerable<ReservationsDto> GetActiveReservationsByBookId(int bookId);
+        IEnumerable<ReservationsDto> GetReservationsByUserId(int userId);
         void DeleteReservationsForUserId(int userId);
 
         void DeleteReservationsForBookId(int bookId);
-
+        int GetBranchIDByName(string name);
+        IEnumerable<BranchDto> GetAllBranches();
+        BranchDto GetBranchById(int branchId);
     }
 }

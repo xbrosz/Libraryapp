@@ -49,25 +49,5 @@ namespace BL.Tests.Services
             _queryObjectMock.Verify(x => x.ExecuteQuery(It.IsAny<AuthorFilterDto>()), Times.Once);
             Assert.Equal(expectedOutput, realOutput);
         }
-
-        //[Fact]
-        //public void GetAuthorsByName_NameWithDigits()
-        //{
-        //    var service = new AuthorService(_uowMock.Object, _mapperMock.Object, _queryObjectMock.Object);
-
-        //    var exception = Assert.Throws<Exception>(() => service.GetAuthorsByName(new AuthorFilterDto() { FirstName = "P6t6r" }));
-
-        //    Assert.Equal("Names should contain just letters.", exception.Message);
-        //}
-
-        //[Fact]
-        //public void GetAuthorsByName_NameWithSpecCharacters()
-        //{
-        //    var service = new AuthorService(_uowMock.Object, _mapperMock.Object, _queryObjectMock.Object);
-
-        //    var exception = Assert.Throws<Exception>(() => service.GetAuthorsByName(new AuthorFilterDto() { FirstName = "Peter-" }));
-
-        //    Assert.Equal("Names should contain just letters.", exception.Message);
-        //}
     }
 }

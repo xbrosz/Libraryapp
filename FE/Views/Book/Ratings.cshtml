@@ -1,7 +1,7 @@
 ﻿@model BookRatingsViewModel
 
 
-<h4>Ratings for @Model.title</h4>
+<h4>Ratings for @Model.Title</h4>
 <table class="table">
     <thead>
         <tr>
@@ -10,7 +10,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var rating in Model.ratings)
+        @foreach (var rating in Model.Ratings)
         {
             <tr>
                 <td>@rating.RatingNumber</td>

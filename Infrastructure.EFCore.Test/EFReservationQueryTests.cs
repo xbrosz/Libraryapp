@@ -16,6 +16,7 @@ namespace Infrastructure.EFCore.Test
             var dbContextOptions = new DbContextOptionsBuilder<LibraryappDbContext>()
                             .UseInMemoryDatabase(databaseName: myDatabaseName)
                             .Options;
+
             dbContext = new LibraryappDbContext(dbContextOptions);
 
             dbContext.Genre.Add(new Genre { Id = 1, Name = "horror" });

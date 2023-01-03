@@ -1,0 +1,33 @@
+﻿@using FE.Models.Admin
+@model AdminBookPrintAddViewModel
+<h4>Add new book print</h4>
+@using (Html.BeginForm("Add", "AdminBookPrint"))
+{
+<div class="row">
+    <div class="col-md-4">
+        <tbody>
+            <tr>
+                <td>Book: </td>
+                <td><select asp-for="SelectedBook" id="inputState" class="form-control">
+                        <option selected>Choose book</option>
+                            @for (int i = 0; i < @Model.Books.Count(); i++)
+                                {
+                                    <option value="@Model.Books.ElementAt(i)">@Model.Books.ElementAt(i)</option>
+                                }
+                </select></td>
+            </tr>
+            <tr>
+                    <td>Branch: </td>
+                    <td><select asp-for="SelectedBranch" id="inputState" class="form-control">
+                        <option selected>Choose branch</option>
+                            @for (int i = 0; i < @Model.Branches.Count(); i++)
+                                {
+                                    <option value="@Model.Branches.ElementAt(i)">@Model.Branches.ElementAt(i)</option>
+                                }
+                        </select></td>
+                </tr>
+        </tbody>
+    </div>
+</div>
+ <button type="submit" class="btn btn-primary">Submit</button>
+}

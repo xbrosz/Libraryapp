@@ -1,12 +1,6 @@
 ﻿using BL.DTOs;
 using BL.DTOs.Author;
 using BL.DTOs.Genre;
-using DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BL.Facades.IFacades
 {
@@ -51,5 +45,8 @@ namespace BL.Facades.IFacades
         void InsertAuthor(AuthorInsertDto author);
 
         void DeleteAuthor(int authorId);
+        IEnumerable<BookPrintDto> GetAllBookPrints();
+        void DeleteBookPrint(int bookPrintId);
+        void InsertBookPrint(int bookId, int branchId);
     }
 }

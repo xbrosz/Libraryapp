@@ -4,7 +4,7 @@ namespace FE.Models
 {
     public class BookRatingsViewModel
     {
-        public string title { get; set; }
-        public IEnumerable<RatingDto> ratings { get; set; }
+        public string Title { get; set; }
+        public IEnumerable<RatingDto> Ratings { get; set; }
     }
 }

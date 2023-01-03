@@ -1,0 +1,60 @@
+﻿@model NewReservationModel
+<h4>New reservation</h4>
+@using (Html.BeginForm("Add", "NewReservation")) {
+@Html.HiddenFor(x => x.Id)
+@Html.HiddenFor(x => x.BookTitle)
+<link href="~/jqueryui/jquery-ui.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-md-4">
+        <table class="table">
+        <tbody>
+                <tr>
+                    <td>Book title:</td>
+                    <td>@Model.BookTitle</td>
+                </tr>
+                <tr>
+                    <td>Branch: </td>
+                    <td><select asp-for="SelectedBranch" id="inputState" class="form-control">
+                        <option selected>Choose branch</option>
+                            @for (int i = 0; i < @Model.Branches.Count(); i++)
+                                {
+                                    <option value="@Model.Branches.ElementAt(i)">@Model.Branches.ElementAt(i)</option>
+                                }
+                        </select></td>
+                </tr>
+                 @Html.ValidationMessageFor(x => x.SelectedBranch, null, new { @class = "text-danger" })
+                <tr>
+                    <td>From: </td>
+                    <td><input asp-for="FromDate" type="text" class="form-control" placeholder="Start date" /></td>
+                     @Html.ValidationMessageFor(x => x.FromDate, null, new { @class = "text-danger" })
+                </tr>
+                <tr>
+                    <td>To: </td>
+                    <td><input asp-for="ToDate" type="text" class="form-control" placeholder="End date" /></td>
+                     @Html.ValidationMessageFor(x => x.ToDate, null, new { @class = "text-danger" })
+                </tr>
+        </tbody>
+        </table>
+        @section scripts{
+        <script src="~/jqueryui/jquery-ui.js"></script>
+        <script>
+            $(function () {
+                $("#FromDate").datepicker({ 
+                    dateFormat: 'dd-mm-yy',
+                    minDate: new Date()
+                }).datepicker("setDate", new Date());
+            });
+        </script>
+        <script>
+            $(function () {
+                $("#ToDate").datepicker({
+                    dateFormat: 'dd-mm-yy',
+                    minDate: "+1"
+            }).datepicker("setDate", new Date());
+            });
+        </script>
+    }
+    </div>
+</div>
+ <button type="submit" class="btn btn-primary">Submit</button>
+ }

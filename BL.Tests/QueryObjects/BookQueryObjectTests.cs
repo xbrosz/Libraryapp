@@ -27,21 +27,21 @@ namespace BL.Tests.QueryObjects
         //public void FilterBook()
         //{
 
-        //    var book = new Book
-        //    {
-        //        Author = new Author
-        //        {
-        //            BirthDate = DateTime.Now,
-        //            FirstName = "A",
-        //            LastName = "B",
-        //            Id = 1
-        //        },
-        //        Genres = new List<Genre>(),
-        //        Id = 1,
-        //        Ratings = new List<Rating>(),
-        //        Release = new DateTime(1900,1,1),
-        //        Title = "Book"
-        //    };
+            var book = new Book
+            {
+                Author = new Author
+                {
+                    BirthDate = DateTime.Now,
+                    FirstName = "A",
+                    LastName = "B",
+                    Id = 1
+                },
+                
+                Id = 1,
+                
+                Release = new DateTime(1900,1,1),
+                Title = "Book"
+            };
             
         //    var queryResultDto = new QueryResultDto<BookGridDto>
         //    {
@@ -66,13 +66,13 @@ namespace BL.Tests.QueryObjects
         //        .Setup(x => x.Map<QueryResultDto<BookGridDto>>(It.IsAny<EFQueryResult<Book>>()))
         //        .Returns(queryResultDto);
 
-        //    var queryObject = new BookQueryObject(_mapperMock.Object, _queryMock.Object);
-        //    var filter = new BookFilterDto
-        //    {
-        //        AuthorID = 2
-        //    };
-        //    var result = queryObject.ExecuteQuery(filter);
-        //    Assert.Empty(result.Items);
-        //}
+            var queryObject = new BookQueryObject(_mapperMock.Object, _queryMock.Object);
+            var filter = new BookFilterDto
+            {
+                Title = "><:<:L?L<P{LPL:<> L:"
+            };
+            var result = queryObject.ExecuteQuery(filter).TotalItemsCount;
+            Assert.True(result == 0);
+        }
     }
 }

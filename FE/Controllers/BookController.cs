@@ -3,6 +3,7 @@ using BL.Facades.IFacades;
 using BL.Services.IServices;
 using FE.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FE.Controllers
 {
@@ -35,15 +36,15 @@ namespace FE.Controllers
             return View(model);
         }
 
-        public IActionResult Ratings(int id)
+        public IActionResult Ratings(int Id)
         {
-            var bookTitle = _bookFacade.GetBookDetailByID(id).Title;
-            var ratings = _ratingService.GetRatingsByBook(id);
+            var bookTitle = _bookFacade.GetBookDetailByID(Id).Title;
+            var ratings = _ratingService.GetRatingsByBook(Id);
 
             var model = new BookRatingsViewModel()
             {
-                title = bookTitle,
-                ratings = ratings
+                Title = bookTitle,
+                Ratings = ratings
             };
 
             return View(model);

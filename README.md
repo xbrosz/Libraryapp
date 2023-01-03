@@ -25,6 +25,12 @@ Aplikácia bude umožňovať:
    5. managovat autorov
    6. managovat hodnotenia
 
+
+Prihlasovacie údaje pre admina:
+username: Admin
+password: Heslo_je_123
+
+
 ---
 ### ERD
 

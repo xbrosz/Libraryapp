@@ -136,7 +136,7 @@ namespace FE.Controllers
                 return NotFound();
             }
 
-            if (!isAdmin() || dto.UserId != getUserId())
+            if (dto.UserId != getUserId())
             {
                 return Unauthorized();
             }

@@ -23,56 +23,56 @@ namespace BL.Tests.QueryObjects
             _queryMock = new Mock<IAbstractQuery<Book>>();
         }
 
-        //[Fact]
-        //public void FilterBook()
-        //{
+        [Fact]
+        public void FilterBook()
+        {
 
-            //var book = new Book
-            //{
-            //    Author = new Author
-            //    {
-            //        BirthDate = DateTime.Now,
-            //        FirstName = "A",
-            //        LastName = "B",
-            //        Id = 1
-            //    },
-                
-            //    Id = 1,
-                
-            //    Release = new DateTime(1900,1,1),
-            //    Title = "Book"
-            //};
-            
-        //    var queryResultDto = new QueryResultDto<BookGridDto>
-        //    {
-        //        Items = new List<BookGridDto>(),
-        //        TotalItemsCount = 0
-        //    };
-        //    var efQueryResult = new EFQueryResult<Book>() { Items = new List<Book>(), TotalItemsCount = 0 };
+            var book = new Book
+            {
+                Author = new Author
+                {
+                    BirthDate = DateTime.Now,
+                    FirstName = "A",
+                    LastName = "B",
+                    Id = 1
+                },
 
-        //    _queryMock
-        //        .Setup(x => x.Where(It.IsAny<Expression<Func<string, bool>>>(), It.IsAny<string>()))
-        //        .Returns(_queryMock.Object);
+                Id = 1,
 
-        //    _queryMock
-        //        .Setup(x => x.Page(It.IsAny<int>(), It.IsAny<int>()))
-        //        .Returns(_queryMock.Object);
+                Release = new DateTime(1900, 1, 1),
+                Title = "Book"
+            };
 
-        //    _queryMock
-        //        .Setup(x => x.Execute())
-        //        .Returns(efQueryResult);
+            var queryResultDto = new QueryResultDto<BookGridDto>
+            {
+                Items = new List<BookGridDto>(),
+                TotalItemsCount = 0
+            };
+            var efQueryResult = new EFQueryResult<Book>() { Items = new List<Book>(), TotalItemsCount = 0 };
 
-        //    _mapperMock
-        //        .Setup(x => x.Map<QueryResultDto<BookGridDto>>(It.IsAny<EFQueryResult<Book>>()))
-        //        .Returns(queryResultDto);
+            _queryMock
+                .Setup(x => x.Where(It.IsAny<Expression<Func<string, bool>>>(), It.IsAny<string>()))
+                .Returns(_queryMock.Object);
 
-            //var queryObject = new BookQueryObject(_mapperMock.Object, _queryMock.Object);
-            //var filter = new BookFilterDto
-            //{
-            //    Title = "><:<:L?L<P{LPL:<> L:"
-            //};
-            //var result = queryObject.ExecuteQuery(filter).TotalItemsCount;
-            //Assert.True(result == 0);
-        //}
+            _queryMock
+                .Setup(x => x.Page(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(_queryMock.Object);
+
+            _queryMock
+                .Setup(x => x.Execute())
+                .Returns(efQueryResult);
+
+            _mapperMock
+                .Setup(x => x.Map<QueryResultDto<BookGridDto>>(It.IsAny<EFQueryResult<Book>>()))
+                .Returns(queryResultDto);
+
+            var queryObject = new BookQueryObject(_mapperMock.Object, _queryMock.Object);
+            var filter = new BookFilterDto
+            {
+                Title = "><:<:L?L<P{LPL:<> L:"
+            };
+            var result = queryObject.ExecuteQuery(filter).TotalItemsCount;
+            Assert.True(result == 0);
+        }
     }
 }

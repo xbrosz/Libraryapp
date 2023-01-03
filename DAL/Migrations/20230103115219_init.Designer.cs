@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(LibraryappDbContext))]
-    [Migration("20221211152144_identity_test")]
-    partial class identity_test
+    [Migration("20230103115219_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -58,7 +58,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 1,
-                            BirthDate = new DateTime(2022, 12, 11, 16, 21, 43, 901, DateTimeKind.Local).AddTicks(9145),
+                            BirthDate = new DateTime(2023, 1, 3, 12, 52, 19, 486, DateTimeKind.Local).AddTicks(5092),
                             FirstName = "Štefan",
                             LastName = "Hemingway",
                             MiddleName = ""
@@ -66,7 +66,7 @@ namespace DAL.Migrations
                         new
                         {
                             Id = 2,
-                            BirthDate = new DateTime(2022, 12, 11, 16, 21, 43, 901, DateTimeKind.Local).AddTicks(9184),
+                            BirthDate = new DateTime(2023, 1, 3, 12, 52, 19, 486, DateTimeKind.Local).AddTicks(5126),
                             FirstName = "Adrian",
                             LastName = "McKinty",
                             MiddleName = "Alfonz"
@@ -84,8 +84,14 @@ namespace DAL.Migrations
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
+                    b.Property<double?>("RatingNumber")
+                        .HasColumnType("float");
+
                     b.Property<DateTime>("Release")
                         .HasColumnType("datetime2");
+
+                    b.Property<double>("SortRatingNumber")
+                        .HasColumnType("float");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -103,15 +109,98 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             AuthorId = 1,
-                            Release = new DateTime(2022, 12, 11, 16, 21, 43, 901, DateTimeKind.Local).AddTicks(9195),
+                            RatingNumber = 4.0,
+                            Release = new DateTime(2023, 1, 3, 12, 52, 19, 486, DateTimeKind.Local).AddTicks(5136),
+                            SortRatingNumber = 0.0,
                             Title = "Space"
                         },
                         new
                         {
                             Id = 2,
                             AuthorId = 2,
-                            Release = new DateTime(2022, 12, 11, 16, 21, 43, 901, DateTimeKind.Local).AddTicks(9197),
+                            Release = new DateTime(2023, 1, 3, 12, 52, 19, 486, DateTimeKind.Local).AddTicks(5141),
+                            SortRatingNumber = 0.0,
                             Title = "The chain"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AuthorId = 2,
+                            Release = new DateTime(2023, 1, 3, 12, 52, 19, 486, DateTimeKind.Local).AddTicks(5142),
+                            SortRatingNumber = 0.0,
+                            Title = "Snow"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AuthorId = 1,
+                            Release = new DateTime(2023, 1, 3, 12, 52, 19, 486, DateTimeKind.Local).AddTicks(5144),
+                            SortRatingNumber = 0.0,
+                            Title = "The war"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AuthorId = 1,
+                            Release = new DateTime(2023, 1, 3, 12, 52, 19, 486, DateTimeKind.Local).AddTicks(5146),
+                            SortRatingNumber = 0.0,
+                            Title = "Vote"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AuthorId = 1,
+                            Release = new DateTime(2023, 1, 3, 12, 52, 19, 486, DateTimeKind.Local).AddTicks(5147),
+                            SortRatingNumber = 0.0,
+                            Title = "Mountains"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            AuthorId = 1,
+                            Release = new DateTime(2023, 1, 3, 12, 52, 19, 486, DateTimeKind.Local).AddTicks(5149),
+                            SortRatingNumber = 0.0,
+                            Title = "Himalay"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            AuthorId = 1,
+                            Release = new DateTime(2023, 1, 3, 12, 52, 19, 486, DateTimeKind.Local).AddTicks(5150),
+                            SortRatingNumber = 0.0,
+                            Title = "Tatras"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            AuthorId = 2,
+                            Release = new DateTime(2023, 1, 3, 12, 52, 19, 486, DateTimeKind.Local).AddTicks(5152),
+                            SortRatingNumber = 0.0,
+                            Title = "Slovakia"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            AuthorId = 2,
+                            Release = new DateTime(2023, 1, 3, 12, 52, 19, 486, DateTimeKind.Local).AddTicks(5154),
+                            SortRatingNumber = 0.0,
+                            Title = "Skill"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            AuthorId = 2,
+                            Release = new DateTime(2023, 1, 3, 12, 52, 19, 486, DateTimeKind.Local).AddTicks(5156),
+                            SortRatingNumber = 0.0,
+                            Title = "Muni guide"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            AuthorId = 2,
+                            Release = new DateTime(2023, 1, 3, 12, 52, 19, 486, DateTimeKind.Local).AddTicks(5157),
+                            SortRatingNumber = 0.0,
+                            Title = "C#"
                         });
                 });
 
@@ -149,6 +238,90 @@ namespace DAL.Migrations
                             Id = 2,
                             BookId = 2,
                             GenreId = 3
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BookId = 2,
+                            GenreId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BookId = 3,
+                            GenreId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            BookId = 4,
+                            GenreId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            BookId = 5,
+                            GenreId = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            BookId = 6,
+                            GenreId = 2
+                        },
+                        new
+                        {
+                            Id = 8,
+                            BookId = 7,
+                            GenreId = 2
+                        },
+                        new
+                        {
+                            Id = 9,
+                            BookId = 8,
+                            GenreId = 2
+                        },
+                        new
+                        {
+                            Id = 10,
+                            BookId = 9,
+                            GenreId = 3
+                        },
+                        new
+                        {
+                            Id = 11,
+                            BookId = 10,
+                            GenreId = 3
+                        },
+                        new
+                        {
+                            Id = 12,
+                            BookId = 11,
+                            GenreId = 3
+                        },
+                        new
+                        {
+                            Id = 13,
+                            BookId = 12,
+                            GenreId = 4
+                        },
+                        new
+                        {
+                            Id = 14,
+                            BookId = 6,
+                            GenreId = 1
+                        },
+                        new
+                        {
+                            Id = 15,
+                            BookId = 7,
+                            GenreId = 1
+                        },
+                        new
+                        {
+                            Id = 16,
+                            BookId = 8,
+                            GenreId = 4
                         });
                 });
 
@@ -228,17 +401,12 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("BookId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BookId");
 
                     b.ToTable("Genre");
 
@@ -257,6 +425,11 @@ namespace DAL.Migrations
                         {
                             Id = 3,
                             Name = "Thriller"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Romance"
                         });
                 });
 
@@ -295,7 +468,7 @@ namespace DAL.Migrations
                             BookId = 1,
                             Comment = "Super",
                             RatingNumber = 4,
-                            UserId = 0
+                            UserId = 1
                         });
                 });
 
@@ -326,24 +499,6 @@ namespace DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Reservation");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BookPrintId = 1,
-                            EndDate = new DateTime(2022, 12, 15, 16, 21, 43, 901, DateTimeKind.Local).AddTicks(9203),
-                            StartDate = new DateTime(2022, 12, 11, 16, 21, 43, 901, DateTimeKind.Local).AddTicks(9201),
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BookPrintId = 2,
-                            EndDate = new DateTime(2022, 12, 13, 16, 21, 43, 901, DateTimeKind.Local).AddTicks(9207),
-                            StartDate = new DateTime(2022, 12, 11, 16, 21, 43, 901, DateTimeKind.Local).AddTicks(9205),
-                            UserId = 1
-                        });
                 });
 
             modelBuilder.Entity("DAL.Entities.Role", b =>
@@ -432,25 +587,25 @@ namespace DAL.Migrations
                         {
                             Id = 1,
                             Address = "Bratislavská 25",
-                            Email = "peter@gmail.com",
-                            FirstName = "Peter",
-                            LastName = "Pavol",
-                            Password = "123",
+                            Email = "lalalala@gmail.com",
+                            FirstName = "Richard",
+                            LastName = "Cernansky",
+                            Password = "$LIBHASH$V1$10000$GlN8pLlRT5wyzRusXQxng6aHa+DzMlA6LaaWHJmGmRyFymaT",
                             PhoneNumber = "4567890",
                             RoleId = 2,
-                            UserName = "pp"
+                            UserName = "Ricko48"
                         },
                         new
                         {
                             Id = 2,
-                            Address = "Bratislavská 21",
-                            Email = "karlic@gmail.com",
-                            FirstName = "Marek",
-                            LastName = "Karlicky",
-                            Password = "marekk",
-                            PhoneNumber = "4567890",
+                            Address = "Praha",
+                            Email = "admin@gmail.com",
+                            FirstName = "Peter",
+                            LastName = "Biely",
+                            Password = "$LIBHASH$V1$10000$+vvEaWfQCD4g8x+p4t6GVEAHPoWxtpf+xXW7RY6xmkjyQiwV",
+                            PhoneNumber = "+4219873645",
                             RoleId = 1,
-                            UserName = "mk"
+                            UserName = "Admin"
                         });
                 });
 
@@ -599,10 +754,12 @@ namespace DAL.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -639,10 +796,12 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -685,7 +844,7 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Entities.BookPrint", b =>
                 {
                     b.HasOne("DAL.Entities.Book", "Book")
-                        .WithMany("BookPrints")
+                        .WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -701,20 +860,15 @@ namespace DAL.Migrations
                     b.Navigation("Branch");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Genre", b =>
-                {
-                    b.HasOne("DAL.Entities.Book", null)
-                        .WithMany("Genres")
-                        .HasForeignKey("BookId");
-                });
-
             modelBuilder.Entity("DAL.Entities.Rating", b =>
                 {
-                    b.HasOne("DAL.Entities.Book", null)
-                        .WithMany("Ratings")
+                    b.HasOne("DAL.Entities.Book", "Book")
+                        .WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Book");
                 });
 
             modelBuilder.Entity("DAL.Entities.Reservation", b =>
@@ -796,15 +950,6 @@ namespace DAL.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("DAL.Entities.Book", b =>
-                {
-                    b.Navigation("BookPrints");
-
-                    b.Navigation("Genres");
-
-                    b.Navigation("Ratings");
                 });
 
             modelBuilder.Entity("DAL.Entities.User", b =>

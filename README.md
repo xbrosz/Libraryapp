@@ -10,7 +10,7 @@
 Aplikácia bude umožňovať:
 1. autentizáciu používateľov
 2. zobraziť ponuku kníh<br>
-3. vyhľadávanie na základe parametrov (názov, autor, žáner, pobočka, hodnotenie, stav)
+3. vyhľadávanie na základe parametrov (názov, autor, žáner, hodnotenie)
 4. *používateľovi:*
    1. si zmeniť osobné údaje
    2. managovat rezerváciu na knihu, ktorú by si chcel prečítať
@@ -21,6 +21,9 @@ Aplikácia bude umožňovať:
    1. pridávať/mazať/upravovať knihy, užívateľov
    2. managovat rezervacie
    3. managovat pobočky
+   4. managovat žánre 
+   5. managovat autorov
+   6. managovat hodnotenia
 
 ---
 ### ERD

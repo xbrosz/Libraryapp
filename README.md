@@ -27,6 +27,7 @@ Aplikácia bude umožňovať:
 
 Aplikácia je dostupná na adrese: [libapp](https://libapp-pv179.azurewebsites.net/)<br>
 <br>
+Odkaz na aplikáciu: https://libapp-pv179.azurewebsites.net/<br><br>
 Prihlasovacie údaje pre admina:<br>
 username: Admin<br>
 password: Heslo_je_123<br>

@@ -25,11 +25,16 @@ Aplikácia bude umožňovať:
    5. managovat autorov
    6. managovat hodnotenia
 
-
+Aplikácia je dostupná na adrese: [libapp](https://libapp-pv179.azurewebsites.net/)<br>
+<br>
 Prihlasovacie údaje pre admina:<br>
 username: Admin<br>
 password: Heslo_je_123<br>
+<br>
 
+Prihlasovacie údaje pre basic usera:<br>
+username: Ricko48<br>
+password: Heslo_je_123<br>
 
 ---
 ### ERD

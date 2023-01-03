@@ -13,24 +13,24 @@ namespace DAL.Data
             {
                 Id = 1,
                 Address = "Bratislavská 25",
-                Email = "peter@gmail.com",
-                FirstName = "Peter",
-                LastName = "Pavol",
-                Password = "123",
+                Email = "lalalala@gmail.com",
+                FirstName = "Richard",
+                LastName = "Cernansky",
+                Password = "$LIBHASH$V1$10000$GlN8pLlRT5wyzRusXQxng6aHa+DzMlA6LaaWHJmGmRyFymaT",
                 PhoneNumber = "4567890",
-                UserName = "pp",
+                UserName = "Ricko48",
                 RoleId = 2
             };
             var admin = new User
             {
                 Id = 2,
-                Address = "Bratislavská 21",
-                Email = "karlic@gmail.com",
-                FirstName = "Marek",
-                LastName = "Karlicky",
-                Password = "marekk",
-                PhoneNumber = "4567890",
-                UserName = "mk",
+                Address = "Praha",
+                Email = "admin@gmail.com",
+                FirstName = "Peter",
+                LastName = "Biely",
+                Password = "$LIBHASH$V1$10000$+vvEaWfQCD4g8x+p4t6GVEAHPoWxtpf+xXW7RY6xmkjyQiwV",
+                PhoneNumber = "+4219873645",
+                UserName = "Admin",
                 RoleId = 1
             };
             var author1 = new Author { BirthDate = DateTime.Now, FirstName = "Štefan", Id = 1, LastName = "Hemingway", MiddleName = "" };
@@ -44,7 +44,7 @@ namespace DAL.Data
             var bookPrint2 = new BookPrint { BranchId = 1, Id = 2, BookId = 2 };
             var rating = new Rating { Id = 1, RatingNumber = 4, Comment = "Super", BookId = 1, UserId = 1 };
 
-            var book1 = new Book { AuthorId = 1, Id = 1, Title = "Space", Release = DateTime.Now, RatingNumber = 4, SortRatingNumber = 4 };
+            var book1 = new Book { AuthorId = 1, Id = 1, Title = "Space", Release = DateTime.Now, RatingNumber = 4 };
             var book2 = new Book { AuthorId = 2, Id = 2, Title = "The chain", Release = DateTime.Now };
             var book3 = new Book { AuthorId = 2, Id = 3, Title = "Snow", Release = DateTime.Now };
             var book4 = new Book { AuthorId = 1, Id = 4, Title = "The war", Release = DateTime.Now };
@@ -57,20 +57,20 @@ namespace DAL.Data
             var book11 = new Book { AuthorId = 2, Id = 11, Title = "Muni guide", Release = DateTime.Now };
             var book12 = new Book { AuthorId = 2, Id = 12, Title = "C#", Release = DateTime.Now };
 
-            //var reservation1 = new Reservation { BookPrintId = 1, Id = 1, UserId = 1, StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(4) };
-            //var reservation2 = new Reservation { BookPrintId = 2, Id = 2, UserId = 1, StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(2) };
-            
+            var reservation1 = new Reservation { BookPrintId = 1, Id = 1, UserId = 1, StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(10) };
+            var reservation2 = new Reservation { BookPrintId = 2, Id = 2, UserId = 1, StartDate = DateTime.Now.AddDays(-20), EndDate = DateTime.Now.AddDays(-14) };
+
             var bookgenre1 = new BookGenre { Id = 1, BookId = 1, GenreId = 1 };
             var bookgenre2 = new BookGenre { Id = 2, BookId = 2, GenreId = 3 };
             var bookgenre3 = new BookGenre { Id = 3, BookId = 2, GenreId = 2 };
             var bookgenre4 = new BookGenre { Id = 4, BookId = 3, GenreId = 2 };
-            var bookgenre5 = new BookGenre { Id = 5, BookId = 4, GenreId =1  };
-            var bookgenre6 = new BookGenre { Id = 6, BookId = 5, GenreId =1  };
-            var bookgenre7 = new BookGenre { Id = 7, BookId = 6, GenreId =2  };
-            var bookgenre8 = new BookGenre { Id = 8, BookId = 7, GenreId =2  };
-            var bookgenre9 = new BookGenre { Id = 9, BookId = 8, GenreId =2  };
-            var bookgenre10 = new BookGenre { Id = 10, BookId = 9, GenreId =3  };
-            var bookgenre11 = new BookGenre { Id = 11, BookId = 10, GenreId =3  };
+            var bookgenre5 = new BookGenre { Id = 5, BookId = 4, GenreId = 1 };
+            var bookgenre6 = new BookGenre { Id = 6, BookId = 5, GenreId = 1 };
+            var bookgenre7 = new BookGenre { Id = 7, BookId = 6, GenreId = 2 };
+            var bookgenre8 = new BookGenre { Id = 8, BookId = 7, GenreId = 2 };
+            var bookgenre9 = new BookGenre { Id = 9, BookId = 8, GenreId = 2 };
+            var bookgenre10 = new BookGenre { Id = 10, BookId = 9, GenreId = 3 };
+            var bookgenre11 = new BookGenre { Id = 11, BookId = 10, GenreId = 3 };
             var bookgenre12 = new BookGenre { Id = 12, BookId = 11, GenreId = 3 };
             var bookgenre13 = new BookGenre { Id = 13, BookId = 12, GenreId = 4 };
             var bookgenre14 = new BookGenre { Id = 14, BookId = 6, GenreId = 1 };

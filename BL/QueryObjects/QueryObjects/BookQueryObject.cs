@@ -34,7 +34,7 @@ namespace BL.QueryObjects.QueryObjects
 
             if (filter.LowestRating.HasValue)
             {
-                _query.Where<double>(a => a >= (double) filter.LowestRating, nameof(Book.RatingNumber));
+                _query.Where<double>(a => a >= (double) filter.LowestRating, nameof(Book.SortRatingNumber));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.SortCriteria))

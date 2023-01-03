@@ -1,4 +1,5 @@
 ﻿using BL.DTOs;
+using BL.DTOs.Book;
 using BL.DTOs.Genre;
 using DAL.Entities;
 
@@ -13,5 +14,7 @@ namespace BL.Services.IServices
         IEnumerable<BookGridDto> GetAllBooks();
         void Delete(int id);
         void UpdateBook(BookUpdateDto dto);
+        void Insert(BookInsertDto dtoToInsert);
+
     }
 }

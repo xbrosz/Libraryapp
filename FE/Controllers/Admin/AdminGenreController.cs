@@ -4,10 +4,12 @@ using BL.Facades.IFacades;
 using BL.Services.IServices;
 using FE.Models.Admin;
 using FE.Models.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FE.Controllers.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class AdminGenreController : Controller
     {
         private IBookFacade _bookFacade;
@@ -37,6 +39,7 @@ namespace FE.Controllers.Admin
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(AdminGenreEditViewModel model)
         {
             if (!ModelState.IsValid) 
@@ -55,6 +58,7 @@ namespace FE.Controllers.Admin
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Add(AdminGenreAddViewModel model)
         {
             if (!ModelState.IsValid)

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BL.DTOs;
+using BL.DTOs.Book;
 using BL.DTOs.BookGenre;
 using BL.DTOs.Genre;
 using BL.QueryObjects.IQueryObject;
@@ -12,7 +13,7 @@ using System.Drawing.Printing;
 
 namespace BL.Services.Services
 {
-    public class BookService : GenericService<Book, BookDetailDto, BookUpdateDto, BookDetailDto>, IBookService
+    public class BookService : GenericService<Book, BookDetailDto, BookUpdateDto, BookInsertDto>, IBookService
     {
         private readonly IQueryObject<BookFilterDto, BookGridDto> _bookQueryObject;
         private readonly IQueryObject<BookGenreFilterDto, BookGenreDto> _bookGenreQueryObject;
@@ -88,12 +89,19 @@ namespace BL.Services.Services
                 dto.Title = book.Title;
             }
 
-            if (!dto.RatingNumber.HasValue)
+            if (!dto.RatingNumber.HasValue && !dto.NoRating)
             {
                 dto.RatingNumber = book.RatingNumber;
             }
 
+            if (dto.RatingNumber.HasValue)
+            {
+                dto.SortRatingNumber = dto.RatingNumber.Value;
+            }
+
             Update(dto);
         }
+
+        
     }
 }

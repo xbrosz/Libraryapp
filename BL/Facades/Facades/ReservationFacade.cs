@@ -1,4 +1,5 @@
-﻿using BL.DTOs.Reservation;
+﻿using BL.DTOs.Branch;
+using BL.DTOs.Reservation;
 using BL.Facades.IFacades;
 using BL.Services.IServices;
 
@@ -6,13 +7,17 @@ namespace BL.Facades.Facades
 {
     public class ReservationFacade : IReservationFacade
     {
+
         private IReservationService _reservationService;
         private IBookPrintService _bookPrintService;
+        private IBranchService _branchService;
 
-        public ReservationFacade(IReservationService reservationService, IBookPrintService bpService)
+
+        public ReservationFacade(IReservationService reservationService, IBookPrintService bpService, IBranchService branchService)
         {
             _reservationService = reservationService;
             _bookPrintService = bpService;
+            _branchService = branchService;
         }
 
         public void ReserveBook(ReservationCreateFormDto reservationDto)
@@ -51,11 +56,14 @@ namespace BL.Facades.Facades
         {
             var reservation = _reservationService.Find(reservationDto.Id);
 
+            Console.WriteLine("ANO");
+
             if (reservation.EndDate.Date < DateTime.Today)
             {
                 throw new InvalidOperationException("Ended reservation cannot be edited.");
             }
 
+            Console.WriteLine("NIE");
 
             var bookId = _bookPrintService.Find(reservationDto.BookPrintId).BookId;
 
@@ -111,6 +119,35 @@ namespace BL.Facades.Facades
         public IEnumerable<ReservationsDto> GetActiveReservationsByBookId(int bookId)
         {
             return _reservationService.GetReservationsByBookId(bookId).Where(x => x.EndDate >= DateTime.Now);
+        }
+        public IEnumerable<BranchDto> GetAllBranches()
+        {
+            return _branchService.GetAllBranches();
+        }
+        public int GetBranchIDByName(string name)
+        {   try
+            {
+                return _branchService.GetBranchesByName(name).First().Id;
+            } catch (Exception ex)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            
+        }
+
+        public IEnumerable<ReservationsDto> GetReservationsByUserId(int userId)
+        {
+            return _reservationService.GetReservationsByUserId(userId);
+        }
+
+        public BranchDto GetBranchById(int branchId)
+        {
+            return _branchService.Find(branchId);
+        }
+
+        public IEnumerable<ReservationsDto> GetAllActiveAndFutureReservations()
+        {
+            return _reservationService.GetAll().Where(x => x.EndDate >= DateTime.Now || x.StartDate >= DateTime.Now);
         }
     }
 }

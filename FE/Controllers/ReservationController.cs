@@ -5,6 +5,7 @@ using BL.Services.IServices;
 using FE.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FE.Controllers
 {
@@ -13,11 +14,13 @@ namespace FE.Controllers
     {
         private readonly IReservationService _reservationService;
         private readonly IReservationFacade _reservationFacade;
+        private readonly IBookFacade _bookFacade;
 
-        public ReservationController(IReservationService reservationService, IReservationFacade reservationFacade)
+        public ReservationController(IReservationService reservationService, IReservationFacade reservationFacade, IBookFacade bookFacade)
         {
             _reservationService = reservationService;
             _reservationFacade = reservationFacade;
+            _bookFacade = bookFacade;
         }
         
         public IActionResult Index()
@@ -62,6 +65,29 @@ namespace FE.Controllers
             };
 
             return View(model);
+        }
+        public IActionResult NewReservationForm(int Id)
+        {
+            var model = new NewReservationModel
+            {
+                Id = Id,
+                Branches = _reservationFacade.GetAllBranches().Select(branch => branch.Name).ToArray(),
+                BookTitle = _bookFacade.GetBookDetailByID(Id).Title
+            };
+            return View(model);
+        }
+        public IActionResult Add(int Id, string branchName, DateTime start, DateTime end)
+        {
+            var dto = new ReservationCreateFormDto
+            {
+                BookId = Id,
+                StartDate = start,
+                EndDate = end,
+                UserId = getUserId(),
+                BranchId = _reservationFacade.GetBranchIDByName(branchName)
+            };
+            _reservationFacade.ReserveBook(dto);
+            return Index();
         }
 
         [HttpPost]

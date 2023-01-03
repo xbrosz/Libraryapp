@@ -39,6 +39,7 @@ namespace BL.Tests.QueryObjects
                         LastName = "Tolkien",
                         BirthDate = new DateTime(1900, 6, 6)
                     },
+                    
                     Release = DateTime.Now,
                     Title = "C++ for begginers"
 
@@ -104,6 +105,7 @@ namespace BL.Tests.QueryObjects
                         LastName = "Tolkien",
                         BirthDate = new DateTime(1900, 6, 6)
                     },
+                    
                     Release = DateTime.Now,
                     Title = "C++ for begginers"
 
@@ -169,6 +171,7 @@ namespace BL.Tests.QueryObjects
                         LastName = "Tolkien",
                         BirthDate = new DateTime(1900, 6, 6)
                     },
+                    
                     Release = DateTime.Now,
                     Title = "C++ for begginers"
 

@@ -1,0 +1,28 @@
+﻿@model FE.Models.Admin.AdminAddAuthorToBookViewModel
+
+<h4>Choose author for book @Model.Title</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Birth date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var author in Model.Authors)
+        {
+            <tr>
+                <td>@author.Name</td>
+                <td>@author.BirthDate.ToString("dd-MM-yyyy")</td>
+
+                <td>
+                    @using (Html.BeginForm("Add", "AdminBook", new { title = Model.Title, release = Model.Release, authorId = author.Id }, FormMethod.Post, true, new { @class = "form-inline" }))
+                    {
+                        <input id="submitFormButton" class="btn btn-secondary my-1" type="submit" value="Choose" />
+                    }
+
+            </tr>
+        }
+    </tbody>
+</table>

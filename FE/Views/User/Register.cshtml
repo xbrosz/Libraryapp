@@ -1,6 +1,6 @@
 ﻿@model FE.Models.User.UserRegisterViewModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Sign Up";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -57,7 +57,7 @@
                 @Html.ValidationMessageFor(x => x.Address, null, new { @class = "text-danger" })
                 </div>
 
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
         }
     </div>
 </div>

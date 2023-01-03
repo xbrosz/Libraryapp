@@ -1,6 +1,6 @@
 ﻿@model FE.Models.User.UserLoginViewModel
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Sign In";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -25,9 +25,12 @@
                     @Html.ValidationMessageFor(x => x.Password, null, new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
+                    <button type="submit" class="btn btn-primary">Sign In</button>
                 </div>
             }
             </section>
+        <div>
+            <a class="nav-link text-blue" href="@Url.Action("Register", "User")">Don't have account? Sign Up here!</a>
+        </div>
     </div>
 </div>

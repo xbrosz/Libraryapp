@@ -69,10 +69,10 @@ namespace BL.Tests.QueryObjects
             var queryObject = new BookQueryObject(_mapperMock.Object, _queryMock.Object);
             var filter = new BookFilterDto
             {
-                AuthorID = 2
+                Title = "><:<:L?L<P{LPL:<> L:"
             };
-            var result = queryObject.ExecuteQuery(filter);
-            Assert.True(result is null);
+            var result = queryObject.ExecuteQuery(filter).TotalItemsCount;
+            Assert.True(result == 0);
         }
     }
 }

@@ -1,6 +1,7 @@
 using AutoMapper;
 using BL.DTOs;
 using BL.DTOs.Author;
+using BL.DTOs.Book;
 using BL.DTOs.BookGenre;
 using BL.DTOs.Branch;
 using BL.DTOs.Genre;
@@ -45,6 +46,7 @@ namespace BL
 
             config.CreateMap<BookPrint, BookPrintDto>().ReverseMap();
             config.CreateMap<Book, BookUpdateDto>().ReverseMap();
+            config.CreateMap<Book, BookInsertDto>().ReverseMap();
             config.CreateMap<BookGenre, BookGenreDto>().ReverseMap();
             config.CreateMap<Genre, GenreDto>().ReverseMap();
             config.CreateMap<Author, AuthorDetailDto>().ReverseMap();

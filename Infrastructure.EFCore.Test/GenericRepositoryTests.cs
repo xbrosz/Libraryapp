@@ -25,50 +25,28 @@ namespace Infrastructure.EFCore.Test
         //        Address = "Botanická 69"
         //    });
 
-            dbContext.Book.Add(new Book
-            {
-                Id = 1,
-                Release = new DateTime(1956, 7, 29),
-                Title = "The Lord of the Rings: The Fellowship of the Ring",
-                AuthorId = 1
-            });
-            dbContext.Book.Add(new Book
-            {
-                Id = 2,
-                Author = new Author
-                {
-                    Id = 1,
-                    FirstName = "John",
-                    MiddleName = "Ronald Reuel",
-                    LastName = "Tolkien",
-                    BirthDate = new DateTime(1982, 1, 3)
-                },
-                Release = new DateTime(1956, 11, 11),
-                Title = "The Lord of the Rings: The Two Towers",
-                AuthorId = 1
-            });
-
-            dbContext.Genre.Add(new Genre
-            {
-                Id = 1,
-                Name = "Fantasy"
-            });
-
-            dbContext.BookGenre.Add(new BookGenre
-            {
-                Id = 1,
-                BookId = 1,
-                GenreId = 1
-            });
-            dbContext.BookGenre.Add(new BookGenre
-            {
-                Id = 2,
-                BookId = 2,
-                GenreId = 1
-            });
-
-            dbContext.SaveChanges();
-
+        //    dbContext.Book.Add(new Book
+        //    {
+        //        Id = 1,
+        //        Release = new DateTime(1956, 7, 29),
+        //        Title = "The Lord of the Rings: The Fellowship of the Ring",
+        //        AuthorId = 1
+        //    });
+        //    dbContext.Book.Add(new Book
+        //    {
+        //        Id = 2,
+        //        Author = new Author
+        //        {
+        //            Id = 1,
+        //            FirstName = "John",
+        //            MiddleName = "Ronald Reuel",
+        //            LastName = "Tolkien",
+        //            BirthDate = new DateTime(1982, 1, 3)
+        //        },
+        //        Release = new DateTime(1956, 11, 11),
+        //        Title = "The Lord of the Rings: The Two Towers",
+        //        AuthorId = 1
+        //    });
 
         //    dbContext.Genre.Add(new Genre
         //    {
@@ -76,7 +54,29 @@ namespace Infrastructure.EFCore.Test
         //        Name = "Fantasy"
         //    });
 
-            }
+        //    dbContext.BookGenre.Add(new BookGenre
+        //    {
+        //        Id = 1,
+        //        BookId = 1,
+        //        GenreId = 1
+        //    });
+        //    dbContext.BookGenre.Add(new BookGenre
+        //    {
+        //        Id = 2,
+        //        BookId = 2,
+        //        GenreId = 1
+        //    });
+
+        //    dbContext.SaveChanges();
+
+
+        ////    dbContext.Genre.Add(new Genre
+        //    {
+        //        Id = 1,
+        //        Name = "Fantasy"
+        //    });
+
+            //}
             [Fact]
             void GenericRepoInsertBookTest()
             {
@@ -101,8 +101,8 @@ namespace Infrastructure.EFCore.Test
                 dbContext.SaveChanges();
                 Assert.True(efRepository.GetByID(1).Title.Equals(bookToUpdate.Title));
 
-        //    dbContext.SaveChanges();
-        //}
+            dbContext.SaveChanges();
+        }
 
         //[Fact]
         //public void GenericRepoGetBookByIDTest()

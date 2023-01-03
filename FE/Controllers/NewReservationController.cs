@@ -21,16 +21,25 @@ namespace FE.Controllers
         public IActionResult Index(int Id)
 
         {
-            int userId = getUserId();
-            var dto = _bookFacade.GetBookDetailByID(Id);
-            var model = new NewReservationModel
+            try
             {
-                Id = Id,
-                BookTitle = dto.Title,
-                Branches = _reservationFacade.GetAllBranches().Select(r => r.Name).ToList(),
-                UserId = userId,
-            };
-            return View(model);
+                int userId = getUserId();
+
+
+                var dto = _bookFacade.GetBookDetailByID(Id);
+                var model = new NewReservationModel
+                {
+                    Id = Id,
+                    BookTitle = dto.Title,
+                    Branches = _reservationFacade.GetAllBranches().Select(r => r.Name).ToList(),
+                    UserId = userId,
+                };
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Login", "User");
+            }
         }
 
         [HttpPost]
@@ -80,7 +89,9 @@ namespace FE.Controllers
 
         private int getUserId()
         {
+            
             return int.Parse(User.Identity.Name);
+           
         }
     }
 }

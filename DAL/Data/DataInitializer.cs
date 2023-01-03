@@ -106,8 +106,8 @@ namespace DAL.Data
             modelBuilder.Entity<BookPrint>().HasData(bookPrint2);
             modelBuilder.Entity<Rating>().HasData(rating);
 
-            //modelBuilder.Entity<Reservation>().HasData(reservation1);
-            //modelBuilder.Entity<Reservation>().HasData(reservation2);
+            modelBuilder.Entity<Reservation>().HasData(reservation1);
+            modelBuilder.Entity<Reservation>().HasData(reservation2);
 
             modelBuilder.Entity<BookGenre>().HasData(bookgenre1);
             modelBuilder.Entity<BookGenre>().HasData(bookgenre2);

@@ -44,7 +44,7 @@ namespace DAL.Data
             var bookPrint2 = new BookPrint { BranchId = 1, Id = 2, BookId = 2 };
             var rating = new Rating { Id = 1, RatingNumber = 4, Comment = "Super", BookId = 1, UserId = 1 };
 
-            var book1 = new Book { AuthorId = 1, Id = 1, Title = "Space", Release = DateTime.Now, RatingNumber = 4 };
+            var book1 = new Book { AuthorId = 1, Id = 1, Title = "Space", Release = DateTime.Now, RatingNumber = 4, SortRatingNumber = 4 };
             var book2 = new Book { AuthorId = 2, Id = 2, Title = "The chain", Release = DateTime.Now };
             var book3 = new Book { AuthorId = 2, Id = 3, Title = "Snow", Release = DateTime.Now };
             var book4 = new Book { AuthorId = 1, Id = 4, Title = "The war", Release = DateTime.Now };

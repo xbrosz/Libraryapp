@@ -124,5 +124,30 @@ namespace BL.Facades.Facades
         {
             return _branchService.GetAllBranches();
         }
+        public int GetBranchIDByName(string name)
+        {   try
+            {
+                return _branchService.GetBranchesByName(name).First().Id;
+            } catch (Exception ex)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            
+        }
+
+        public IEnumerable<ReservationsDto> GetReservationsByUserId(int userId)
+        {
+            return _reservationService.GetReservationsByUserId(userId);
+        }
+
+        public BranchDto GetBranchById(int branchId)
+        {
+            return _branchService.Find(branchId);
+        }
+
+        public IEnumerable<ReservationsDto> GetAllActiveAndFutureReservations()
+        {
+            return _reservationService.GetAll().Where(x => x.EndDate >= DateTime.Now || x.StartDate >= DateTime.Now);
+        }
     }
 }

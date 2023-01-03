@@ -26,9 +26,9 @@ Aplikácia bude umožňovať:
    6. managovat hodnotenia
 
 
-Prihlasovacie údaje pre admina:
-username: Admin
-password: Heslo_je_123
+Prihlasovacie údaje pre admina:<br>
+username: Admin<br>
+password: Heslo_je_123<br>
 
 
 ---

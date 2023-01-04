@@ -1,6 +1,8 @@
 ﻿@using FE.Models.Admin
 @model AdminBookPrintIndexViewModel
 <h4>Book prints</h4>
+@using (Html.BeginForm()) {
+@Html.HiddenFor(x => x.Id)
 <table class="table">
     <thead>
         <tr>
@@ -11,7 +13,8 @@
         </tr>
     </thead>
     <tbody>
-        <a class="btn btn-secondary my-1" href="@Url.Action("Add", "AdminBookPrint")">Add</a>
+        @Html.HiddenFor(x => x.Id)
+        <a class="btn btn-secondary my-1" href="@Url.Action("Add", "AdminBookPrint", new {id = Model.Id})">Add</a>
         @foreach (var bookPrint in Model.bookPrints)
         {
             <tr>
@@ -26,11 +29,14 @@
                 </td>*@
                 @if(bookPrint.CanBeDeleted)
                 {
-                    <td>
-                        @using (Html.BeginForm("Delete", "AdminBookPrint", new { id = bookPrint.Id }, FormMethod.Post, true, new { @class = "form-inline" }))
+                    @*<td>
+                        @using (Html.BeginForm("Delete", "AdminBookPrint", new { Id = bookPrint.Id }, FormMethod.Post, true, new { @class = "form-inline" }))
                             {
                                 <input class="btn btn-secondary my-1" type="submit" value="Delete" />
                             }
+                    </td>*@
+                    <td>
+                        <a class="btn btn-secondary my-1" href="@Url.Action("Delete", "AdminBookPrint", new {Id = bookPrint.Id, bookId = Model.Id})">Delete</a>
                     </td>
                 }
                 else 
@@ -50,4 +56,5 @@
         alert (myText);
       }
         </script>
+}
 }

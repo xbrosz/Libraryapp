@@ -3,29 +3,25 @@
 <h4>Add new book print</h4>
 @using (Html.BeginForm("Add", "AdminBookPrint"))
 {
+    @Html.HiddenFor(x => x.BookTitle)
+    @Html.HiddenFor(x => x.Id)
 <div class="row">
     <div class="col-md-4">
         <tbody>
             <tr>
                 <td>Book: </td>
-                <td><select asp-for="SelectedBook" id="inputState" class="form-control">
-                        <option selected>Choose book</option>
-                            @for (int i = 0; i < @Model.Books.Count(); i++)
-                                {
-                                    <option value="@Model.Books.ElementAt(i)">@Model.Books.ElementAt(i)</option>
-                                }
-                </select></td>
+                <td>@Model.BookTitle</td>
             </tr>
             <tr>
-                    <td>Branch: </td>
-                    <td><select asp-for="SelectedBranch" id="inputState" class="form-control">
-                        <option selected>Choose branch</option>
-                            @for (int i = 0; i < @Model.Branches.Count(); i++)
-                                {
-                                    <option value="@Model.Branches.ElementAt(i)">@Model.Branches.ElementAt(i)</option>
-                                }
-                        </select></td>
-                </tr>
+                <td><select asp-for="SelectedBranch" id="inputState" class="form-control">
+                    <option selected>Choose branch</option>
+                        @for (int i = 0; i < @Model.Branches.Count(); i++)
+                            {
+                                <option value="@Model.Branches.ElementAt(i)">@Model.Branches.ElementAt(i)</option>
+                            }
+                    </select></td>
+                    @Html.ValidationMessageFor(x => x.SelectedBranch, null, new { @class = "text-danger" })
+            </tr>
         </tbody>
     </div>
 </div>

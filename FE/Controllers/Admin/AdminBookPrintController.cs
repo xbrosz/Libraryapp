@@ -17,9 +17,9 @@ namespace FE.Controllers.Admin
 
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int Id)
         {
-            var dtos = _bookFacade.GetAllBookPrints();
+            var dtos = _bookFacade.GetAllBookPrints().Where(x => x.BookId == Id);
             var reservedPrints = _reservationFacade.GetAllActiveAndFutureReservations().Select(x => x.BookPrintId);
             List<BookPrintGridDto> prints = new List<BookPrintGridDto>();
             foreach (var d in dtos)
@@ -34,33 +34,43 @@ namespace FE.Controllers.Admin
             }
             var model = new AdminBookPrintIndexViewModel
             {
+                Id = Id,
                 bookPrints = prints
             };
             return View(model);
         }
        
-        [HttpPost]
-        public IActionResult Delete(int Id)
+        
+        public IActionResult Delete(int Id, int bookId)
         {
             _bookFacade.DeleteBookPrint(Id);
-            return RedirectToAction("Index", "AdminBookPrint");
+            return RedirectToAction("Index", "AdminBookPrint", new {Id = bookId});
         }
-        public IActionResult Add()
+        public IActionResult Add(int Id)
         {
             var model = new AdminBookPrintAddViewModel
             {
-                Books = _bookFacade.GetAllBooks().Select(x => x.Title).ToList(),
+                Id = Id,
+                BookTitle = _bookFacade.GetBookDetailByID(Id).Title,
                 Branches = _reservationFacade.GetAllBranches().Select(x => x.Name).ToList()
             };
             return View(model);
         }
         [HttpPost]
         public IActionResult Add(AdminBookPrintAddViewModel model)
-        {
-            int bookId = _bookFacade.GetBooksByTitle(model.SelectedBook).First().Id;
-            int branchId = _reservationFacade.GetBranchIDByName(model.SelectedBranch);
-            _bookFacade.InsertBookPrint(bookId, branchId);
-            return RedirectToAction("Index", "AdminBookPrint");
+        { try
+            {
+                int bookId = model.Id;
+                int branchId = _reservationFacade.GetBranchIDByName(model.SelectedBranch);
+                _bookFacade.InsertBookPrint(bookId, branchId);
+                return RedirectToAction("Index", "AdminBookPrint", new { Id = model.Id });
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(nameof(AdminBookPrintAddViewModel.SelectedBranch), "Please select a valid branch");
+                model.Branches = _reservationFacade.GetAllBranches().Select(x => x.Name).ToList();
+                return View("Add", model);
+            }
         }
     }
 }

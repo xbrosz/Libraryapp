@@ -75,8 +75,8 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
-//using (var scope = app.Services.CreateScope())                                                  // Just for Testing !!!!
-//{
+using (var scope = app.Services.CreateScope())                                                  // Just for Testing !!!!
+{
 //    scope.ServiceProvider.GetRequiredService<LibraryappDbContext>().Database.EnsureDeleted();
 //    scope.ServiceProvider.GetRequiredService<LibraryappDbContext>().Database.EnsureCreated();
 
@@ -92,17 +92,17 @@ app.MapControllerRoute(
 //        RoleId = 2
 //    });
 
-//    scope.ServiceProvider.GetRequiredService<IUserService>().Register(new BL.DTOs.User.UserCreateDto()
-//    {
-//        Address = "Praha",
-//        Password = "Heslo_je_123",
-//        UserName = "Admin",
-//        FirstName = "Peter",
-//        LastName = "Biely",
-//        PhoneNumber = "+4219873645",
-//        Email = "admin@gmail.com",
-//        RoleId = 1
-//    });
+    scope.ServiceProvider.GetRequiredService<IUserService>().Register(new BL.DTOs.User.UserCreateDto()
+    {
+        Address = "Praha",
+        Password = "Heslo_je_123",
+        UserName = "Admin",
+        FirstName = "Peter",
+        LastName = "Biely",
+        PhoneNumber = "+4219873645",
+        Email = "admin@gmail.com",
+        RoleId = 1
+    });
 
 //    var dto = new ReservationCreateFormDto()
 //    {
@@ -125,6 +125,6 @@ app.MapControllerRoute(
 //    };
 
 //    scope.ServiceProvider.GetRequiredService<IReservationFacade>().ReserveBook(dto2);
-//}
+}
 
 app.Run();

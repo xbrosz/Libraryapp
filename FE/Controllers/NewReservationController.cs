@@ -46,7 +46,9 @@ namespace FE.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Add(NewReservationModel newModel)
         {
-            if (newModel.ToDate <= newModel.FromDate)
+            var fromDate = DateTime.Parse(newModel.FromDate);
+            var toDate = DateTime.Parse(newModel.ToDate);
+            if (toDate <= fromDate)
             {
                 ModelState.AddModelError(nameof(NewReservationModel.ToDate), "Invalid date range");
                 newModel.Branches = _reservationFacade.GetAllBranches().Select(r => r.Name).ToList();
@@ -56,8 +58,8 @@ namespace FE.Controllers
             var dto = new ReservationCreateFormDto
             {
                 BookId = newModel.Id,
-                StartDate = newModel.FromDate,
-                EndDate = newModel.ToDate,
+                StartDate = fromDate,
+                EndDate = toDate,
                 UserId = getUserId(),
                 BranchId = _reservationFacade.GetBranchIDByName(newModel.SelectedBranch)
             };

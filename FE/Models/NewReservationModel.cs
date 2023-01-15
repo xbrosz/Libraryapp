@@ -10,8 +10,8 @@ namespace FE.Models
         public IEnumerable<string> Branches { get; set; }
         public string BookTitle { get; set; }
         public string SelectedBranch { get; set; }
-        public DateTime FromDate { get; set; }
-        public DateTime ToDate { get; set; }
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
 
     }
 }

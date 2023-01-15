@@ -13,7 +13,7 @@
     <div class="form-group">
         @Html.LabelFor(x => x.StartDate)
 
-        @if(Model.StartDate.Date <= DateTime.Today)
+        @if(Model.StartDate.Date.ToLocalTime() <= DateTime.Today)
         {
             @Html.HiddenFor(x => x.StartDate)
             <input asp-for="StartDate" type="text" disabled class="form-control" placeholder="Start date" />
@@ -33,14 +33,14 @@
         <script>
             $(function () {
                 $("#StartDate").datepicker({ 
-                    dateFormat: 'dd-mm-yy',
+                    dateFormat: 'mm-dd-yy',
                     minDate: "+1",
                 });
             });
         </script>
         <script>
             $(function () {
-                $("#EndDate").datepicker({ dateFormat: 'dd-mm-yy' });
+                $("#EndDate").datepicker({ dateFormat: 'mm-dd-yy' });
             });
         </script>
     }

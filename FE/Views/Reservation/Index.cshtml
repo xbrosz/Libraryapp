@@ -17,8 +17,8 @@
             <tr>
                 <td>@reservation.BookTitle</td>
 
-                <td>@reservation.StartDate.ToString("dd-MM-yyyy")</td>
-                <td>@reservation.EndDate.ToString("dd-MM-yyyy")</td>
+                <td>@reservation.StartDate.ToString("MM-dd-yyyy")</td>
+                <td>@reservation.EndDate.ToString("MM-dd-yyyy")</td>
                 <td>@reservation.Branch.Name</td>
                 <td>
                     @using (Html.BeginForm("Delete", "Reservation", new { id = reservation.Id }, FormMethod.Post, true, new { @class = "form-inline" }))

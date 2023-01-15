@@ -77,17 +77,25 @@ app.MapControllerRoute(
 using (var scope = app.Services.CreateScope())
 {
 
-    scope.ServiceProvider.GetRequiredService<IUserService>().Register(new BL.DTOs.User.UserCreateDto()
+    try
     {
-        Address = "Praha",
-        Password = "Heslo_je_123",
-        UserName = "Admin",
-        FirstName = "Peter",
-        LastName = "Biely",
-        PhoneNumber = "+4219873645",
-        Email = "admin@gmail.com",
-        RoleId = 1
-    });
+        scope.ServiceProvider.GetRequiredService<IUserFacade>().Register(new BL.DTOs.User.UserCreateDto()
+        {
+            Address = "Praha",
+            Password = "Heslo_je_123",
+            UserName = "Admin",
+            FirstName = "Peter",
+            LastName = "Biely",
+            PhoneNumber = "+4219873645",
+            Email = "admin@gmail.com",
+            RoleId = 1
+        });
+    }
+    catch (Exception)
+    {
+
+    }
+
 
 
 }

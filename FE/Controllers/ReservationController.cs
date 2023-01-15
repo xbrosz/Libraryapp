@@ -76,19 +76,6 @@ namespace FE.Controllers
             };
             return View(model);
         }
-        public IActionResult Add(int Id, string branchName, DateTime start, DateTime end)
-        {
-            var dto = new ReservationCreateFormDto
-            {
-                BookId = Id,
-                StartDate = start,
-                EndDate = end,
-                UserId = getUserId(),
-                BranchId = _reservationFacade.GetBranchIDByName(branchName)
-            };
-            _reservationFacade.ReserveBook(dto);
-            return Index();
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

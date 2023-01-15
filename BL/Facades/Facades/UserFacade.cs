@@ -22,6 +22,8 @@ namespace BL.Facades.Facades
 
         public void Register(UserCreateDto user)
         {
+            user.UserName = user.UserName.Trim();
+
             if (_userService.GetUserByUserName(user.UserName) != null) {
                 throw new Exception("User name already exists");
             }
@@ -31,6 +33,7 @@ namespace BL.Facades.Facades
 
         public UserDetailDto Login(UserLoginDto userloginDto)
         {
+            userloginDto.UserName = userloginDto.UserName.Trim();
             return _userService.Login(userloginDto);
         }
 

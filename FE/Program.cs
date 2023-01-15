@@ -83,7 +83,7 @@ using (var scope = app.Services.CreateScope())
         {
             Address = "Praha",
             Password = "Heslo_je_123",
-            UserName = "Admin2",
+            UserName = "Admin",
             FirstName = "Peter",
             LastName = "Biely",
             PhoneNumber = "+4219873645",
@@ -91,7 +91,7 @@ using (var scope = app.Services.CreateScope())
             RoleId = 1
         });
 
-       
+
     }
     catch (Exception)
     {

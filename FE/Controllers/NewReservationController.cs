@@ -49,7 +49,6 @@ namespace FE.Controllers
             if (newModel.ToDate <= newModel.FromDate)
             {
                 ModelState.AddModelError(nameof(NewReservationModel.ToDate), "Invalid date range");
-                //return RedirectToAction("Index", new { Id = newModel.Id });
                 newModel.Branches = _reservationFacade.GetAllBranches().Select(r => r.Name).ToList();
                 return View("Index", newModel);
             }
